@@ -1,19 +1,23 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-
+import {RouterModule, Routes} from '@angular/router';
 import { NgModule } from '@angular/core';
-
+import {APP_ROUTES} from './app-routes';
 import { AppComponent } from './app.component';
-import { AccountEditorComponent } from './account-editor/account-editor.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AccountEditorComponent
+    LoginComponent
 ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    RouterModule.forRoot(
+      APP_ROUTES,
+      {enableTracing: true}
+  )
   ],
   providers: [],
   bootstrap: [AppComponent]

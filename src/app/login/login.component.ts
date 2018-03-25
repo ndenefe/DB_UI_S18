@@ -4,11 +4,11 @@ import { Account } from '../domain/models/account';
 import { Department } from '../domain/models/department';
 
 @Component({
-  selector: 'app-account-editor',
-  templateUrl: './account-editor.component.html',
-  styleUrls: ['./account-editor.component.css']
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
-export class AccountEditorComponent implements OnInit {
+export class LoginComponent implements OnInit {
 
   public title: string;
 
@@ -21,20 +21,19 @@ export class AccountEditorComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.title = 'Account Editor';
+    this.title = 'Login';
     this.account = {
-      name: 'John',
+      name: 'Patrick',
       phoneNumbers: [
-        { number: "214-545-1232", type: "mobile" },
-        { number: "214-333-2221", type: "home" },
-        { number: "817-444-2322", type: "work" },
-        { number: "213-444-2223", type: "fax" }
+        { number: "214-545-1232", type: "mobile" }
       ]
     };
     this.departments = [
-      { id: 1, name: 'HR' },
-      { id: 2, name: 'Marketing' },
-      { id: 3, name: 'IT' }
+      { id: 0, name: 'Democrat' },
+      { id: 1, name: 'Republican' },
+      { id: 2, name: 'Libertarian' },
+      { id: 3, name: 'Green Party' },
+      { id: 4, name: 'Other' }
     ];
 
     this.newPhone = {};
@@ -43,4 +42,5 @@ export class AccountEditorComponent implements OnInit {
   public addPhone(){
     this.account.phoneNumbers.push(this.newPhone);
   }
+  
 }
