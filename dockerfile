@@ -10,5 +10,7 @@ RUN npm install
 
 COPY server.js /usr/src/app
 
+COPY createDb.sql /usr/src/app
+
 EXPOSE 3000
 CMD ["npm", "start"]
