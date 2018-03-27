@@ -20,7 +20,7 @@ server.route({
 	path:'/users',
 	handler:function(reuest,reply){
 		connection.query('SELECT username,email FROM politicians',
-		function(error,results,fields{
+		function(error,results,fields) {
 			if(error) throw error;
 			reply(results);
 		});
