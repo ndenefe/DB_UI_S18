@@ -4,11 +4,11 @@ import { Account } from '../domain/models/account';
 import { Department } from '../domain/models/department';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-sign-up',
+  templateUrl: './sign-up.component.html',
+  styleUrls: ['./sign-up.component.css']
 })
-export class LoginComponent implements OnInit {
+export class SignUpComponent implements OnInit {
 
   public title: string;
 
@@ -21,11 +21,11 @@ export class LoginComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.title = 'Login';
+    this.title = 'Sign Up';
     this.account = {
-      name: 'Patrick',
+      name: '',
       phoneNumbers: [
-        { number: '214-545-1232', type: 'mobile' }
+        { number: '', type: '' }
       ]
     };
     this.departments = [

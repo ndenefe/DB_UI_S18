@@ -4,12 +4,12 @@ import {RouterModule, Routes} from '@angular/router';
 import { NgModule } from '@angular/core';
 import {APP_ROUTES} from './app-routes';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    SignUpComponent
 ],
   imports: [
     BrowserModule,
