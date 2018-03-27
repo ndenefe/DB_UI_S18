@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
     this.account = {
       name: 'Patrick',
       phoneNumbers: [
-        { number: "214-545-1232", type: "mobile" }
+        { number: '214-545-1232', type: 'mobile' }
       ]
     };
     this.departments = [
@@ -39,8 +39,7 @@ export class LoginComponent implements OnInit {
     this.newPhone = {};
   }
 
-  public addPhone(){
+  public addPhone() {
     this.account.phoneNumbers.push(this.newPhone);
   }
-  
 }
