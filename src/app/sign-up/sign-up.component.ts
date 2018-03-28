@@ -15,6 +15,8 @@ export class SignUpComponent implements OnInit {
 
   public account: Account;
 
+  public accounts: Account[];
+
   public departments: Department[];
 
   public newPhone: Phone;
@@ -36,6 +38,8 @@ export class SignUpComponent implements OnInit {
       { id: 4, name: 'Other' }
     ];
 
+    this.accounts = [];
+
     this.newPhone = {};
   }
 
@@ -50,6 +54,17 @@ export class SignUpComponent implements OnInit {
 
   public deleteFieldValue(index) {
     this.account.phoneNumbers.splice(index, 1);
-}
+  }
+
+  public saveProfile() {
+    this.accounts.push(this.account);
+
+    this.account = {
+      name: '',
+      phoneNumbers: []
+    };
+
+    this.newPhone = {};
+  }
 
 }
