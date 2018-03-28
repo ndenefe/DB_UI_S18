@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Account } from '../domain/models/account';
 import { Department } from '../domain/models/department';
 import { Router, RouterLink} from '@angular/router';
+import { Login } from './../domain/models/login';
 
 @Component({
   selector: 'app-sign-up',
@@ -21,13 +22,29 @@ export class SignUpComponent implements OnInit {
 
   public newPhone: Phone;
 
+  public loginInfo: Login[];
+
+  public signUp: Login;
+
+  public passCheck: string;
+
+  public checkPassMatch: boolean = true;
+
+  public reset: boolean = false;
+
   constructor() { }
 
   ngOnInit() {
     this.title = 'Sign Up';
+
+    this.loginInfo = [];
+
+    this.signUp = {};
+
     this.account = {
       name: '',
-      phoneNumbers: []
+      phoneNumbers: [],
+      login: []
     };
 
     this.departments = [
@@ -57,14 +74,28 @@ export class SignUpComponent implements OnInit {
   }
 
   public saveProfile() {
-    this.accounts.push(this.account);
-
+    if (this.reset)
+    {
+      this.checkPassMatch = true;
+    }
+    if (this.passCheck != this.signUp.password)
+    {
+      this.checkPassMatch = false;
+      this.reset = true;
+    }
+    else
+    {
+      this.account.login.push(this.signUp);
+      this.loginInfo.push(this.signUp);
+      this.accounts.push(this.account);
+    }
     this.account = {
       name: '',
       phoneNumbers: []
     };
-
     this.newPhone = {};
+    this.signUp = {};
+    this.passCheck = "";
   }
 
 }

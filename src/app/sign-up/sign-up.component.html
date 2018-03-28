@@ -1,24 +1,63 @@
 <div class="container">
-  <h1>{{ title }}</h1>
+  <h1 class = "text-center">{{ title }}</h1>
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-8" id = "content">
+        <div class="card">
+            <div class="card-header">
+              Login Information
+            </div>
+            <div class="card-body">
+              <div class="form-group text-left">
+                <label for="signup_name">
+                  Username:
+                </label>
+                <input type="text"
+                  id="account_name"
+                  class="form-control"
+                  [(ngModel)]="signUp.username" />
+              </div>
+              <div class="form-group text-left">
+                <label for="account_email">
+                  Password:
+                </label>
+                <input type="text"
+                  id="signUp_password"
+                  class="form-control"
+                  [(ngModel)]="signUp.password" />
+              </div>
+              <div *ngIf= "!checkPassMatch" class="text-danger">*Passwords do not match</div>
+              <div class="form-group text-left">
+                  <label for="account_email">
+                    Re-enter Password:
+                  </label>
+                  <input type="text"
+                    id="signUp_password"
+                    class="form-control"
+                    [(ngModel)]="passCheck" />
+                </div>
+                <div *ngIf= "!checkPassMatch" class="text-danger">*Passwords do not match</div>
+                <br />
+            </div>
+        </div>
+     
+    <br />
       <div class="card">
         <div class="card-header">
           Account Information
         </div>
         <div class="card-body">
-          <div class="form-group">
+          <div class="form-group text-left">
             <label for="account_name">
-              Name
+              Name:
             </label>
             <input type="text"
               id="account_name"
               class="form-control"
               [(ngModel)]="account.name" />
           </div>
-          <div class="form-group">
+          <div class="form-group text-left">
             <label for="account_email">
-              Email
+              Email:
             </label>
             <input type="email"
               id="account_email"
@@ -33,9 +72,9 @@
               [(ngModel)]="account.isEmployee" /> Politician
             </label>
           </div>
-          <div class="form-group" *ngIf="account.isEmployee">
+          <div class="form-group text-left" *ngIf="account.isEmployee">
             <label for="account_departmentId">
-              Party Affliation
+              Party Affliation:
             </label>
             <select id="account_departmentId"
                 class="form-control"
@@ -50,8 +89,8 @@
       </div>
       <br />
       <ul class="list-group">
-        <li class="list-group-item bg-light">
-          Phone numbers
+        <li class="list-group-item bg-light text-left">
+          Phone numbers:
         </li>
         <li class="list-group-item"
             *ngFor="let phone of account.phoneNumbers; let i = index">
@@ -102,6 +141,13 @@
     <div class="col-md-4">
       <pre>{{accounts|json}}</pre>
     </div>
+    <div class="col-md-4">
+        <pre>{{signUp|json}}</pre>
+    </div>
+    <div class="col-md-4">
+        <pre>{{loginInfo|json}}</pre>
+    </div>
+  </div>
   </div>
 </div>
 <br />
