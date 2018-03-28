@@ -1,4 +1,5 @@
 import { Phone } from './phone';
+import { Login } from './login';
 
 export class Account {
   name?: string;
@@ -6,4 +7,5 @@ export class Account {
   isEmployee?: boolean;
   departmentId?: number;
   phoneNumbers?: Phone[];
+  login?: Login[];
 }
