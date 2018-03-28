@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
       this.newLogin = {};
     }
 
-    login() {
+    public login() {
       if (this.reset)
       {
         this.userCheck = false;
