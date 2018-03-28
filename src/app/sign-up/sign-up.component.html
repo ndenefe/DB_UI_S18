@@ -54,11 +54,12 @@
           Phone numbers
         </li>
         <li class="list-group-item"
-            *ngFor="let phone of account.phoneNumbers">
+            *ngFor="let phone of account.phoneNumbers; let i = index">
           {{ phone.number }}
-          <span class="badge badge-primary float-right">
+          <button class="btn btn-danger float-right" type="button" (click)="deleteFieldValue(i)">Delete</button>
+          <button class="btn btn-primary float-right">
             {{ phone.type }}
-          </span>
+          </button>
         </li>
         <li class="list-group-item">
           <div class="input-group">
@@ -66,9 +67,10 @@
               <div class="dropdown">
                   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                       <span class="caret"></span>
+                      {{ newPhone.type || 'SELECT' }}
                     </button>
                     <ul class="dropdown-menu">
-                      <li *ngFor="let type of ['home', 'fax', 'mobile']"
+                      <li *ngFor="let type of ['Home', 'Fax', 'Mobile']"
                           class="dropdown-item"
                           (click)="newPhone.type = type">
                         <a href="javascript:void(0);">
@@ -92,11 +94,11 @@
           </div>
         </li>
       </ul>
-      <br />
-      <button class="btn btn-lg btn-success btn-block" type="button">
-        Save
-      </button>
-    </div>
+    <br />
+    <button class="btn btn-lg btn-success btn-block" type="button">
+      Save
+    </button>
+    <a [routerLink]="['/Login']" class="btn btn-link btn-block">Cancel</a>
     <div class="col-md-4">
       <pre>{{account|json}}</pre>
     </div>

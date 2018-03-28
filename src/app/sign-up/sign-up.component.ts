@@ -2,6 +2,7 @@ import { Phone } from './../domain/models/phone';
 import { Component, OnInit } from '@angular/core';
 import { Account } from '../domain/models/account';
 import { Department } from '../domain/models/department';
+import { Router, RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -24,10 +25,9 @@ export class SignUpComponent implements OnInit {
     this.title = 'Sign Up';
     this.account = {
       name: '',
-      phoneNumbers: [
-        { number: '', type: '' }
-      ]
+      phoneNumbers: []
     };
+
     this.departments = [
       { id: 0, name: 'Democrat' },
       { id: 1, name: 'Republican' },
@@ -40,6 +40,16 @@ export class SignUpComponent implements OnInit {
   }
 
   public addPhone() {
+    if (!this.newPhone.type)
+    {
+      this.newPhone.type = "None";
+    }
     this.account.phoneNumbers.push(this.newPhone);
+    this.newPhone = {};
   }
+
+  public deleteFieldValue(index) {
+    this.account.phoneNumbers.splice(index, 1);
+}
+
 }
