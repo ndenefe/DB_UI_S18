@@ -20,6 +20,7 @@
           <input type="password" class="form-control" name="password" [(ngModel)]="newLogin.password"/>
           <div *ngIf= "passCheck" class="text-danger">*Password is required</div>
         </div>
+        <hr>
         <div class="form-group">
             <button class="btn btn-primary" type = "button" (click) = "login()">Login</button>
             <a [routerLink]="['/SignUp']" class="btn btn-link">Sign Up</a>
@@ -30,4 +31,4 @@
     <div class="col-md-4">
         <pre>{{logins|json}}</pre>
     </div>
-  </div>  
+  </div>
