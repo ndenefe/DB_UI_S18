@@ -5,15 +5,24 @@ const server = new Hapi.Server();
 
 
 const connection = MySQL.createConnection({
-	host:'0.0.0.0',
-	user:'wlyuxuan',
-	password:'chenyu',
+	host:'0.0.0.0:3306',
+	user:'root',
+	password:'password',
 	database:'DB_Lab'
 });
 
 server.connection({ port: 8000, host: '0.0.0.0' });
 
 connection.connect();
+
+server.route({
+    method: 'GET',
+    path: '/',
+    handler: function (request, reply) {
+        console.log('Server processing a / request');
+        reply('Hello, world!');
+    }
+});
 
 server.route({
 	method:'GET',
