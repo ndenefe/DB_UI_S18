@@ -5,3 +5,10 @@
     right: 1%;
     position: absolute;
 }
+
+.card-header{
+  background-color: lightcoral;
+}
+.card{
+  background-color: whitesmoke;
+}
