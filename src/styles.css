@@ -3,14 +3,15 @@
   background-color: #357ec7;
 }
 
-.card-header{
-  background-color: lightcoral;
-}
-
 .card-body{
   background-color: whitesmoke;
   border: none;
 }
+
+.card-header{
+  background-color: lightcoral;
+}
+
 .card{
   box-shadow: .2em .1em 2em;
 }
