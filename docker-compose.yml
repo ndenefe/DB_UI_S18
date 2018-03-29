@@ -12,3 +12,7 @@ services:
       - "8000:8000"
     volumes:
       - .:/code/hapi
+    depends_on:
+      - api
+    environment:
+      - DATABASE_HOST=api

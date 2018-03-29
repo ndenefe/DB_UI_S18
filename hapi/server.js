@@ -1,11 +1,12 @@
 'use strict';
 const Hapi = require('hapi');
-
+const mysql = require('mysql');
 const server = new Hapi.Server();
 
 
 const connection = MySQL.createConnection({
-	host:'0.0.0.0:3306',
+	host:'0.0.0.0',
+	port:'3306',
 	user:'root',
 	password:'password',
 	database:'DB_Lab'
