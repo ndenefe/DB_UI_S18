@@ -18,12 +18,13 @@
               <label for="password">Password:</label>
           </h3>
           <input type="password" class="form-control" name="password" [(ngModel)]="newLogin.password"/>
+          <button onclick="if (password.type == 'text') password.type ='password';else password.type = 'text';">Toggle</button>
           <div *ngIf= "passCheck" class="text-danger">*Password is required</div>
         </div>
         <hr>
         <div class="form-group">
             <button class="btn btn-primary" type = "button" (click) = "login()">Login</button>
-            <a [routerLink]="['/SignUp']" class="btn btn-link">Sign Up</a>
+            <a [routerLink]="['/signup']" class="btn btn-link">Sign Up</a>
         </div>
         </form>
       </div>
