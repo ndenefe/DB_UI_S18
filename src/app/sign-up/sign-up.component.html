@@ -1,0 +1,156 @@
+<div class="container">
+  <h1 class = "text-center">{{ title }}</h1>
+  <div class="row">
+    <div class="col-md-8" id = "content">
+        <div class="card">
+            <div class="card-header">
+              Login Information
+            </div>
+            <div class="card-body">
+              <div class="form-group text-left">
+                <label for="signup_name">
+                  Username:
+                </label>
+                <input type="text"
+                  id="account_name"
+                  class="form-control"
+                  [(ngModel)]="signUp.username" />
+              </div>
+              <div class="form-group text-left">
+                <label for="account_email">
+                  Password:
+                </label>
+                <input type="password"
+                  id="_password"
+                  class="form-control"
+                  [(ngModel)]="signUp.password" />
+                  <!-- Password Toggleing -->
+                  <button onclick="if (_password.type == 'text') _password.type ='password';else _password.type = 'text';">Toggle</button>
+              </div>
+              <div *ngIf= "!checkPassMatch" class="text-danger">*Passwords do not match</div>
+              <div class="form-group text-left">
+                  <label for="account_email">
+                    Re-enter Password:
+                  </label>
+                  <input type="password"
+                    id="password"
+                    class="form-control"
+                    [(ngModel)]="passCheck" />
+                    <button onclick="if (password.type == 'text') password.type ='password';else password.type = 'text';">Toggle</button>
+                </div>
+                <div *ngIf= "!checkPassMatch" class="text-danger">*Passwords do not match</div>
+                <br />
+            </div>
+        </div>
+     
+    <br />
+      <div class="card">
+        <div class="card-header">
+          Account Information
+        </div>
+        <div class="card-body">
+          <div class="form-group text-left">
+            <label for="account_name">
+              Name:
+            </label>
+            <input type="text"
+              id="account_name"
+              class="form-control"
+              [(ngModel)]="account.name" />
+          </div>
+          <div class="form-group text-left">
+            <label for="account_email">
+              Email:
+            </label>
+            <input type="email"
+              id="account_email"
+              class="form-control"
+              [(ngModel)]="account.email" />
+          </div>
+          <br />
+          <div class="form-group">
+            <label for="account_isEmployee">
+              <input type="checkbox"
+              id="account_isEmployee"
+              [(ngModel)]="account.isEmployee" /> Politician
+            </label>
+          </div>
+          <div class="form-group text-left" *ngIf="account.isEmployee">
+            <label for="account_departmentId">
+              Party Affliation:
+            </label>
+            <select id="account_departmentId"
+                class="form-control"
+                [(ngModel)]="account.departmentId">
+              <option></option>
+              <option [value]="department.id" *ngFor="let department of departments">
+                {{ department.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br />
+      <ul class="list-group">
+        <li class="list-group-item bg-light text-left">
+          Phone numbers:
+        </li>
+        <li class="list-group-item"
+            *ngFor="let phone of account.phoneNumbers; let i = index">
+          {{ phone.number }}
+          <button class="btn btn-danger float-right" type="button" (click)="deleteFieldValue(i)">Delete</button>
+          <button class="btn btn-primary float-right">
+            {{ phone.type }}
+          </button>
+        </li>
+        <li class="list-group-item">
+          <div class="input-group">
+            <div class="input-group-btn">
+              <div class="dropdown">
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                      <span class="caret"></span>
+                      {{ newPhone.type || 'SELECT' }}
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li *ngFor="let type of ['Home', 'Fax', 'Mobile']"
+                          class="dropdown-item"
+                          (click)="newPhone.type = type">
+                        <a href="javascript:void(0);">
+                          {{ type }}
+                        </a>
+                      </li>
+                    </ul>
+              </div>
+            </div>
+            <input type="text"
+            class="form-control"
+            placeholder="Add phone..."
+            [(ngModel)]="newPhone.number">
+            <span class="input-group-btn">
+              <button class="btn btn-info"
+                      type="button"
+                      (click)="addPhone()">
+                Add
+              </button>
+            </span>
+          </div>
+        </li>
+      </ul>
+    <br />
+    <button class="btn btn-lg btn-success btn-block" type="button" (click) = "saveProfile()">
+      Save
+    </button>
+    <a [routerLink]="['/login']" class="btn btn-link btn-block">Cancel</a>
+    <div class="col-md-4">
+      <pre>{{accounts|json}}</pre>
+    </div>
+    <div class="col-md-4">
+        <pre>{{signUp|json}}</pre>
+    </div>
+    <div class="col-md-4">
+        <pre>{{loginInfo|json}}</pre>
+    </div>
+  </div>
+  </div>
+</div>
+<br />
