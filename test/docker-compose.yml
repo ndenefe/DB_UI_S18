@@ -1,0 +1,14 @@
+version: '3'
+services:
+    mysql:
+        build:
+            context: ./sql
+        ports:
+            - "3306:3306"
+        volumes:
+            - ./sql/createDb.sql
+    node:
+        build:
+            context: ./test
+        ports:
+            - "3000:3000"
