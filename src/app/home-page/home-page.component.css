@@ -6,10 +6,19 @@ a{
   color: #663366;
 }
 
-#image1 {
-  max-width: 100% !important;
-  object-fit: cover;
+img {
+  max-width: 50% !important;
+  max-height: 50% !important;
+  margin-left: auto;
+  margin-right: auto;
+  display:block;
   float: right;
+}
+
+#gif {
+  max-width: 200% !important;
+  max-height: 200% !important;
+  display: cover;
 }
 
 #content {
