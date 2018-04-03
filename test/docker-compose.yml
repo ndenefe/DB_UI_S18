@@ -6,7 +6,7 @@ services:
         ports:
             - "3306:3306"
         volumes:
-            - ./sql/createDb.sql
+            - /sql
     node:
         build:
             context: ./test

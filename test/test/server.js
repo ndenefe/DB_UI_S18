@@ -17,7 +17,13 @@ var connection = mysql.createConnection({
     database : 'DB_Lab'
 });
 
-
+server.route({
+    method: 'POST',
+    path: '/user',
+    handler: function(request,reply){
+        reply('User Added: ' + request.payload['lName']+ ', ' + request.payload['fName']);
+    }
+});
 server.route({
     method: 'GET',
     path: '/',
