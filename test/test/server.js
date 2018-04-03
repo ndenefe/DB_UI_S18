@@ -61,6 +61,27 @@ server.route({
     }
 });
 
+/*server.route({
+    method: 'GET',
+    path:'/login{uName}{pWord}',
+    handler: function (request, reply){
+        console.log('Server processing a /getData request');
+        const uName=request.params.uName;
+        const pWord=request.params.pWord;
+        connection.connect();
+        connection.query('SELECT firstName, lastName FROM politicians p WHERE p.username=${uName} && p.password=${pWord}', function (error, results, fields) {
+            if (error)
+                throw error;
+            //Sends back to the client the value of 1 + 1
+            reply (results);
+
+            //for exemplar purposes, stores the returned value in a variable to be
+        });
+        //close the connection to MySQL
+        connection.end();
+    
+    }
+});*/
 
 server.route({
     method: 'GET',
