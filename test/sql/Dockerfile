@@ -14,5 +14,7 @@ ENV MYSQL_USER=db
 ENV MYSQL_PASSWORD=123
 ENV MYSQL_ROOT_PASSWORD=password
 
+
+ADD createDb.sql /docker-entrypoint-initdb.d
 CMD ["mysqld"]
 EXPOSE 3306
