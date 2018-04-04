@@ -60,7 +60,60 @@ server.route({
         connection.end();
     }
 });
+//A new route to test connectivity to MySQL
+server.route({
+    method: 'GET',
+    path: '/nonPol',
+    handler: function (request, reply) {
+        console.log('Server processing a /nonPol request');
 
+        //Creates the connection
+        connection.connect();
+
+        //Does a simple select, not from a table, but essentially just uses MySQL
+        //to add 1 + 1.
+        //function (error, results, fields){...} is a call-back function that the
+        //MySQL lib uses to send info back such as if there was an error, and/or the
+        //actual results.
+        connection.query('SELECT firstName, lastName, email FROM nonPolitician', function (error, results, fields) {
+            if (error)
+                throw error;
+            //Sends back to the client the value of 1 + 1
+            reply (results);
+
+            //for exemplar purposes, stores the returned value in a variable to be
+        });
+        //close the connection to MySQL
+        connection.end();
+    }
+});
+//A new route to test connectivity to MySQL
+server.route({
+    method: 'GET',
+    path: '/pol',
+    handler: function (request, reply) {
+        console.log('Server processing a /pol request');
+
+        //Creates the connection
+        connection.connect();
+
+        //Does a simple select, not from a table, but essentially just uses MySQL
+        //to add 1 + 1.
+        //function (error, results, fields){...} is a call-back function that the
+        //MySQL lib uses to send info back such as if there was an error, and/or the
+        //actual results.
+        connection.query('SELECT firstName, lastName, email FROM politicians', function (error, results, fields) {
+            if (error)
+                throw error;
+            //Sends back to the client the value of 1 + 1
+            reply (results);
+
+            //for exemplar purposes, stores the returned value in a variable to be
+        });
+        //close the connection to MySQL
+        connection.end();
+    }
+});
 /*server.route({
     method: 'GET',
     path:'/login{uName}{pWord}',
