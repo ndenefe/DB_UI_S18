@@ -31,7 +31,7 @@ server.route({
     path: '/',
     handler: function (request, reply) {
         console.log('Server processing a / request');
-        reply('Hello, world!');
+        reply('Helloo, world!');
     }
 });
 
@@ -42,18 +42,11 @@ server.route({
     handler: function (request, reply) {
         console.log('Server processing a /getData request');
 
-        //Does a simple select, not from a table, but essentially just uses MySQL
-        //to add 1 + 1.
-        //function (error, results, fields){...} is a call-back function that the
-        //MySQL lib uses to send info back such as if there was an error, and/or the
-        //actual results.
         connection.query('SELECT username, password FROM nonPolitician', function (error, results, fields) {
             if (error)
                 throw error;
-            //Sends back to the client the value of 1 + 1
             reply (results);
 
-            //for exemplar purposes, stores the returned value in a variable to be
         });
     }
 });
@@ -79,6 +72,60 @@ server.route({
         });
     }
 });
+server.route({
+    method: 'POST',
+    path: '/insertData',
+    handler: function (request, reply) {
+        console.log('Server processing a /insertData request');
+	
+        connection.query('INSERT INTO `party` SET `partyId`=?, `partyName`=?', [request.payload['partyId'],request.payload['partyName']],function (error, results, fields) {
+            if (error)
+                throw error;
+        });
+    }
+});
+
+server.route({
+    method: 'PUT',
+    path: '/updateData',
+    handler: function (request, reply) {
+        console.log('Server processing a /insertData request');
+	
+        connection.query('UPDATE `party` SET `partyName`=? WHERE `partyId`=?', [request.payload['partyName'],request.payload['partyId']],function (error, results, fields) {
+            if (error)
+                throw error;
+        });
+    }
+});
+
+server.route({
+    method: 'DELETE',
+    path: '/deleteData',
+    handler: function (request, reply) {
+        console.log('Server processing a /insertData request');
+	
+        connection.query('DELETE FROM `party` WHERE `partyID`=?', request.payload['partyId'],function (error, results, fields) {
+            if (error)
+                throw error;
+        });
+    }
+});
+
+server.route({
+    method: 'GET',
+    path: '/getParty',
+    handler: function (request, reply) {
+        console.log('Server processing a /getData request');
+
+        connection.query('SELECT partyId, partyName FROM party', function (error, results, fields) {
+            if (error)
+                throw error;
+            reply (results);
+
+        });
+    }
+});
+
 //A new route to test connectivity to MySQL
 server.route({
     method: 'GET',
@@ -101,6 +148,9 @@ server.route({
         });
     }
 });
+
+
+
 /*server.route({
     method: 'GET',
     path:'/login{uName}{pWord}',
