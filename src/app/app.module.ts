@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
+import { UpelectionComponent } from './upelection/upelection.component';
 import { HomePageComponent } from './home-page/home-page.component';
 
 @NgModule({
@@ -15,6 +16,7 @@ import { HomePageComponent } from './home-page/home-page.component';
     SignUpComponent,
     LoginComponent,
     ProfileComponent,
+    UpelectionComponent,
     HomePageComponent
 ],
   imports: [
