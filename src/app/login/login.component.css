@@ -6,9 +6,7 @@
     position: absolute;
 }
 
-.card-header{
+ .card-header{
   background-color: lightcoral;
-}
-.card{
-  background-color: whitesmoke;
-}
+} 
+

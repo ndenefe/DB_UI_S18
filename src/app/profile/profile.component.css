@@ -1,3 +1,10 @@
-img { 
-    border:1px solid #021a40;
- }
+
+.card {
+  width: 90%;
+  margin: 0 auto;
+}
+#content {
+  width: 90%;
+  margin: 0 auto;
+}
+
