@@ -19,13 +19,7 @@ var connection = mysql.createConnection({
 
 connection.connect();
 
-server.route({
-    method: 'POST',
-    path: '/user',
-    handler: function(request,reply){
-        reply('User Added: ' + request.payload['lName']+ ', ' + request.payload['fName']);
-    }
-});
+
 server.route({
     method: 'GET',
     path: '/',
@@ -35,21 +29,7 @@ server.route({
     }
 });
 
-//A new route to test connectivity to MySQL
-server.route({
-    method: 'GET',
-    path: '/getData',
-    handler: function (request, reply) {
-        console.log('Server processing a /getData request');
 
-        connection.query('SELECT username, password FROM nonPolitician', function (error, results, fields) {
-            if (error)
-                throw error;
-            reply (results);
-
-        });
-    }
-});
 //A new route to test connectivity to MySQL
 server.route({
     method: 'GET',
@@ -81,6 +61,7 @@ server.route({
         connection.query('INSERT INTO `party` SET `partyId`=?, `partyName`=?', [request.payload['partyId'],request.payload['partyName']],function (error, results, fields) {
             if (error)
                 throw error;
+	    reply('insert successful!');
         });
     }
 });
@@ -89,11 +70,12 @@ server.route({
     method: 'PUT',
     path: '/updateData',
     handler: function (request, reply) {
-        console.log('Server processing a /insertData request');
+        console.log('Server processing a /updateData request');
 	
         connection.query('UPDATE `party` SET `partyName`=? WHERE `partyId`=?', [request.payload['partyName'],request.payload['partyId']],function (error, results, fields) {
             if (error)
                 throw error;
+	    reply('update successful!');
         });
     }
 });
@@ -102,11 +84,12 @@ server.route({
     method: 'DELETE',
     path: '/deleteData',
     handler: function (request, reply) {
-        console.log('Server processing a /insertData request');
+        console.log('Server processing a /deleteData request');
 	
         connection.query('DELETE FROM `party` WHERE `partyID`=?', request.payload['partyId'],function (error, results, fields) {
             if (error)
                 throw error;
+	    reply('delete successful!');
         });
     }
 });
@@ -115,7 +98,7 @@ server.route({
     method: 'GET',
     path: '/getParty',
     handler: function (request, reply) {
-        console.log('Server processing a /getData request');
+        console.log('Server processing a /getParty request');
 
         connection.query('SELECT partyId, partyName FROM party', function (error, results, fields) {
             if (error)
@@ -126,55 +109,85 @@ server.route({
     }
 });
 
-//A new route to test connectivity to MySQL
 server.route({
-    method: 'GET',
-    path: '/pol',
+    method: 'POST',
+    path: '/login',
     handler: function (request, reply) {
-        console.log('Server processing a /pol request');
+        console.log('Server processing a /login request');
 
-        //Does a simple select, not from a table, but essentially just uses MySQL
-        //to add 1 + 1.
-        //function (error, results, fields){...} is a call-back function that the
-        //MySQL lib uses to send info back such as if there was an error, and/or the
-        //actual results.
-        connection.query('SELECT firstName, lastName, email FROM politicians', function (error, results, fields) {
+        connection.query('SELECT * FROM `nonPolitician` WHERE `username` =? AND `password` = ?', [request.payload['username'],request.payload['password']],function (error, results, fields) {
             if (error)
                 throw error;
-            //Sends back to the client the value of 1 + 1
-            reply (results);
+            else{
+		if(results.length==1){
+			reply('Hello '+results[0].firstName+' '+results[0].lastName);
+		}
+		else
+			reply('Cannot find account, try it again.');
+	    }
 
-            //for exemplar purposes, stores the returned value in a variable to be
         });
     }
 });
 
 server.route({
     method: 'GET',
-    path: '/pol/login',
-    handler: function (request, reply){
-        console.log('Server processing politician login request');
-        reply('Username: ' + request.headers['uName'] + ' Password: ' +request.headers['pWord']);
-    }
-});
-
-server.route({
-    method: 'GET',
-    path: '/nonPol/login',
-    handler: function (request, reply){
-        console.log('Server processing non-politician login request');
-        reply('Username: ' + request.headers['uName'] + ' Password: ' +request.headers['pWord']);
-    }
-});
-
-server.route({
-    method: 'GET',
-    path: '/{name}',
+    path: '/search/{name}',
     handler: function (request, reply) {
-        console.log('Server processing /name request');
-        reply('Hello, ' + encodeURIComponent(request.params.name) + '!');
+        console.log('Server processing a /search request');
+        connection.query('SELECT firstName,lastName, email, picture, partyId, phone, website, platformId FROM `politicians` WHERE `firstName`=? OR `lastName`=?', [request.params.name,request.params.name], function (error, results, fields) {
+            if (error)
+                throw error;
+            reply (results);
+
+        });
     }
 });
+
+server.route({
+    method: 'GET',
+    path: '/{election}/{name}',
+    handler: function (request, reply) {
+        console.log('Server processing a /searchElection request');
+        connection.query('SELECT firstName,lastName, email, picture, partyId, phone, website, dateTime, city,state FROM `politicians` NATURAL JOIN `candidates` NATURAL JOIN `elections` WHERE `electionId`=? AND (`firstName`=? OR `lastName`=?)', [request.params.election,request.params.name,request.params.name], function (error, results, fields) {
+            if (error)
+                throw error;
+            reply (results);
+
+        });
+    }
+});
+
+server.route({
+    method: 'POST',
+    path: '/insertCandi',
+    handler: function (request, reply) {
+        console.log('Server processing a /insertCandi request');
+	
+        connection.query('INSERT INTO `candidates` SET `electionId`=?, `polId`=?', [request.payload['electionId'],request.payload['polId']],function (error, results, fields) {
+            if (error)
+                throw error;
+	    reply('insert successful!');
+        });
+    }
+});
+
+server.route({
+    method: 'GET',
+    path: '/pol',
+    handler: function (request, reply) {
+        console.log('Server processing a /pol request');
+        connection.query('SELECT firstName, lastName, email FROM politicians', function (error, results, fields) {
+            if (error)
+                throw error;
+            reply (results);
+
+        });
+    }
+});
+
+
+
 
 server.start((err) => {
 
