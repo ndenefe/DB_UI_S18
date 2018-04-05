@@ -25,7 +25,7 @@ server.route({
     path: '/',
     handler: function (request, reply) {
         console.log('Server processing a / request');
-        reply('Helloo, world!');
+        reply('Hello, world!');
     }
 });
 
@@ -49,6 +49,19 @@ server.route({
             reply (results);
 
             //for exemplar purposes, stores the returned value in a variable to be
+        });
+    }
+});
+server.route({
+    method: 'GET',
+    path: '/pol',
+    handler: function (request, reply) {
+        console.log('Server processing a /pol request');
+        connection.query('SELECT firstName, lastName, email FROM politicians', function (error, results, fields) {
+            if (error)
+                throw error;
+            reply (results);
+
         });
     }
 });
@@ -111,7 +124,7 @@ server.route({
 
 server.route({
     method: 'POST',
-    path: '/login',
+    path: '/login/nonPol',
     handler: function (request, reply) {
         console.log('Server processing a /login request');
 
@@ -131,8 +144,30 @@ server.route({
 });
 
 server.route({
+    method: 'POST',
+    path: '/login/pol',
+    handler: function (request, reply) {
+        console.log('Server processing a /login request');
+
+        connection.query('SELECT * FROM `politicians` WHERE `username` =? AND `password` = ?', [request.payload['username'],request.payload['password']],function (error, results, fields) {
+            if (error)
+                throw error;
+            else{
+		if(results.length==1){
+			reply('Hello '+results[0].firstName+' '+results[0].lastName);
+		}
+		else
+			reply('Cannot find account, try it again.');
+	    }
+
+        });
+    }
+});
+
+
+server.route({
     method: 'GET',
-    path: '/search/{name}',
+    path: '/search/pol/{name}',
     handler: function (request, reply) {
         console.log('Server processing a /search request');
         connection.query('SELECT firstName,lastName, email, picture, partyId, phone, website, platformId FROM `politicians` WHERE `firstName`=? OR `lastName`=?', [request.params.name,request.params.name], function (error, results, fields) {
@@ -143,13 +178,12 @@ server.route({
         });
     }
 });
-
 server.route({
     method: 'GET',
-    path: '/{election}/{name}',
+    path: '/search/nonPol/{name}',
     handler: function (request, reply) {
-        console.log('Server processing a /searchElection request');
-        connection.query('SELECT firstName,lastName, email, picture, partyId, phone, website, dateTime, city,state FROM `politicians` NATURAL JOIN `candidates` NATURAL JOIN `elections` WHERE `electionId`=? AND (`firstName`=? OR `lastName`=?)', [request.params.election,request.params.name,request.params.name], function (error, results, fields) {
+        console.log('Server processing a /search request');
+        connection.query('SELECT firstName,lastName, email, picture, phone  FROM `nonPolitician` WHERE `firstName`=? OR `lastName`=?', [request.params.name,request.params.name], function (error, results, fields) {
             if (error)
                 throw error;
             reply (results);
@@ -157,7 +191,6 @@ server.route({
         });
     }
 });
-
 server.route({
     method: 'POST',
     path: '/insertCandi',
@@ -174,10 +207,10 @@ server.route({
 
 server.route({
     method: 'GET',
-    path: '/pol',
+    path: '/{election}/{name}',
     handler: function (request, reply) {
-        console.log('Server processing a /pol request');
-        connection.query('SELECT firstName, lastName, email FROM politicians', function (error, results, fields) {
+        console.log('Server processing a /searchElection request');
+        connection.query('SELECT firstName,lastName, email, picture, partyId, phone, website, dateTime, city,state FROM `politicians` NATURAL JOIN `candidates` NATURAL JOIN `elections` WHERE `electionId`=? AND (`firstName`=? OR `lastName`=?)', [request.params.election,request.params.name,request.params.name], function (error, results, fields) {
             if (error)
                 throw error;
             reply (results);
