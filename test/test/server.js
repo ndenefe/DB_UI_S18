@@ -42,9 +42,6 @@ server.route({
     handler: function (request, reply) {
         console.log('Server processing a /getData request');
 
-        //Creates the connection
-        //connection.connect();
-
         //Does a simple select, not from a table, but essentially just uses MySQL
         //to add 1 + 1.
         //function (error, results, fields){...} is a call-back function that the
@@ -58,8 +55,6 @@ server.route({
 
             //for exemplar purposes, stores the returned value in a variable to be
         });
-        //close the connection to MySQL
-        //connection.end();
     }
 });
 //A new route to test connectivity to MySQL
@@ -68,9 +63,6 @@ server.route({
     path: '/nonPol',
     handler: function (request, reply) {
         console.log('Server processing a /nonPol request');
-
-        //Creates the connection
-        //connection.connect();
 
         //Does a simple select, not from a table, but essentially just uses MySQL
         //to add 1 + 1.
@@ -85,8 +77,6 @@ server.route({
 
             //for exemplar purposes, stores the returned value in a variable to be
         });
-        //close the connection to MySQL
-        //connection.end();
     }
 });
 //A new route to test connectivity to MySQL
@@ -95,9 +85,6 @@ server.route({
     path: '/pol',
     handler: function (request, reply) {
         console.log('Server processing a /pol request');
-
-        //Creates the connection
-        //connection.connect();
 
         //Does a simple select, not from a table, but essentially just uses MySQL
         //to add 1 + 1.
@@ -112,8 +99,6 @@ server.route({
 
             //for exemplar purposes, stores the returned value in a variable to be
         });
-        //close the connection to MySQL
-        //connection.end();
     }
 });
 /*server.route({
@@ -123,7 +108,6 @@ server.route({
         console.log('Server processing a /getData request');
         const uName=request.params.uName;
         const pWord=request.params.pWord;
-        connection.connect();
         connection.query('SELECT firstName, lastName FROM politicians p WHERE p.username=${uName} && p.password=${pWord}', function (error, results, fields) {
             if (error)
                 throw error;
@@ -132,8 +116,6 @@ server.route({
 
             //for exemplar purposes, stores the returned value in a variable to be
         });
-        //close the connection to MySQL
-        connection.end();
     
     }
 });*/
