@@ -78,7 +78,7 @@
           <div class="form-group text-left" *ngIf="account.hasWebsite">
             <div class="form-group text-left">
               <label for="account_email">
-                Website:
+                Website Link:
               </label>
               <input type="website" id="account_website" class="form-control" [(ngModel)]="account.website" />
             </div>
@@ -114,7 +114,7 @@
                   {{ newPhone.type || 'SELECT' }}
                 </button>
                 <ul class="dropdown-menu">
-                  <li *ngFor="let type of ['Home', 'Fax', 'Mobile']" class="dropdown-item" (click)="newPhone.type = type">
+                  <li *ngFor="let type of ['Home', 'Mobile']" class="dropdown-item" (click)="newPhone.type = type">
                     <a href="javascript:void(0);">
                       {{ type }}
                     </a>
@@ -135,7 +135,7 @@
       <button class="btn btn-lg btn-success btn-block" type="button" (click)="saveProfile()">
         Save
       </button>
-      <a [routerLink]="['/login']" class="btn btn-primary btn-block">Cancel</a>
+      <a [routerLink]="['/login']" class="btn btn-danger btn-block bg-gray">Cancel</a>
       <div class="col-md-4">
         <pre>{{account|json}}</pre>
       </div>
