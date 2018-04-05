@@ -17,6 +17,8 @@ var connection = mysql.createConnection({
     database : 'DB_Lab'
 });
 
+connection.connect();
+
 server.route({
     method: 'POST',
     path: '/user',
@@ -41,7 +43,7 @@ server.route({
         console.log('Server processing a /getData request');
 
         //Creates the connection
-        connection.connect();
+        //connection.connect();
 
         //Does a simple select, not from a table, but essentially just uses MySQL
         //to add 1 + 1.
@@ -57,7 +59,7 @@ server.route({
             //for exemplar purposes, stores the returned value in a variable to be
         });
         //close the connection to MySQL
-        connection.end();
+        //connection.end();
     }
 });
 //A new route to test connectivity to MySQL
@@ -68,7 +70,7 @@ server.route({
         console.log('Server processing a /nonPol request');
 
         //Creates the connection
-        connection.connect();
+        //connection.connect();
 
         //Does a simple select, not from a table, but essentially just uses MySQL
         //to add 1 + 1.
@@ -84,7 +86,7 @@ server.route({
             //for exemplar purposes, stores the returned value in a variable to be
         });
         //close the connection to MySQL
-        connection.end();
+        //connection.end();
     }
 });
 //A new route to test connectivity to MySQL
@@ -95,7 +97,7 @@ server.route({
         console.log('Server processing a /pol request');
 
         //Creates the connection
-        connection.connect();
+        //connection.connect();
 
         //Does a simple select, not from a table, but essentially just uses MySQL
         //to add 1 + 1.
@@ -111,7 +113,7 @@ server.route({
             //for exemplar purposes, stores the returned value in a variable to be
         });
         //close the connection to MySQL
-        connection.end();
+        //connection.end();
     }
 });
 /*server.route({
