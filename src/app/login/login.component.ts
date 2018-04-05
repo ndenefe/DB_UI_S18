@@ -28,26 +28,21 @@ export class LoginComponent implements OnInit {
     }
 
     public login() {
-      if (this.reset)
-      {
+      if (this.reset) {
         this.userCheck = false;
         this.passCheck = false;
       }
-      if (!this.newLogin.password)
-      {
+      if (!this.newLogin.password) {
         this.passCheck = true;
       }
-      if (!this.newLogin.username)
-      {
+      if (!this.newLogin.username) {
         this.userCheck = true;
       }
-      if (this.passCheck == true || this.userCheck == true)
-      {
+      if (this.passCheck === true || this.userCheck === true) {
         this.reset = true;
         this.newLogin = {};
       }
-      else
-      {
+      else {
         this.logins.push(this.newLogin);
         this.newLogin = {};
       }

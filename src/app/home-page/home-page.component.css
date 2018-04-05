@@ -1,0 +1,34 @@
+h1{
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+a{
+  color: #663366;
+}
+
+img {
+  max-width: 50% !important;
+  max-height: 50% !important;
+  margin-left: auto;
+  margin-right: auto;
+  display:block;
+  float: right;
+}
+
+#gif {
+  max-width: 200% !important;
+  max-height: 200% !important;
+  display: cover;
+}
+
+#content {
+    max-width: 1000px;
+    margin: auto;
+    left: 1%;
+    right: 1%;
+    position: absolute;
+}
+
+.card{
+  background-color: whitesmoke;
+}
