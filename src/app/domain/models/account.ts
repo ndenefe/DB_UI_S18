@@ -8,4 +8,7 @@ export class Account {
   departmentId?: number;
   phoneNumbers?: Phone[];
   login?: Login[];
+  hasWebsite?: boolean;
+  website?: string;
+  tenure?: string;
 }

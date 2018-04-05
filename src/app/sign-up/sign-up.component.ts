@@ -4,6 +4,7 @@ import { Account } from '../domain/models/account';
 import { Department } from '../domain/models/department';
 import { Router, RouterLink} from '@angular/router';
 import { Login } from './../domain/models/login';
+import { Website } from './../domain/models/website';
 
 @Component({
   selector: 'app-sign-up',
@@ -74,6 +75,14 @@ export class SignUpComponent implements OnInit {
   }
 
   public saveProfile() {
+    if (!this.account.isEmployee)
+    {
+      this.account.departmentId = null;
+    }
+    if (!this.account.hasWebsite)
+    {
+      this.account.website = null;
+    }
     if (this.reset)
     {
       this.checkPassMatch = true;
