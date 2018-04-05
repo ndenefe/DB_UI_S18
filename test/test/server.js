@@ -149,26 +149,23 @@ server.route({
     }
 });
 
-
-
-/*server.route({
+server.route({
     method: 'GET',
-    path:'/login{uName}{pWord}',
+    path: '/pol/login',
     handler: function (request, reply){
-        console.log('Server processing a /getData request');
-        const uName=request.params.uName;
-        const pWord=request.params.pWord;
-        connection.query('SELECT firstName, lastName FROM politicians p WHERE p.username=${uName} && p.password=${pWord}', function (error, results, fields) {
-            if (error)
-                throw error;
-            //Sends back to the client the value of 1 + 1
-            reply (results);
-
-            //for exemplar purposes, stores the returned value in a variable to be
-        });
-    
+        console.log('Server processing politician login request');
+        reply('Username: ' + request.headers['uName'] + ' Password: ' +request.headers['pWord']);
     }
-});*/
+});
+
+server.route({
+    method: 'GET',
+    path: '/nonPol/login',
+    handler: function (request, reply){
+        console.log('Server processing non-politician login request');
+        reply('Username: ' + request.headers['uName'] + ' Password: ' +request.headers['pWord']);
+    }
+});
 
 server.route({
     method: 'GET',
