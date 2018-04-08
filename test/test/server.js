@@ -67,11 +67,11 @@ server.route({
 });
 server.route({
     method: 'POST',
-    path: '/insertData',
+    path: '/insertParty',
     handler: function (request, reply) {
         console.log('Server processing a /insertData request');
 	
-        connection.query('INSERT INTO `party` SET `partyId`=?, `partyName`=?', [request.payload['partyId'],request.payload['partyName']],function (error, results, fields) {
+        connection.query('INSERT INTO `party` SET `partyName`=?', [request.payload['partyName']],function (error, results, fields) {
             if (error)
                 throw error;
 	    reply('insert successful!');
@@ -81,7 +81,7 @@ server.route({
 
 server.route({
     method: 'PUT',
-    path: '/updateData',
+    path: '/updateParty',
     handler: function (request, reply) {
         console.log('Server processing a /updateData request');
 	
@@ -95,7 +95,7 @@ server.route({
 
 server.route({
     method: 'DELETE',
-    path: '/deleteData',
+    path: '/deleteParty',
     handler: function (request, reply) {
         console.log('Server processing a /deleteData request');
 	
@@ -218,8 +218,6 @@ server.route({
         });
     }
 });
-
-
 
 
 server.start((err) => {
