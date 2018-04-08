@@ -29,7 +29,6 @@ server.route({
     }
 });
 
-
 //A new route to test connectivity to MySQL
 server.route({
     method: 'GET',
@@ -52,7 +51,7 @@ server.route({
         });
     }
 });
-server.route({
+server.route({ //Returns firstname, lastname, and email of all politicians
     method: 'GET',
     path: '/pol',
     handler: function (request, reply) {
@@ -65,7 +64,7 @@ server.route({
         });
     }
 });
-server.route({
+server.route({ //Inserts party with attributes partyID & partyName
     method: 'POST',
     path: '/insertData',
     handler: function (request, reply) {
@@ -79,7 +78,7 @@ server.route({
     }
 });
 
-server.route({
+server.route({ //Updates a parties partyName
     method: 'PUT',
     path: '/updateData',
     handler: function (request, reply) {
@@ -93,7 +92,7 @@ server.route({
     }
 });
 
-server.route({
+server.route({ //Deletes a party by partyName
     method: 'DELETE',
     path: '/deleteData',
     handler: function (request, reply) {
@@ -107,7 +106,7 @@ server.route({
     }
 });
 
-server.route({
+server.route({ //Returns all parties partyId's and partyNames
     method: 'GET',
     path: '/getParty',
     handler: function (request, reply) {
@@ -122,7 +121,7 @@ server.route({
     }
 });
 
-server.route({
+server.route({ //Non political login, requires username and password
     method: 'POST',
     path: '/login/nonPol',
     handler: function (request, reply) {
@@ -143,7 +142,7 @@ server.route({
     }
 });
 
-server.route({
+server.route({ //Political login, requires username and password
     method: 'POST',
     path: '/login/pol',
     handler: function (request, reply) {
@@ -165,7 +164,7 @@ server.route({
 });
 
 
-server.route({
+server.route({ //Return firstname, lastname, email, picture, partyId,, phone, website, plataformID from a politician by lastname or firstname
     method: 'GET',
     path: '/search/pol/{name}',
     handler: function (request, reply) {
@@ -178,7 +177,7 @@ server.route({
         });
     }
 });
-server.route({
+server.route({ //Return firstname, lastname, email, picture, partyId,, phone, website, plataformID from a non-politician by lastname or firstname
     method: 'GET',
     path: '/search/nonPol/{name}',
     handler: function (request, reply) {
@@ -191,7 +190,7 @@ server.route({
         });
     }
 });
-server.route({
+server.route({ //Inserts into candidates a new candidate with electionID and polID attributes
     method: 'POST',
     path: '/insertCandi',
     handler: function (request, reply) {
@@ -205,7 +204,7 @@ server.route({
     }
 });
 
-server.route({
+server.route({ //Searches elections for a politician, returns public information if in specific election
     method: 'GET',
     path: '/{election}/{name}',
     handler: function (request, reply) {
