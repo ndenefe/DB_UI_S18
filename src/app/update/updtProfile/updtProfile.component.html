@@ -1,3 +1,114 @@
-<p>
-  updtProfile works!
-</p>
+<div class="container">
+  <h1 class="text-center">Update Profile</h1>
+  <div class="row">
+    <div class="col-md-8" id="content">
+
+      <div class="card">
+        <div class="card-header">
+          Account Information
+        </div>
+        <div class="card-body">
+          <div class="form-group text-left">
+            <label for="account_name">
+              Name:
+            </label>
+            <input type="text" id="account_name" class="form-control" [(ngModel)]="account.name" />
+          </div>
+          <div class="form-group text-left">
+            <label for="account_email">
+              Email:
+            </label>
+            <input type="email" id="account_email" class="form-control" [(ngModel)]="account.email" />
+          </div>
+          <br />
+          <div class="form-group">
+            <label for="account_isEmployee">
+              <input type="checkbox" id="account_isEmployee" [(ngModel)]="account.isEmployee" /> Politician
+            </label>
+          </div>
+          <div class="form-group text-left" *ngIf="account.isEmployee">
+            <label for="account_departmentId">
+              Party Affliation:
+            </label>
+            <select id="account_departmentId" class="form-control" [(ngModel)]="account.departmentId">
+              <option></option>
+              <option [value]="department.id" *ngFor="let department of departments">
+                {{ department.name }}
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="account_hasWebsite">
+              <input type="checkbox" id="account_hasWebsite" [(ngModel)]="account.hasWebsite" /> Website
+            </label>
+          </div>
+
+          <div class="form-group text-left" *ngIf="account.hasWebsite">
+            <div class="form-group text-left">
+              <label for="account_email">
+                Website Link:
+              </label>
+              <input type="website" id="account_website" class="form-control" [(ngModel)]="account.website" />
+            </div>
+          </div>
+
+          <div class="form-group text-left">
+            <label for="account_tenure">
+              Tenure Information:
+            </label>
+            <input type="text" id="account_tenure" class="form-control" [(ngModel)]="account.tenure" />
+          </div>
+
+        </div>
+      </div>
+      <br />
+      <ul class="list-group">
+        <li class="list-group-item text-left" id="header">
+          Phone Numbers:
+        </li>
+        <li class="list-group-item" *ngFor="let phone of account.phoneNumbers; let i = index">
+          {{ phone.number }}
+          <button class="btn btn-danger float-right" type="button" (click)="deleteFieldValue(i)">Delete</button>
+          <button class="btn btn-primary float-right">
+            {{ phone.type }}
+          </button>
+        </li>
+        <li class="list-group-item">
+          <div class="input-group">
+            <div class="input-group-btn">
+              <div class="dropdown">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                  <span class="caret"></span>
+                  {{ newPhone.type || 'SELECT' }}
+                </button>
+                <ul class="dropdown-menu">
+                  <li *ngFor="let type of ['Home', 'Mobile']" class="dropdown-item" (click)="newPhone.type = type">
+                    <a href="javascript:void(0);">
+                      {{ type }}
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <input type="text" class="form-control" placeholder="Add phone..." [(ngModel)]="newPhone.number">
+            <span class="input-group-btn">
+              <button class="btn btn-info" type="button" (click)="addPhone()">
+                Add
+              </button>
+            </span>
+          </div>
+        </li>
+      </ul>
+      <br />
+      <button class="btn btn-lg btn-success btn-block" type="button" (click)="saveProfile()">
+        Edit
+      </button>
+      <div class="col-md-4">
+        <pre>{{account|json}}</pre>
+      </div>
+      <div class="col-md-4">
+        <pre>{{accounts|json}}</pre>
+      </div>
+    </div>
+  </div>
+</div>

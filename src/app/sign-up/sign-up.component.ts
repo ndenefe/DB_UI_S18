@@ -11,6 +11,12 @@ import { Website } from './../domain/models/website';
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css']
 })
+
+//need to add to db on a valid save and the route to the profile page with the 
+//users info automatically loaded
+
+//needs better validation
+
 export class SignUpComponent implements OnInit {
 
   public title: string;

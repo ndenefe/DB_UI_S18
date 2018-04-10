@@ -8,6 +8,9 @@ import { Login } from './../domain/models/login';
   styleUrls: ['./login.component.css']
 })
 
+//need to check db to login then route to profile page on a login and
+// have the profile info load automatically for the user
+
 export class LoginComponent implements OnInit {
 
     public logins: Login[];

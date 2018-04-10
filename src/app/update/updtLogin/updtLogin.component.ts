@@ -29,7 +29,13 @@ export class UpdtLoginComponent implements OnInit {
       this.logins = [];
       this.newLogin = {};
     }
-    // need to add check to make sure username is in db
+
+    //need to add navbar to the page and add this to navbar
+
+    // need to load in username automatically
+
+    //need to make changes to db on save 
+    
     public resetLogin() {
       if (this.reset) {
         this.userCheck = false;
