@@ -1,0 +1,42 @@
+<h1 class="text-center ">Reset Login</h1>
+<div class="row">
+  <div class="col-md-8" id="content">
+    <div class="card">
+      <div class="card-header">
+        <h4>Login Information</h4>
+      </div>
+      <div class="card-body">
+        <div class="form-group text-left">
+          <label for="signup_name">
+            Username:
+          </label>
+          <input type="text" id="account_name" class="form-control" [(ngModel)]="newLogin.username" />
+          <div *ngIf="userCheck" class="text-danger">*Username is required</div>
+        </div>
+        <div class="form-group text-left">
+          <label for="account_email">
+            Password:
+          </label>
+          <input type="password" id="_password" class="form-control" [(ngModel)]="newLogin.password" />
+          <!-- Password Toggleing -->
+          <button onclick="if (_password.type == 'text') _password.type ='password';else _password.type = 'text';">Toggle</button>
+        </div>
+        <div *ngIf="!checkPassMatch" class="text-danger">*Passwords do not match</div>
+        <div *ngIf="passCheck" class="text-danger">*Password is required</div>
+        <div class="form-group text-left">
+          <label for="account_email">
+            Re-enter Password:
+          </label>
+          <input type="password" id="password" class="form-control" [(ngModel)]="passwordCheck" />
+          <button onclick="if (password.type == 'text') password.type ='password';else password.type = 'text';">Toggle</button>
+        </div>
+        <div *ngIf="!checkPassMatch" class="text-danger">*Passwords do not match</div>
+        <div *ngIf="passCheck" class="text-danger">*Password is required</div>
+        <button class="btn btn-primary" type="button" (click)="resetLogin()">Reset</button>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <pre>{{logins|json}}</pre>
+    </div>
+  </div>
+</div>
