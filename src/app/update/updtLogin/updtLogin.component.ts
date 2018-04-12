@@ -1,17 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { Login } from './../../domain/models/login';
 import { Router, RouterLink} from '@angular/router';
-import { Login } from './../domain/models/login';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-updtLogin',
+  templateUrl: './updtLogin.component.html',
+  styleUrls: ['./updtLogin.component.css']
 })
-
-//need to check db to login then route to profile page on a login and
-// have the profile info load automatically for the user
-
-export class LoginComponent implements OnInit {
+export class UpdtLoginComponent implements OnInit {
 
     public logins: Login[];
 
@@ -23,6 +19,10 @@ export class LoginComponent implements OnInit {
 
     public reset: boolean = false;
 
+    public passwordCheck: string;
+
+    public checkPassMatch: boolean = true;
+
     constructor() {}
 
     ngOnInit() {
@@ -30,10 +30,17 @@ export class LoginComponent implements OnInit {
       this.newLogin = {};
     }
 
-    public login() {
+    //need to add navbar to the page and add this to navbar
+
+    // need to load in username automatically
+
+    //need to make changes to db on save 
+    
+    public resetLogin() {
       if (this.reset) {
         this.userCheck = false;
         this.passCheck = false;
+        this.checkPassMatch = true;
       }
       if (!this.newLogin.password) {
         this.passCheck = true;
@@ -45,9 +52,16 @@ export class LoginComponent implements OnInit {
         this.reset = true;
         this.newLogin = {};
       }
+      else if (this.passwordCheck != this.newLogin.password)
+      {
+        this.checkPassMatch = false;
+        this.reset = true;
+      }
       else {
         this.logins.push(this.newLogin);
-        this.newLogin = {};
       }
+      this.newLogin = {};
+      this.passwordCheck = "";
     }
+
 }
