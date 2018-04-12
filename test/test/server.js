@@ -186,15 +186,15 @@ server.route({
 
 server.route({
     method: 'POST',
-    path: '/login/{user}/{pass}',
+    path: '/login',
     handler: function (request, reply) {
         console.log('Server processing a /login request');
 
-        connection.query('SELECT * FROM `politicians` WHERE `username` =? AND `password` = ? ', [request.params.user,request.params.pass],function (error, results, fields) {
+        connection.query('SELECT * FROM `politicians` WHERE `username` =? AND `password` = ? ', [request.payload['username'],request.payload['password']],function (error, results, fields) {
             if (error)
                 throw error;
             
-            connection.query(' SELECT * FROM `nonPolitician` WHERE `username` =? AND `password` = ?', [request.params.user,request.params.pass],function (error, results2, fields) {
+            connection.query(' SELECT * FROM `nonPolitician` WHERE `username` =? AND `password` = ?', [request.payload['username'],request.payload['password']],function (error, results2, fields) {
             if (error)
                 throw error;
             else{
@@ -202,25 +202,22 @@ server.route({
 			reply('Hello '+results[0].firstName+' '+results[0].lastName);
 		}
                 else if(results2.length==1){
+                    reply('Hello '+results2[0].firstName+' '+results2[0].lastName);
                     if(results2[0].favorites != 'null'){
-                        connection.query('SELECT firstName,lastName, positionId, dateTime, city,state FROM `politicians` NATURAL JOIN `candidates` NATURAL JOIN `elections` WHERE polId=?', results2[0].favorites, function (error, results3, fields) {
+                        connection.query('SELECT firstName,lastName, positionId, dateTime, city,state FROM `politicians` NATURAL JOIN `candidates` NATURAL JOIN `elections` WHERE polId=?', [results2[0].favorite], function (error, results3, fields) {
                         if (error)
                             throw error;
                         if(results3.length>=1){
-                            reply('Hello '+results2[0].firstName+' '+results2[0].lastName+ ". Your favorite politician has upcoming election, please check it on election page.");
+                            reply("Here is your favorite politician's upcoming election: ")
+                            reply (results3);
                         }
-                        else
-                            reply('Hello '+results2[0].firstName+' '+results2[0].lastName);
 			
                     });
-                    }
-                    else{
-                        reply('Hello '+results2[0].firstName+' '+results2[0].lastName);
-                    }
-                }
+		}
 		else
 			reply('Cannot find account, try it again.');
 	    }
+         }
         });
         });
     }
