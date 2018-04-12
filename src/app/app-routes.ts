@@ -8,7 +8,7 @@ import {UpelectionComponent} from './upelection/upelection.component';
 export const APP_ROUTES: Routes = [
     {path: 'signup', component: SignUpComponent},
     {path: 'login', component: LoginComponent},
-    {path: 'profile', component: ProfileComponent},
+    {path: 'profile/:id', component: ProfileComponent},
     {path: 'upelection', component: UpelectionComponent},
     {path: '', component: HomePageComponent},
     {path: '**', component: HomePageComponent}
