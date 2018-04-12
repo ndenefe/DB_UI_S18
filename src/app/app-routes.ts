@@ -4,12 +4,14 @@ import {LoginComponent} from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import {HomePageComponent} from './home-page/home-page.component';
 import {UpelectionComponent} from './upelection/upelection.component';
+import { RegisterComponent } from './register/register.component';
 
 export const APP_ROUTES: Routes = [
     {path: 'signup', component: SignUpComponent},
     {path: 'login', component: LoginComponent},
     {path: 'profile', component: ProfileComponent},
     {path: 'upelection', component: UpelectionComponent},
+    {path: 'register', component: RegisterComponent},
     {path: '', component: HomePageComponent},
     {path: '**', component: HomePageComponent}
 ];

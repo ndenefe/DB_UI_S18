@@ -15,10 +15,10 @@ img {
   float: right;
 }
 
-#gif {
-  max-width: 200% !important;
-  max-height: 200% !important;
-  display: cover;
+#gifContainer {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
 }
 
 #content {
