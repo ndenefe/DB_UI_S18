@@ -9,6 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { UpelectionComponent } from './upelection/upelection.component';
 import { HomePageComponent } from './home-page/home-page.component';
+import { RegisterComponent } from './register/register.component';
 import { UpdateModule} from './update/update.module';
 
 @NgModule({
@@ -18,7 +19,8 @@ import { UpdateModule} from './update/update.module';
     LoginComponent,
     ProfileComponent,
     UpelectionComponent,
-    HomePageComponent
+    HomePageComponent,
+    RegisterComponent
 ],
   imports: [
     BrowserModule,
