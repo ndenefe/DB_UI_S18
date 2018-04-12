@@ -13,6 +13,8 @@ import { Website } from '../../domain/models/website';
 
 //need to add beter validation on this and sign up
 
+//add an alert message saying profile was updated if sucessful
+
 @Component({
   selector: 'app-updtProfile',
   templateUrl: './updtProfile.component.html',

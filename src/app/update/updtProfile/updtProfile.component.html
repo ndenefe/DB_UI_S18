@@ -100,8 +100,8 @@
         </li>
       </ul>
       <br />
-      <button class="btn btn-lg btn-success btn-block" type="button" (click)="saveProfile()">
-        Edit
+      <button class="btn btn-lg btn-success btn-block" type="button" [disabled] = '!account.name || !account.email' (click)="saveProfile()">
+        Save Changes
       </button>
       <div class="col-md-4">
         <pre>{{account|json}}</pre>

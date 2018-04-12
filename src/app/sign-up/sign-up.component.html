@@ -132,7 +132,7 @@
         </li>
       </ul>
       <br />
-      <button class="btn btn-lg btn-success btn-block" type="button" (click)="saveProfile()">
+      <button class="btn btn-lg btn-success btn-block" type="button" [disabled] = '!account.name || !account.email'  (click)="saveProfile()">
         Save
       </button>
       <a [routerLink]="['/login']" class="btn btn-danger btn-block bg-gray">Cancel</a>

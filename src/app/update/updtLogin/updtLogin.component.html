@@ -32,7 +32,7 @@
         </div>
         <div *ngIf="!checkPassMatch" class="text-danger">*Passwords do not match</div>
         <div *ngIf="passCheck" class="text-danger">*Password is required</div>
-        <button class="btn btn-primary" type="button" (click)="resetLogin()">Reset</button>
+        <button class="btn btn-primary" type="button" [disabled] = '!newLogin.username || !newLogin.password || !passwordCheck' (click)="resetLogin()">Save Changes</button>
       </div>
     </div>
     <div class="col-md-4">
