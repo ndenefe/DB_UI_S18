@@ -32,16 +32,16 @@ export class RegisterComponent implements OnInit {
 
   public passCheck: string;
 
-  public checkPassMatch: boolean = true;
+  public checkPassMatch = true;
 
-  public reset: boolean = false;
+  public reset = false;
 
   constructor() { }
 
   ngOnInit() {
     this.currentNum = 0;
 
-    this.number= 30;
+    this.number = 30;
 
     this.title = 'Register';
 
@@ -69,9 +69,8 @@ export class RegisterComponent implements OnInit {
   }
 
   public addPhone() {
-    if (!this.newPhone.type)
-    {
-      this.newPhone.type = "None";
+    if (!this.newPhone.type) {
+      this.newPhone.type = 'None';
     }
     this.account.phoneNumbers.push(this.newPhone);
     this.newPhone = {};
@@ -82,21 +81,16 @@ export class RegisterComponent implements OnInit {
   }
 
   public saveProfile() {
-    this.register.slot=this.currentNum+1;
-    if (!this.account.isEmployee)
-    {
+    this.register.slot = this.currentNum + 1;
+    if (!this.account.isEmployee) {
       this.account.departmentId = null;
     }
-    if (!this.account.hasWebsite)
-    {
+    if (!this.account.hasWebsite) {
       this.account.website = null;
     }
-    if (this.reset)
-    {
+    if (this.reset) {
       this.checkPassMatch = true;
-    }
-    else
-    {
+    } else {
       this.registers.push(this.register);
       this.accounts.push(this.account);
     }
@@ -107,10 +101,10 @@ export class RegisterComponent implements OnInit {
 
     this.newPhone = {};
     this.register = {};
-    this.passCheck = "";
-    this.currentNum+=1;
+    this.passCheck = '';
+    this.currentNum += 1;
 
-    this.number=30-this.currentNum;
+    this.number = 30 - this.currentNum;
   }
 
 }
