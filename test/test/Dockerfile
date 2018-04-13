@@ -7,6 +7,7 @@ WORKDIR /usr/src/app
 # Install app dependencies
 COPY package*.json /usr/src/app
 RUN npm install
+RUN npm install --save bell hapi-auth-cookie
 
 # Bundle app source
 COPY server.js /usr/src/app
