@@ -44,8 +44,7 @@ export class LoginComponent implements OnInit {
       if (this.passCheck === true || this.userCheck === true) {
         this.reset = true;
         this.newLogin = {};
-      }
-      else {
+      } else {
         this.logins.push(this.newLogin);
         this.newLogin = {};
       }

@@ -7,4 +7,12 @@
   width: 90%;
   margin: 0 auto;
 }
+.card-header{
+  background-color: lightcoral;
+}
+img{
+  border-radius: 200em;
+  width: 7em;
+  height: 10em;
 
+}
