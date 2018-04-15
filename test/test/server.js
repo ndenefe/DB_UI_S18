@@ -19,6 +19,14 @@ var connection = mysql.createConnection({
 
 connection.connect();
 
+server.state('session',{
+    ttl:60*1000*24*24,   // session time 1 day
+    isSecure:false,
+    encoding:'base64json',
+    clearInvalid: true,
+    strictHeader: false,
+
+});
 
 server.route({
     method: 'GET',
@@ -26,6 +34,31 @@ server.route({
     handler: function (request, reply) {
         console.log('Server processing a / request');
         reply('Hello, world!');
+    }
+});
+
+server.route({
+    method: 'GET',
+    path: '/search/{name}',
+    handler: function (request, reply) {
+        console.log('Server processing a /search request');
+        connection.query('SELECT firstName,lastName, email, picture, phone  FROM `nonPolitician` WHERE `firstName`=? OR `lastName`=?', [request.params.name,request.params.name], function (error, results, fields) {
+            if (error)
+                throw error;
+            else{
+                connection.query('SELECT firstName,lastName, email, picture, partyId, phone, website, platformId FROM `politicians` WHERE `firstName`=? OR `lastName`=?', [request.params.name,request.params.name], function (error, results2, fields) {
+                    if (error)
+                        throw error;
+                    else{
+                        if(results)
+                            reply('politician results: '+results);
+                        else if(results2)
+                            reply('nonpolitician results: '+results);
+                    }
+
+                });
+            }
+        });
     }
 });
 
@@ -111,33 +144,6 @@ server.route({
 
 server.route({
     method: 'GET',
-    path: '/search/pol/{name}',
-    handler: function (request, reply) {
-        console.log('Server processing a /search request');
-        connection.query('SELECT firstName,lastName, email, picture, partyId, phone, website, platformId FROM `politicians` WHERE `firstName`=? OR `lastName`=?', [request.params.name,request.params.name], function (error, results, fields) {
-            if (error)
-                throw error;
-            reply (results);
-
-        });
-    }
-});
-server.route({
-    method: 'GET',
-    path: '/search/nonPol/{name}',
-    handler: function (request, reply) {
-        console.log('Server processing a /search request');
-        connection.query('SELECT firstName,lastName, email, picture, phone  FROM `nonPolitician` WHERE `firstName`=? OR `lastName`=?', [request.params.name,request.params.name], function (error, results, fields) {
-            if (error)
-                throw error;
-            reply (results);
-
-        });
-    }
-});
-
-server.route({
-    method: 'GET',
     path: '/election',
     handler: function (request, reply) {
         console.log('Server processing a /election request');
@@ -184,7 +190,7 @@ server.route({
     }
 });
 
-server.route({
+/*server.route({
     method: 'POST',
     path: '/login',
     handler: function (request, reply) {
@@ -221,52 +227,126 @@ server.route({
         });
         });
     }
-});
-
+});*/
 server.route({
-    method: 'PUT',
-    path: '/login/favor/{user}/{pass}/{pol}',
+    method: ['POST','GET'],
+    path: '/login',
     handler: function (request, reply) {
+        let cookie =request.state.session;
         console.log('Server processing a /login request');
-
-        connection.query('SELECT * FROM `nonPolitician` WHERE `username` =? AND `password` = ? ', [request.params.user,request.params.pass],function (error, results, fields) {
+        if(cookie){
+            cookie.lastVisit=Date.now();
+            return reply.redirect('/login/userpage').state('session',cookie);
+        }
+        connection.query('SELECT * FROM `politicians` WHERE `username` =? AND `password` = ? ', [request.payload['username'],request.payload['password']],function (error, results, fields) {
             if (error)
                 throw error;
             
-            if(results.length==1){
-                connection.query('SELECT polId FROM `politicians` WHERE `firstName`=? OR `lastName`=?', [request.params.pol,request.params.pol], function (error, results2, fields) {
-                if (error)
-                    throw error;
-                if(results2.length==1){
-                    connection.query('UPDATE `nonPolitician` SET `favorites`=? WHERE `username` =? AND `password` = ?', [results2[0].polId,request.params.user,request.params.pass], function (error, results3, fields) {
-                    if (error)
-                        throw error;
-                    reply (' successfully updated'+request.params.pol+' to favorite!');
-
-        });
+            connection.query(' SELECT * FROM `nonPolitician` WHERE `username` =? AND `password` = ?', [request.payload['username'],request.payload['password']],function (error, results2, fields) {
+            if (error)
+                throw error;
+            else{
+		if(results.length==1){
+                    var users=request.payload['username'];
+                    var passs=request.payload['password'];
+                    if(!cookie){
+                        cookie={
+                            username:users,
+                            password:passs
+                        };
+                    }
+                    
+                    cookie.lastVisit=Date.now();
+                    return reply.redirect('/login/userpage').state('session',cookie);
+		}
+                else if(results2.length==1){
+                    var users=request.payload['username'];
+                    var passs=request.payload['password'];
+                    if(!cookie){
+                        cookie={
+                            username:users,
+                            password:passs
+                        };
+                    }
+                    cookie.lastVisit=Date.now();
+                    return reply.redirect('/login/userpage').state('session',cookie);
+                    
                 }
-                else
-                    reply('Cannot find the politician, try another name.');
-
-            });
-            }
-            else
-		reply('Cannot find account, try it again.');
+		else{
+                    cookie.lastVisit=Date.now();
+                    return reply('Cannot find account, try it again.');
+                }
+	    }
+            
+            
         });
-    }
+        });
+    },
+        config: {
+        state: {
+            parse: true,        // parse cookies and store in request.state
+            failAction: 'error' // may also be 'ignore' or 'log'
+            }
+        }
+    
+    
 });
 
 server.route({
     method: 'GET',
-    path: '/login/profile/{user}/{pass}',
+    path: '/login/userpage',
     handler: function (request, reply) {
         console.log('Server processing a /login and profile request');
-
-        connection.query('SELECT username, email, picture, firstName, lastName, partyId, phone, website, platformId FROM `politicians` WHERE `username` =? AND `password` = ? ', [request.params.user,request.params.pass],function (error, results, fields) {
+        let cookie = request.state.session; 
+        if(!cookie){
+            reply.redirect('/');
+        }
+        else{
+        var userr=cookie.username;
+        var pass=cookie.password;
+        connection.query('SELECT firstName, lastName FROM `politicians` WHERE `username` =? AND `password` = ? ', [userr,pass],function (error, results, fields) {
             if (error)
                 throw error;
             
-            connection.query(' SELECT username,email,picture,firstName,lastName,phone,favorites FROM `nonPolitician` WHERE `username` =? AND `password` = ?', [request.params.user,request.params.pass],function (error, results2, fields) {
+            connection.query(' SELECT firstName,lastName FROM `nonPolitician` WHERE `username` =? AND `password` = ?', [userr,pass],function (error, results2, fields) {
+            if (error)
+                throw error;
+            else{
+		if(results.length==1){
+			reply('Hello '+results[0].firstName+' '+results[0].lastName);
+		}
+                else if(results2.length==1){
+			reply('Hello '+results2[0].firstName+' '+results2[0].lastName);
+		}
+	    }
+        });
+        });
+    }},
+        config: {
+        state: {
+            parse: true,        // parse cookies and store in request.state
+            failAction: 'error' // may also be 'ignore' or 'log'
+            }
+        }
+});
+
+server.route({
+    method: 'GET',
+    path: '/login/profile',
+    handler: function (request, reply) {
+        console.log('Server processing a /login and profile request');
+        let cookie = request.state.session; 
+        if(!cookie){
+            reply.redirect('/');
+        }
+        else{
+        var userr=cookie.username;
+        var pass=cookie.password;
+        connection.query('SELECT username, email, picture, firstName, lastName, partyId, phone, website, platformId FROM `politicians` WHERE `username` =? AND `password` = ? ', [userr,pass],function (error, results, fields) {
+            if (error)
+                throw error;
+            
+            connection.query(' SELECT username,email,picture,firstName,lastName,phone,favorites FROM `nonPolitician` WHERE `username` =? AND `password` = ?', [userr,pass],function (error, results2, fields) {
             if (error)
                 throw error;
             else{
@@ -281,42 +361,22 @@ server.route({
 	    }
         });
         });
-    }
+    }},
+        config: {
+        state: {
+            parse: true,        // parse cookies and store in request.state
+            failAction: 'error' // may also be 'ignore' or 'log'
+            }
+        }
 });
 
 server.route({
-    method: 'PUT',
-    path: '/login/profile/update/{user}/{pass}',
+    method: 'GET',
+    path: '/logout',
     handler: function (request, reply) {
-        console.log('Server processing a /login and profile request');
-
-        connection.query('SELECT * FROM `politicians` WHERE `username` =? AND `password` = ? ', [request.params.user,request.params.pass],function (error, results, fields) {
-            if (error)
-                throw error;
-            
-            connection.query(' SELECT * FROM `nonPolitician` WHERE `username` =? AND `password` = ?', [request.params.user,request.params.pass],function (error, results2, fields) {
-            if (error)
-                throw error;
-            else{
-		if(results.length==1){
-			connection.query('UPDATE `politicians` SET `email`=?,`picture`=?,`phone`=?,`website`=? WHERE `username` =? AND `password` = ?', [request.payload['email'],request.payload['piture'],request.payload['phone'],request.payload['website'],request.params.user,request.params.pass],function (error, results, fields) {
-                            if (error)
-                                throw error;
-                            reply('update successful!');
-                        });
-		}
-                else if(results2.length==1){
-			connection.query('UPDATE `nonPolitician` SET `email`=?,`picture`=?,`phone`=? WHERE `username` =? AND `password` = ?', [request.payload['email'],request.payload['piture'],request.payload['phone'],request.params.user,request.params.pass],function (error, results, fields) {
-                            if (error)
-                                throw error;
-                            reply('update successful!');
-                        });
-		}
-		else
-			reply('Cannot find account, try it again.');
-	    }
-        });
-        });
+        console.log('Server processing a /logout');
+        let cookie = request.state.session; 
+        reply.redirect('/').unstate('session');  // delete session and redirect to default page
     }
 });
 

@@ -8,6 +8,8 @@ services:
         volumes:
             - /sql
     node:
+        depends_on:
+            - "mysql"
         build:
             context: ./test
         ports:
