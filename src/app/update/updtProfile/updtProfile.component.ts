@@ -1,22 +1,26 @@
-import { Phone } from './../domain/models/phone';
+import { Phone } from '../../domain/models/phone';
 import { Component, OnInit } from '@angular/core';
-import { Account } from '../domain/models/account';
-import { Department } from '../domain/models/department';
+import { Account } from '../../domain/models/account';
+import { Department } from '../../domain/models/department';
 import { Router, RouterLink} from '@angular/router';
-import { Login } from './../domain/models/login';
+//import { Website } from '../../domain/models/website';
+
+//needs to load in profile info at start
+
+//needs to change info in the db on save
+
+//need to add navbar to the page and add this to navbar
+
+//need to add beter validation on this and sign up
+
+//add an alert message saying profile was updated if sucessful
 
 @Component({
-  selector: 'app-sign-up',
-  templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.css']
+  selector: 'app-updtProfile',
+  templateUrl: './updtProfile.component.html',
+  styleUrls: ['./updtProfile.component.css']
 })
-
-//need to add to db on a valid save and the route to the profile page with the 
-//users info automatically loaded
-
-//needs better validation
-
-export class SignUpComponent implements OnInit {
+export class UpdtProfileComponent implements OnInit {
 
   public title: string;
 
@@ -28,24 +32,10 @@ export class SignUpComponent implements OnInit {
 
   public newPhone: Phone;
 
-  public loginInfo: Login[];
-
-  public signUp: Login;
-
-  public passCheck: string;
-
-  public checkPassMatch: boolean = true;
-
-  public reset: boolean = false;
-
   constructor() { }
 
   ngOnInit() {
     this.title = 'Sign Up';
-
-    this.loginInfo = [];
-
-    this.signUp = {};
 
     this.account = {
       name: '',
@@ -88,19 +78,8 @@ export class SignUpComponent implements OnInit {
     {
       this.account.website = null;
     }
-    if (this.reset)
-    {
-      this.checkPassMatch = true;
-    }
-    if (this.passCheck != this.signUp.password)
-    {
-      this.checkPassMatch = false;
-      this.reset = true;
-    }
     else
     {
-      this.account.login.push(this.signUp);
-      this.loginInfo.push(this.signUp);
       this.accounts.push(this.account);
     }
     this.account = {
@@ -108,8 +87,8 @@ export class SignUpComponent implements OnInit {
       phoneNumbers: []
     };
     this.newPhone = {};
-    this.signUp = {};
-    this.passCheck = "";
   }
 
 }
+
+

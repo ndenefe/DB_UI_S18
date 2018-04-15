@@ -1,40 +1,8 @@
 <div class="container">
-  <h1 class="text-center">{{ title }}</h1>
+  <h1 class="text-center">Update Profile</h1>
   <div class="row">
     <div class="col-md-8" id="content">
-      <div class="card">
-        <div class="card-header">
-          Login Information
-        </div>
-        <div class="card-body">
-          <div class="form-group text-left">
-            <label for="signup_name">
-              Username:
-            </label>
-            <input type="text" id="account_name" class="form-control" [(ngModel)]="signUp.username" />
-          </div>
-          <div class="form-group text-left">
-            <label for="account_email">
-              Password:
-            </label>
-            <input type="password" id="_password" class="form-control" [(ngModel)]="signUp.password" />
-            <!-- Password Toggleing -->
-            <button onclick="if (_password.type == 'text') _password.type ='password';else _password.type = 'text';">Toggle</button>
-          </div>
-          <div *ngIf="!checkPassMatch" class="text-danger">*Passwords do not match</div>
-          <div class="form-group text-left">
-            <label for="account_email">
-              Re-enter Password:
-            </label>
-            <input type="password" id="password" class="form-control" [(ngModel)]="passCheck" />
-            <button onclick="if (password.type == 'text') password.type ='password';else password.type = 'text';">Toggle</button>
-          </div>
-          <div *ngIf="!checkPassMatch" class="text-danger">*Passwords do not match</div>
-          <br />
-        </div>
-      </div>
 
-      <br />
       <div class="card">
         <div class="card-header">
           Account Information
@@ -83,13 +51,13 @@
               <input type="website" id="account_website" class="form-control" [(ngModel)]="account.website" />
             </div>
           </div>
-          
+
           <div class="form-group text-left">
-              <label for="account_tenure">
-                Tenure Information:
-              </label>
-              <input type="text" id="account_tenure" class="form-control" [(ngModel)]="account.tenure" />
-            </div>
+            <label for="account_tenure">
+              Tenure Information:
+            </label>
+            <input type="text" id="account_tenure" class="form-control" [(ngModel)]="account.tenure" />
+          </div>
 
         </div>
       </div>
@@ -132,23 +100,15 @@
         </li>
       </ul>
       <br />
-      <button class="btn btn-lg btn-success btn-block" type="button" [disabled] = '!account.name || !account.email'  (click)="saveProfile()">
-        Save
+      <button class="btn btn-lg btn-success btn-block" type="button" [disabled] = '!account.name || !account.email' (click)="saveProfile()">
+        Save Changes
       </button>
-      <a [routerLink]="['/login']" class="btn btn-danger btn-block bg-gray">Cancel</a>
       <div class="col-md-4">
         <pre>{{account|json}}</pre>
       </div>
       <div class="col-md-4">
         <pre>{{accounts|json}}</pre>
       </div>
-      <div class="col-md-4">
-        <pre>{{signUp|json}}</pre>
-      </div>
-      <div class="col-md-4">
-        <pre>{{loginInfo|json}}</pre>
-      </div>
     </div>
   </div>
 </div>
-<br />

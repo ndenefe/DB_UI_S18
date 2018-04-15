@@ -9,6 +9,8 @@ import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { UpelectionComponent } from './upelection/upelection.component';
 import { HomePageComponent } from './home-page/home-page.component';
+import { RegisterComponent } from './register/register.component';
+import { UpdateModule} from './update/update.module';
 
 @NgModule({
   declarations: [
@@ -17,11 +19,13 @@ import { HomePageComponent } from './home-page/home-page.component';
     LoginComponent,
     ProfileComponent,
     UpelectionComponent,
-    HomePageComponent
+    HomePageComponent,
+    RegisterComponent
 ],
   imports: [
     BrowserModule,
     FormsModule,
+    UpdateModule,
     RouterModule.forRoot(
       APP_ROUTES,
       {enableTracing: true}

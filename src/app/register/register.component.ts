@@ -3,22 +3,20 @@ import { Component, OnInit } from '@angular/core';
 import { Account } from '../domain/models/account';
 import { Department } from '../domain/models/department';
 import { Router, RouterLink} from '@angular/router';
-import { Login } from './../domain/models/login';
+import { Register } from './../domain/models/register';
 
 @Component({
-  selector: 'app-sign-up',
-  templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.css']
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
 })
-
-//need to add to db on a valid save and the route to the profile page with the 
-//users info automatically loaded
-
-//needs better validation
-
-export class SignUpComponent implements OnInit {
+export class RegisterComponent implements OnInit {
 
   public title: string;
+
+  public number: number;
+
+  public currentNum: number;
 
   public account: Account;
 
@@ -28,9 +26,9 @@ export class SignUpComponent implements OnInit {
 
   public newPhone: Phone;
 
-  public loginInfo: Login[];
+  public registers: Register[];
 
-  public signUp: Login;
+  public register: Register;
 
   public passCheck: string;
 
@@ -41,11 +39,15 @@ export class SignUpComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.title = 'Sign Up';
+    this.currentNum = 0;
 
-    this.loginInfo = [];
+    this.number= 30;
 
-    this.signUp = {};
+    this.title = 'Register';
+
+    this.registers = [];
+
+    this.register = {};
 
     this.account = {
       name: '',
@@ -80,6 +82,7 @@ export class SignUpComponent implements OnInit {
   }
 
   public saveProfile() {
+    this.register.slot=this.currentNum+1;
     if (!this.account.isEmployee)
     {
       this.account.departmentId = null;
@@ -92,24 +95,22 @@ export class SignUpComponent implements OnInit {
     {
       this.checkPassMatch = true;
     }
-    if (this.passCheck != this.signUp.password)
-    {
-      this.checkPassMatch = false;
-      this.reset = true;
-    }
     else
     {
-      this.account.login.push(this.signUp);
-      this.loginInfo.push(this.signUp);
+      this.registers.push(this.register);
       this.accounts.push(this.account);
     }
     this.account = {
       name: '',
       phoneNumbers: []
     };
+
     this.newPhone = {};
-    this.signUp = {};
+    this.register = {};
     this.passCheck = "";
+    this.currentNum+=1;
+
+    this.number=30-this.currentNum;
   }
 
 }
