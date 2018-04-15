@@ -23,7 +23,7 @@ export class Account2 {
   email?: string;
   picture?: Blob;
   phone?: string;
-  favorites?: number;
+  favorites?: number; // Will be changing because favorite politicians need to be their own table
   partyId?: number;
   website?: string;
   platformId?: number;
