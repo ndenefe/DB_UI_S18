@@ -18,7 +18,7 @@ var connection = mysql.createConnection({
 connection.connect();
 
 server.state('session',{
-    ttl:60*1000,
+    ttl:60*1000*24*24,   // session time 1 day
     isSecure:false,
     encoding:'base64json',
     clearInvalid: true,
@@ -252,6 +252,16 @@ server.route({
             failAction: 'error' // may also be 'ignore' or 'log'
             }
         }
+});
+
+server.route({
+    method: 'GET',
+    path: '/logout',
+    handler: function (request, reply) {
+        console.log('Server processing a /logout');
+        let cookie = request.state.session; 
+        reply.redirect('/').unstate('session');  // delete session and redirect to default page
+    }
 });
 
 
