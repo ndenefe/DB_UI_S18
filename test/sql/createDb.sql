@@ -150,11 +150,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `DB_Lab`.`Favorites`
+-- Table `DB_Lab`.`favorites`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `DB_Lab`.`Favorites` ;
+DROP TABLE IF EXISTS `DB_Lab`.`favorites` ;
 
-CREATE TABLE IF NOT EXISTS `DB_Lab`.`Favorites` (
+CREATE TABLE IF NOT EXISTS `DB_Lab`.`favorites` (
   `userId` INT NOT NULL,
   `polId` INT NOT NULL,
   PRIMARY KEY (`userId`, `polId`),
@@ -173,11 +173,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `DB_Lab`.`lPhone`
+-- Table `DB_Lab`.`phone`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `DB_Lab`.`lPhone` ;
+DROP TABLE IF EXISTS `DB_Lab`.`phone` ;
 
-CREATE TABLE IF NOT EXISTS `DB_Lab`.`lPhone` (
+CREATE TABLE IF NOT EXISTS `DB_Lab`.`phone` (
   `phoneId` INT NOT NULL AUTO_INCREMENT,
   `UID` INT NOT NULL,
   `accountType` INT NOT NULL,

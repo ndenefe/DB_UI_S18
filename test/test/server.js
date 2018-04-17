@@ -7,17 +7,20 @@ server.connection({ port: 3000, host: '0.0.0.0' });
 
 //Initialize the mysql variable and create the connection object with necessary values
 //Uses the https://www.npmjs.com/package/mysql package.
-var mysql      = require('mysql');
-var connection = mysql.createConnection({
+var mysql = require('mysql');
 
+var pool  = mysql.createPool({
     //host will be the name of the service from the docker-compose file. 
     host     : 'mysql',
     user     : 'root',
     password : 'password',
     database : 'DB_Lab'
 });
-
-connection.connect();
+var getConnection = function(callback) {
+    pool.getConnection(function(err, connection) {
+        callback(err, connection);
+    });
+};
 
 server.state('session',{
     ttl:60*1000*24*24,   // session time 1 day
@@ -41,6 +44,7 @@ server.route({
     method: 'GET',
     path: '/search/{name}',
     handler: function (request, reply) {
+        getConnection();
         console.log('Server processing a /search request');
         connection.query('SELECT firstName,lastName, email, picture, phone  FROM `nonPolitician` WHERE `firstName`=? OR `lastName`=?', [request.params.name,request.params.name], function (error, results, fields) {
             if (error)
@@ -59,6 +63,7 @@ server.route({
                 });
             }
         });
+        connection.release();
     }
 });
 
@@ -68,6 +73,7 @@ server.route({
     method: 'GET',
     path: '/nonPol',
     handler: function (request, reply) {
+        getConnection();
         console.log('Server processing a /nonPol request');
 
         //Does a simple select, not from a table, but essentially just uses MySQL
@@ -83,12 +89,14 @@ server.route({
 
             //for exemplar purposes, stores the returned value in a variable to be
         });
+        connection.release();
     }
 });
 server.route({
     method: 'GET',
     path: '/pol',
     handler: function (request, reply) {
+        getConnection();
         console.log('Server processing a /pol request');
         connection.query('SELECT firstName, lastName, email FROM politicians', function (error, results, fields) {
             if (error)
@@ -96,6 +104,7 @@ server.route({
             reply (results);
 
         });
+        connection.release();
     }
 });
 
@@ -103,6 +112,7 @@ server.route({
     method: 'POST',
     path: '/login/nonPol',
     handler: function (request, reply) {
+        getConnection();
         console.log('Server processing a /login request');
 
         connection.query('SELECT * FROM `nonPolitician` WHERE `username` =? AND `password` = ?', [request.payload['username'],request.payload['password']],function (error, results, fields) {
@@ -117,6 +127,7 @@ server.route({
 	    }
 
         });
+        connection.release();
     }
 });
 
@@ -124,6 +135,7 @@ server.route({
     method: 'POST',
     path: '/login/pol',
     handler: function (request, reply) {
+        getConnection();
         console.log('Server processing a /login request');
 
         connection.query('SELECT * FROM `politicians` WHERE `username` =? AND `password` = ?', [request.payload['username'],request.payload['password']],function (error, results, fields) {
@@ -138,6 +150,7 @@ server.route({
 	    }
 
         });
+        connection.release();
     }
 });
 
@@ -146,6 +159,7 @@ server.route({
     method: 'GET',
     path: '/election',
     handler: function (request, reply) {
+        getConnection();
         console.log('Server processing a /election request');
         connection.query('SELECT positionId, dateTime, city,state FROM `elections`', function (error, results, fields) {
             if (error)
@@ -153,6 +167,7 @@ server.route({
             reply (results);
 
         });
+        connection.release();
     }
 });
 
@@ -160,6 +175,7 @@ server.route({
     method: 'GET',
     path: '/{election}/{name}',
     handler: function (request, reply) {
+        getConnection();
         console.log('Server processing a /searchElection request');
         connection.query('SELECT firstName,lastName, email, picture, partyId, phone, website, dateTime, city,state FROM `politicians` NATURAL JOIN `candidates` NATURAL JOIN `elections` WHERE `electionId`=? AND (`firstName`=? OR `lastName`=?)', [request.params.election,request.params.name,request.params.name], function (error, results, fields) {
             if (error)
@@ -170,6 +186,7 @@ server.route({
                 reply("The people you are looking for doesn't enroll this election. ");
 
         });
+        connection.release();
     }
 });
 
@@ -177,6 +194,7 @@ server.route({
     method: 'GET',
     path: '/election/{name}',
     handler: function (request, reply) {
+        getConnection();
         console.log('Server processing a /searchElection request');
         connection.query('SELECT firstName,lastName, positionId, dateTime, city,state FROM `politicians` NATURAL JOIN `candidates` NATURAL JOIN `elections` WHERE (`firstName`=? OR `lastName`=?)', [request.params.name,request.params.name], function (error, results, fields) {
             if (error)
@@ -187,6 +205,7 @@ server.route({
                 reply("The people you are looking for doesn't enroll any election. ");
 
         });
+        connection.release();
     }
 });
 
@@ -227,11 +246,12 @@ server.route({
         });
         });
     }
-});*/
+});*///
 server.route({
     method: ['POST','GET'],
     path: '/login',
     handler: function (request, reply) {
+        getConnection();
         let cookie =request.state.session;
         console.log('Server processing a /login request');
         if(cookie){
@@ -281,6 +301,7 @@ server.route({
             
         });
         });
+        connection.release();
     },
         config: {
         state: {
@@ -296,6 +317,7 @@ server.route({
     method: 'GET',
     path: '/login/userpage',
     handler: function (request, reply) {
+        getConnection();
         console.log('Server processing a /login and profile request');
         let cookie = request.state.session; 
         if(!cookie){
@@ -321,7 +343,9 @@ server.route({
 	    }
         });
         });
-    }},
+        }
+        connection.release();
+    },
         config: {
         state: {
             parse: true,        // parse cookies and store in request.state
@@ -334,6 +358,7 @@ server.route({
     method: 'GET',
     path: '/login/profile',
     handler: function (request, reply) {
+        getConnection();
         console.log('Server processing a /login and profile request');
         let cookie = request.state.session; 
         if(!cookie){
@@ -361,7 +386,9 @@ server.route({
 	    }
         });
         });
-    }},
+        }
+        connection.release();
+    },
         config: {
         state: {
             parse: true,        // parse cookies and store in request.state
