@@ -162,7 +162,7 @@ server.route({
     }
 });
 
-/*server.route({
+server.route({
     method: 'POST',
     path: '/login',
     handler: function (request, reply) {
@@ -201,8 +201,8 @@ server.route({
             });
         });
     }
-});*///
-server.route({
+});
+/*server.route({
     method: ['POST','GET'],
     path: '/login',
     handler: function (request, reply) {
@@ -289,13 +289,13 @@ server.route({
             if (error)
                 throw error;
             else{
-		if(results.length==1){
-			reply('Hello '+results[0].firstName+' '+results[0].lastName);
-		}
+                if(results.length==1){
+                    reply(results[0]);
+                }
                 else if(results2.length==1){
-			reply('Hello '+results2[0].firstName+' '+results2[0].lastName);
-		}
-	    }
+                    reply(results2[0]);
+                }
+	        }
         });
         });
         }
@@ -331,10 +331,10 @@ server.route({
                 throw error;
             else{
 		if(results.length==1){
-			reply(results);
+			reply(results[0]);
 		}
                 else if(results2.length==1){
-			reply(results2);
+			reply(results2[0]);
 		}
 		else
 			reply('Cannot find account, try it again.');
@@ -360,7 +360,7 @@ server.route({
         let cookie = request.state.session; 
         reply.redirect('/').unstate('session');  // delete session and redirect to default page
     }
-});
+});*/
 
 server.start((err) => {
 
