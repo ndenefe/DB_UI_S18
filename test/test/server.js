@@ -3,7 +3,14 @@
 const Hapi = require('hapi');
 
 const server = new Hapi.Server();
-server.connection({ port: 3000, host: '0.0.0.0' });
+server.connection({ port: 3000, host: '0.0.0.0', routes: {
+        cors: {
+            origin: ["*"],
+            headers: ["Access-Control-Allow-Origin","Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type", "CORELATION_ID"],
+            credentials: true
+        }
+    } 
+});
 
 //Initialize the mysql variable and create the connection object with necessary values
 //Uses the https://www.npmjs.com/package/mysql package.
@@ -76,7 +83,7 @@ server.route({
         getConnection();
         console.log('Server processing a /nonPol request');
 
-        //Does a simple select, not from a table, but essentially just uses MySQL
+        //Does a simple select, not from a table, but essentially just uses MySQL//
         //to add 1 + 1.
         //function (error, results, fields){...} is a call-back function that the
         //MySQL lib uses to send info back such as if there was an error, and/or the
@@ -107,53 +114,6 @@ server.route({
         connection.release();
     }
 });
-
-server.route({
-    method: 'POST',
-    path: '/login/nonPol',
-    handler: function (request, reply) {
-        getConnection();
-        console.log('Server processing a /login request');
-
-        connection.query('SELECT * FROM `nonPolitician` WHERE `username` =? AND `password` = ?', [request.payload['username'],request.payload['password']],function (error, results, fields) {
-            if (error)
-                throw error;
-            else{
-		if(results.length==1){
-			reply('Hello '+results[0].firstName+' '+results[0].lastName);
-		}
-		else
-			reply('Cannot find account, try it again.');
-	    }
-
-        });
-        connection.release();
-    }
-});
-
-server.route({
-    method: 'POST',
-    path: '/login/pol',
-    handler: function (request, reply) {
-        getConnection();
-        console.log('Server processing a /login request');
-
-        connection.query('SELECT * FROM `politicians` WHERE `username` =? AND `password` = ?', [request.payload['username'],request.payload['password']],function (error, results, fields) {
-            if (error)
-                throw error;
-            else{
-		if(results.length==1){
-			reply('Hello '+results[0].firstName+' '+results[0].lastName);
-		}
-		else
-			reply('Cannot find account, try it again.');
-	    }
-
-        });
-        connection.release();
-    }
-});
-
 
 server.route({
     method: 'GET',
@@ -220,30 +180,32 @@ server.route({
                 throw error;
             
             connection.query(' SELECT * FROM `nonPolitician` WHERE `username` =? AND `password` = ?', [request.payload['username'],request.payload['password']],function (error, results2, fields) {
-            if (error)
-                throw error;
-            else{
-		if(results.length==1){
-			reply('Hello '+results[0].firstName+' '+results[0].lastName);
-		}
-                else if(results2.length==1){
-                    reply('Hello '+results2[0].firstName+' '+results2[0].lastName);
-                    if(results2[0].favorites != 'null'){
-                        connection.query('SELECT firstName,lastName, positionId, dateTime, city,state FROM `politicians` NATURAL JOIN `candidates` NATURAL JOIN `elections` WHERE polId=?', [results2[0].favorite], function (error, results3, fields) {
-                        if (error)
-                            throw error;
-                        if(results3.length>=1){
-                            reply("Here is your favorite politician's upcoming election: ")
-                            reply (results3);
-                        }
-			
-                    });
-		}
-		else
-			reply('Cannot find account, try it again.');
-	    }
-         }
-        });
+                if (error)
+                    throw error;
+                else{
+                    if(results.length==1){
+                        reply(results[0]);
+                    }
+                    else if(results2.length==1){
+                        // if(results2[0].favorites != 'null'){
+                        //     connection.query('SELECT firstName,lastName, positionId, dateTime, city,state FROM `politicians` NATURAL JOIN `candidates` NATURAL JOIN `elections` WHERE polId=?', [results2[0].favorite], function (error, results3, fields) {
+                        //         if (error)
+                        //             throw error;
+                        //             if(results3.length>=1){
+                        //                 reply('Hello '+results2[0].firstName+' '+results2[0].lastName+ ". Your favorite politician has upcoming election, please check it on election page.");
+                        //             }
+                        //             else
+                        //                 reply('Hello '+results2[0].firstName+' '+results2[0].lastName+" your favorite is not in an election");
+                
+                        //     });
+                        // }else{
+                        //     reply('Hello '+results2[0].firstName+' '+results2[0].lastName);
+                        // }
+                        reply(results2[0]);
+                    }
+                    else reply('Cannot find account, try it again.');
+                }
+            });
         });
     }
 });*///
