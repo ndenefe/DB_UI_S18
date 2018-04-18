@@ -223,6 +223,90 @@ server.route({
 });
 
 server.route({
+    method: 'POST',
+    path: '/nonPol',
+    handler: function(request, reply) {
+        console.log('Server processing a /nonPol POST request');
+        pool.query('INSERT INTO `nonPolitician` (`username`,`password`,`email`,`picture`,`firstName`,`lastName`,`phone`) VALUES(?, ?, ?, ?, ?, ?, ?)',
+        [request.payload['username'],request.payload['password'],request.payload['email'],request.payload['picture'],request.payload['firstName'],
+        request.payload['lastName'], request.payload['phone']],function (error, results, fields){
+            if (error)
+                throw error;
+            reply (results);
+        });
+    }
+});
+
+server.route({
+    method: 'POST',
+    path: '/pol',
+    handler: function(request, reply) {
+        console.log('Server processing a /pol POST request');
+        pool.query('INSERT INTO `politicians` (`username`,`password`,`email`,`picture`,`firstName`,`lastName`,`phone`,`partyId`,`website`,`platformId`) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+        [request.payload['username'],request.payload['password'],request.payload['email'],request.payload['picture'],request.payload['firstName'],
+        request.payload['lastName'], request.payload['phone'],request.payload['partyId'],request.payload['website'],request.payload['platformId']],
+        function (error, results, fields){
+            if (error)
+                throw error;
+            reply (results);
+        });
+    }
+});
+
+server.route({
+    method: 'PUT',
+    path: '/nonPol/creds',
+    handler: function(request, reply) {
+        console.log('Server processing a /nonPol credential PUT request');
+        pool.query('UPDATE `nonPolitician` SET `username` = ?, `password` = ? WHERE `userId` = ?',
+        [request.payload['username'],request.payload['password'],request.payload['userId']], function (error, results, fields) {
+            if (error)
+                throw error;
+            reply (results);
+        });        
+    }
+});
+server.route({
+    method: 'PUT',
+    path: '/pol/creds',
+    handler: function(request, reply) {
+        console.log('Server processing a /pol credential PUT request');
+        pool.query('UPDATE `politicians` SET `username` = ?, `password` = ? WHERE `polId` = ?',
+        [request.payload['username'],request.payload['password'],request.payload['polId']], function (error, results, fields) {
+            if (error)
+                throw error;
+            reply (results);
+        });        
+    }
+});
+server.route({
+    method: 'PUT',
+    path: '/nonPol/info',
+    handler: function(request, reply) {
+        console.log('Server processing a /nonPol Info PUT request');
+        pool.query('UPDATE `nonPolitician` SET `email` = ?, `picture` = ?, `firstName` = ?, `lastName` = ?, `phone` = ? WHERE `userId` = ?',
+        [request.payload['email'],request.payload['picture'],request.payload['firstName'],request.payload['lastName'],request.payload['phone'], request.payload['userId']], function (error, results, fields) {
+            if (error)
+                throw error;
+            reply (results);
+        });       
+    }
+});
+server.route({
+    method: 'PUT',
+    path: '/pol/info',
+    handler: function(request, reply) {
+        console.log('Server processing a /pol info PUT request');
+        pool.query('UPDATE `politicians` SET `email` = ?, `picture` = ?, `firstName` = ?, `lastName` = ?, `phone` = ?, `partyId` = ?, `website` = ?, `platformId` = ? WHERE `polId` = ?',
+        [request.payload['email'],request.payload['picture'],request.payload['firstName'],request.payload['lastName'],request.payload['phone'],request.payload['partyId'],
+        request.payload['website'],request.payload['platformId'],request.payload['polId']], function (error, results, fields) {
+            if (error)
+                throw error;
+            reply (results);
+        });        
+    }
+});
+server.route({
     method: 'GET',
     path: '/election',
     handler: function (request, reply) {
@@ -276,7 +360,7 @@ server.route({
     }
 });
 
-/*server.route({
+server.route({
     method: 'POST',
     path: '/login',
     handler: function (request, reply) {
@@ -315,8 +399,9 @@ server.route({
             });
         });
     }
-});*///
-server.route({
+});
+
+/*server.route({
     method: ['POST','GET'],
     path: '/login',
     handler: function (request, reply) {
@@ -464,7 +549,7 @@ server.route({
             failAction: 'error' // may also be 'ignore' or 'log'
             }
         }
-});
+});*/
 
 server.route({
     method: 'GET',
