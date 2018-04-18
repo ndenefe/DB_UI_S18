@@ -34,12 +34,126 @@ server.state('session',{
 
 });
 
+
 server.route({
     method: 'GET',
     path: '/',
     handler: function (request, reply) {
         console.log('Server processing a / request');
         reply('Hello, world!');
+    }
+});
+
+//FULL TABLE GET ROUTES
+server.route({
+    method: 'GET',
+    path: '/getFavorites',
+    handler: function (request, reply) {
+        console.log('Server processing a /getFavorites request');
+        pool.query('SELECT * FROM `favorites`', function (error, results, fields){
+            if (error)
+                throw error;
+            //Sends back to the client the value of 1 + 1
+            reply (results);
+        });
+    }
+});
+
+server.route({
+    method: 'GET',
+    path: '/getPhone',
+    handler: function (request, reply) {
+        console.log('Server processing a /getPhone request');
+        pool.query('SELECT * FROM `phone`', function (error, results, fields){
+            if (error)
+                throw error;
+            //Sends back to the client the value of 1 + 1
+            reply (results);
+        });
+    }
+});
+
+server.route({
+    method: 'GET',
+    path: '/getPlatform',
+    handler: function (request, reply) {
+        console.log('Server processing a /getPlatform request');
+        pool.query('SELECT * FROM `platform`', function (error, results, fields){
+            if (error)
+                throw error;
+            //Sends back to the client the value of 1 + 1
+            reply (results);
+        });
+    }
+});
+
+server.route({
+    method: 'GET',
+    path: '/getPictures',
+    handler: function (request, reply) {
+        console.log('Server processing a /getPictures request');
+        pool.query('SELECT * FROM `pictures`', function (error, results, fields){
+            if (error)
+                throw error;
+            //Sends back to the client the value of 1 + 1
+            reply (results);
+        });
+    }
+});
+
+server.route({
+    method: 'GET',
+    path: '/getParty',
+    handler: function (request, reply) {
+        console.log('Server processing a /getParty request');
+        pool.query('SELECT * FROM `party`', function (error, results, fields){
+            if (error)
+                throw error;
+            //Sends back to the client the value of 1 + 1
+            reply (results);
+        });
+    }
+});
+
+server.route({
+    method: 'GET',
+    path: '/getElections',
+    handler: function (request, reply) {
+        console.log('Server processing a /getElections request');
+        pool.query('SELECT * FROM `elections`', function (error, results, fields){
+            if (error)
+                throw error;
+            //Sends back to the client the value of 1 + 1
+            reply (results);
+        });
+    }
+});
+
+server.route({
+    method: 'GET',
+    path: '/getCandidates',
+    handler: function (request, reply) {
+        console.log('Server processing a /getCandidates request');
+        pool.query('SELECT * FROM `candidates`', function (error, results, fields){
+            if (error)
+                throw error;
+            //Sends back to the client the value of 1 + 1
+            reply (results);
+        });
+    }
+});
+
+server.route({
+    method: 'GET',
+    path: '/getPositions',
+    handler: function (request, reply) {
+        console.log('Server processing a /getPositions request');
+        pool.query('SELECT * FROM `positions`', function (error, results, fields){
+            if (error)
+                throw error;
+            //Sends back to the client the value of 1 + 1
+            reply (results);
+        });
     }
 });
 
@@ -72,7 +186,7 @@ server.route({
 //A new route to test connectivity to MySQL
 server.route({
     method: 'GET',
-    path: '/nonPol',
+    path: '/getNonPol',
     handler: function (request, reply) {
         console.log('Server processing a /nonPol request');
 
@@ -81,7 +195,7 @@ server.route({
         //function (error, results, fields){...} is a call-back function that the
         //MySQL lib uses to send info back such as if there was an error, and/or the
         //actual results.
-        pool.query('SELECT firstName, lastName, email FROM nonPolitician', function (error, results, fields) {
+        pool.query('SELECT * FROM nonPolitician', function (error, results, fields) {
             if (error)
                 throw error;
             //Sends back to the client the value of 1 + 1
@@ -94,11 +208,11 @@ server.route({
 });
 server.route({
     method: 'GET',
-    path: '/pol',
+    path: '/getPol',
     handler: function (request, reply) {
         
         console.log('Server processing a /pol request');
-        pool.query('SELECT firstName, lastName, email FROM politicians', function (error, results, fields) {
+        pool.query('SELECT * FROM politicians', function (error, results, fields) {
             if (error)
                 throw error;
             reply (results);
@@ -162,7 +276,7 @@ server.route({
     }
 });
 
-server.route({
+/*server.route({
     method: 'POST',
     path: '/login',
     handler: function (request, reply) {
@@ -201,8 +315,8 @@ server.route({
             });
         });
     }
-});
-/*server.route({
+});*///
+server.route({
     method: ['POST','GET'],
     path: '/login',
     handler: function (request, reply) {
@@ -226,8 +340,8 @@ server.route({
                     var passs=request.payload['password'];
                     if(!cookie){
                         cookie={
-                            username:users,
-                            password:passs
+                            username: users,
+                            password: passs
                         };
                     }
                     
@@ -239,8 +353,8 @@ server.route({
                     var passs=request.payload['password'];
                     if(!cookie){
                         cookie={
-                            username:users,
-                            password:passs
+                            username: users,
+                            password: passs
                         };
                     }
                     cookie.lastVisit=Date.now();
@@ -289,13 +403,13 @@ server.route({
             if (error)
                 throw error;
             else{
-                if(results.length==1){
-                    reply(results[0]);
-                }
+		if(results.length==1){
+			reply('Hello '+results[0].firstName+' '+results[0].lastName);
+		}
                 else if(results2.length==1){
-                    reply(results2[0]);
-                }
-	        }
+			reply('Hello '+results2[0].firstName+' '+results2[0].lastName);
+		}
+	    }
         });
         });
         }
@@ -331,10 +445,10 @@ server.route({
                 throw error;
             else{
 		if(results.length==1){
-			reply(results[0]);
+			reply(results);
 		}
                 else if(results2.length==1){
-			reply(results2[0]);
+			reply(results2);
 		}
 		else
 			reply('Cannot find account, try it again.');
@@ -360,7 +474,7 @@ server.route({
         let cookie = request.state.session; 
         reply.redirect('/').unstate('session');  // delete session and redirect to default page
     }
-});*/
+});
 
 server.start((err) => {
 
