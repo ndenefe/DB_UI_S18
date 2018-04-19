@@ -12,3 +12,19 @@ export class Account {
   website?: string;
   tenure?: string;
 }
+
+export class Account2 {
+  userId?: number;
+  polId?: number;
+  username?: string;
+  password?: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  picture?: Blob;
+  phone?: string;
+  favorites?: number; // Will be changing because favorite politicians need to be their own table
+  partyId?: number;
+  website?: string;
+  platformId?: number;
+}

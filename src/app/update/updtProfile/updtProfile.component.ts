@@ -1,8 +1,6 @@
-import { Phone } from '../../domain/models/phone';
 import { Component, OnInit } from '@angular/core';
-import { Account } from '../../domain/models/account';
-import { Department } from '../../domain/models/department';
 import { Router, RouterLink} from '@angular/router';
+import { Tenure, Phone, Department, Account2, Login } from '../../domain';
 //import { Website } from '../../domain/models/website';
 
 //needs to load in profile info at start
@@ -22,15 +20,26 @@ import { Router, RouterLink} from '@angular/router';
 })
 export class UpdtProfileComponent implements OnInit {
 
+
   public title: string;
 
-  public account: Account;
+  public account: Account2;
 
-  public accounts: Account[];
+  public accounts: Account2[];
 
   public departments: Department[];
 
   public newPhone: Phone;
+
+  public passCheck: string;
+
+  public tenNumber: number;
+
+  public tenure: Tenure[];
+
+  public phoneNumbers: Phone[];
+
+  public isPol: boolean;
 
   constructor() { }
 
@@ -38,10 +47,20 @@ export class UpdtProfileComponent implements OnInit {
     this.title = 'Sign Up';
 
     this.account = {
-      name: '',
-      phoneNumbers: [],
-      login: []
+      username: '',
+      password: '',
+      firstName: '',
+      lastName: '',
+      email: '',
+      partyId: null,
+      website: ''
     };
+
+    this.accounts = [];
+
+    this.phoneNumbers = [];
+
+    this.tenNumber = null;
 
     this.departments = [
       { id: 0, name: 'Democrat' },
@@ -51,7 +70,20 @@ export class UpdtProfileComponent implements OnInit {
       { id: 4, name: 'Other' }
     ];
 
-    this.accounts = [];
+    this.tenure = [
+      { id: 0, name: '0 Years'},
+      { id: 1, name: '1 Year'},
+      { id: 2, name: '2 Years'},
+      { id: 3, name: '3 Years'},
+      { id: 4, name: '4 Years'},
+      { id: 5, name: '5 Years'},
+      { id: 6, name: '6 Years'},
+      { id: 7, name: '7 Years'},
+      { id: 8, name: '8 Years'},
+      { id: 9, name: '9 Years'},
+      { id: 10, name: '10 Years'},
+      { id: 11, name: 'Over 10 Years'}
+    ]
 
     this.newPhone = {};
   }
@@ -61,34 +93,31 @@ export class UpdtProfileComponent implements OnInit {
     {
       this.newPhone.type = "None";
     }
-    this.account.phoneNumbers.push(this.newPhone);
+    this.phoneNumbers.push(this.newPhone);
     this.newPhone = {};
   }
 
   public deleteFieldValue(index) {
-    this.account.phoneNumbers.splice(index, 1);
+    this.phoneNumbers.splice(index, 1);
   }
 
   public saveProfile() {
-    if (!this.account.isEmployee)
-    {
-      this.account.departmentId = null;
-    }
-    if (!this.account.hasWebsite)
-    {
-      this.account.website = null;
-    }
-    else
-    {
-      this.accounts.push(this.account);
-    }
+    this.accounts.push(this.account);
+    //reset data
     this.account = {
-      name: '',
-      phoneNumbers: []
+      username: '',
+      password: '',
+      firstName: '',
+      lastName: '',
+      email: '',
+      partyId: null,
+      website: ''
     };
+    this.phoneNumbers = [];
+    this.tenNumber = null;
     this.newPhone = {};
+    this.passCheck = "";
   }
 
 }
-
 

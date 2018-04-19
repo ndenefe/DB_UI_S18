@@ -1,9 +1,6 @@
-import { Phone } from './../domain/models/phone';
 import { Component, OnInit } from '@angular/core';
-import { Account } from '../domain/models/account';
-import { Department } from '../domain/models/department';
 import { Router, RouterLink} from '@angular/router';
-import { Login } from './../domain/models/login';
+import { Tenure, Phone, Department, Account2, Login } from './../domain';
 
 @Component({
   selector: 'app-sign-up',
@@ -11,47 +8,50 @@ import { Login } from './../domain/models/login';
   styleUrls: ['./sign-up.component.css']
 })
 
-//need to add to db on a valid save and the route to the profile page with the 
-//users info automatically loaded
-
-//needs better validation
+//add phone number validation and pipe stuff
 
 export class SignUpComponent implements OnInit {
 
   public title: string;
 
-  public account: Account;
+  public account: Account2;
 
-  public accounts: Account[];
+  public accounts: Account2[];
 
   public departments: Department[];
 
   public newPhone: Phone;
 
-  public loginInfo: Login[];
-
-  public signUp: Login;
-
   public passCheck: string;
 
-  public checkPassMatch: boolean = true;
+  public tenNumber: number;
 
-  public reset: boolean = false;
+  public tenure: Tenure[];
+
+  public phoneNumbers: Phone[];
+
+  public isPol: boolean;
 
   constructor() { }
 
   ngOnInit() {
     this.title = 'Sign Up';
 
-    this.loginInfo = [];
-
-    this.signUp = {};
-
     this.account = {
-      name: '',
-      phoneNumbers: [],
-      login: []
+      username: '',
+      password: '',
+      firstName: '',
+      lastName: '',
+      email: '',
+      partyId: null,
+      website: ''
     };
+
+    this.accounts = [];
+
+    this.phoneNumbers = [];
+
+    this.tenNumber = null;
 
     this.departments = [
       { id: 0, name: 'Democrat' },
@@ -61,7 +61,20 @@ export class SignUpComponent implements OnInit {
       { id: 4, name: 'Other' }
     ];
 
-    this.accounts = [];
+    this.tenure = [
+      { id: 0, name: '0 Years'},
+      { id: 1, name: '1 Year'},
+      { id: 2, name: '2 Years'},
+      { id: 3, name: '3 Years'},
+      { id: 4, name: '4 Years'},
+      { id: 5, name: '5 Years'},
+      { id: 6, name: '6 Years'},
+      { id: 7, name: '7 Years'},
+      { id: 8, name: '8 Years'},
+      { id: 9, name: '9 Years'},
+      { id: 10, name: '10 Years'},
+      { id: 11, name: 'Over 10 Years'}
+    ]
 
     this.newPhone = {};
   }
@@ -71,44 +84,29 @@ export class SignUpComponent implements OnInit {
     {
       this.newPhone.type = "None";
     }
-    this.account.phoneNumbers.push(this.newPhone);
+    this.phoneNumbers.push(this.newPhone);
     this.newPhone = {};
   }
 
   public deleteFieldValue(index) {
-    this.account.phoneNumbers.splice(index, 1);
+    this.phoneNumbers.splice(index, 1);
   }
 
   public saveProfile() {
-    if (!this.account.isEmployee)
-    {
-      this.account.departmentId = null;
-    }
-    if (!this.account.hasWebsite)
-    {
-      this.account.website = null;
-    }
-    if (this.reset)
-    {
-      this.checkPassMatch = true;
-    }
-    if (this.passCheck != this.signUp.password)
-    {
-      this.checkPassMatch = false;
-      this.reset = true;
-    }
-    else
-    {
-      this.account.login.push(this.signUp);
-      this.loginInfo.push(this.signUp);
-      this.accounts.push(this.account);
-    }
+    this.accounts.push(this.account);
+    //reset data
     this.account = {
-      name: '',
-      phoneNumbers: []
+      username: '',
+      password: '',
+      firstName: '',
+      lastName: '',
+      email: '',
+      partyId: null,
+      website: ''
     };
+    this.phoneNumbers = [];
+    this.tenNumber = null;
     this.newPhone = {};
-    this.signUp = {};
     this.passCheck = "";
   }
 
