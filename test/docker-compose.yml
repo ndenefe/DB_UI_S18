@@ -2,9 +2,7 @@ version: '3'
 services:
     mysql:
         build:
-            context: ./sql
-        image:
-            ndenefe/mysql:mysql        
+            context: ./sql       
         ports:
             - "3306:3306"
         volumes:
@@ -14,7 +12,5 @@ services:
             - "mysql"
         build:
             context: ./test
-        image:
-            ndenefe/node:LabS18_hapinode
         ports:
             - "3000:3000"
