@@ -1,0 +1,10 @@
+.navbar-toggler{
+  background-color: lightcoral;
+}
+input {
+  border-color: lightcoral;
+  border-collapse: collapse;
+}
+nav{
+  margin-bottom: 1em;
+}
