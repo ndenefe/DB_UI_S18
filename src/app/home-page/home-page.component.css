@@ -31,4 +31,11 @@ img {
 
 .card{
   background-color: whitesmoke;
+  padding: 1em;
+}
+table{
+  margin: 1rem auto;
+}
+td{
+  width:20%;
 }

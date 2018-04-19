@@ -13,6 +13,7 @@ import { RegisterComponent } from './register/register.component';
 import { PhonePipe, Phone } from './domain';
 import { UpdateModule} from './update/update.module';
 import { DomainModule } from './domain';
+import { NavigationComponent } from './navigation/navigation.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { DomainModule } from './domain';
     UpelectionComponent,
     HomePageComponent,
     RegisterComponent,
-    PhonePipe
+    PhonePipe,
+    NavigationComponent
 ],
   imports: [
     BrowserModule,
