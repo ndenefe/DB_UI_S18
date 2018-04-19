@@ -360,7 +360,7 @@ server.route({
     }
 });
 
-server.route({
+/*server.route({
     method: 'POST',
     path: '/login',
     handler: function (request, reply) {
@@ -399,9 +399,9 @@ server.route({
             });
         });
     }
-});
+});*/
 
-/*server.route({
+server.route({
     method: ['POST','GET'],
     path: '/login',
     handler: function (request, reply) {
@@ -410,7 +410,7 @@ server.route({
         console.log('Server processing a /login request');
         if(cookie){
             cookie.lastVisit=Date.now();
-            return reply.redirect('/login/userpage').state('session',cookie);
+            return reply.redirect('/login/profile').state('session',cookie);
         }
         pool.query('SELECT * FROM `politicians` WHERE `username` =? AND `password` = ? ', [request.payload['username'],request.payload['password']],function (error, results, fields) {
             if (error)
@@ -431,7 +431,7 @@ server.route({
                     }
                     
                     cookie.lastVisit=Date.now();
-                    return reply.redirect('/login/userpage').state('session',cookie);
+                    return reply.redirect('/login/profile').state('session',cookie);
 		}
                 else if(results2.length==1){
                     var users=request.payload['username'];
@@ -443,7 +443,7 @@ server.route({
                         };
                     }
                     cookie.lastVisit=Date.now();
-                    return reply.redirect('/login/userpage').state('session',cookie);
+                    return reply.redirect('/login/profile').state('session',cookie);
                     
                 }
 		else{
@@ -525,7 +525,7 @@ server.route({
             if (error)
                 throw error;
             
-            pool.query(' SELECT username,email,picture,firstName,lastName,phone,favorites FROM `nonPolitician` WHERE `username` =? AND `password` = ?', [userr,pass],function (error, results2, fields) {
+            pool.query(' SELECT username,email,picture,firstName,lastName,phone FROM `nonPolitician` WHERE `username` =? AND `password` = ?', [userr,pass],function (error, results2, fields) {
             if (error)
                 throw error;
             else{
@@ -549,7 +549,7 @@ server.route({
             failAction: 'error' // may also be 'ignore' or 'log'
             }
         }
-});*/
+});
 
 server.route({
     method: 'GET',
