@@ -19,6 +19,7 @@ export class UpelectionComponent implements OnInit {
     this.getdata();
   }
   getdata() {
-    this.testRepository.getdata().subscribe(x => console.log(x));
+    this.testRepository.getdata().subscribe(x =>
+      console.log(x));
   }
 }
