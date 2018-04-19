@@ -10,6 +10,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { UpelectionComponent } from './upelection/upelection.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { RegisterComponent } from './register/register.component';
+import { PhonePipe, Phone } from './domain';
 import { UpdateModule} from './update/update.module';
 import { DomainModule } from './domain';
 
@@ -21,7 +22,8 @@ import { DomainModule } from './domain';
     ProfileComponent,
     UpelectionComponent,
     HomePageComponent,
-    RegisterComponent
+    RegisterComponent,
+    PhonePipe
 ],
   imports: [
     BrowserModule,

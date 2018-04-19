@@ -2,17 +2,22 @@
   <h1 class="text-center">Update Profile</h1>
   <div class="row">
     <div class="col-md-8" id="content">
-
       <div class="card">
         <div class="card-header">
           Account Information
         </div>
         <div class="card-body">
           <div class="form-group text-left">
-            <label for="account_name">
-              Name:
+            <label for="account_fname">
+              First Name:
             </label>
-            <input type="text" id="account_name" class="form-control" [(ngModel)]="account.name" />
+            <input type="text" id="account_nfame" class="form-control" [(ngModel)]="account.firstName" />
+          </div>
+          <div class="form-group text-left">
+            <label for="account_lname">
+              Last Name:
+            </label>
+            <input type="text" id="account_lname" class="form-control" [(ngModel)]="account.lastName" />
           </div>
           <div class="form-group text-left">
             <label for="account_email">
@@ -22,43 +27,38 @@
           </div>
           <br />
           <div class="form-group">
-            <label for="account_isEmployee">
-              <input type="checkbox" id="account_isEmployee" [(ngModel)]="account.isEmployee" /> Politician
+            <label for="isPol">
+              <input type="checkbox" id="isPol" [(ngModel)]="isPol" /> Politician
             </label>
           </div>
-          <div class="form-group text-left" *ngIf="account.isEmployee">
-            <label for="account_departmentId">
+          <div class="form-group text-left" *ngIf="isPol">
+            <label for="account_partyId">
               Party Affliation:
             </label>
-            <select id="account_departmentId" class="form-control" [(ngModel)]="account.departmentId">
+            <select id="account_partyId" class="form-control" [(ngModel)]="account.partyId">
               <option></option>
               <option [value]="department.id" *ngFor="let department of departments">
                 {{ department.name }}
               </option>
             </select>
-          </div>
-          <div class="form-group">
-            <label for="account_hasWebsite">
-              <input type="checkbox" id="account_hasWebsite" [(ngModel)]="account.hasWebsite" /> Website
-            </label>
-          </div>
-
-          <div class="form-group text-left" *ngIf="account.hasWebsite">
-            <div class="form-group text-left">
-              <label for="account_email">
-                Website Link:
-              </label>
-              <input type="website" id="account_website" class="form-control" [(ngModel)]="account.website" />
-            </div>
-          </div>
-
-          <div class="form-group text-left">
             <label for="account_tenure">
               Tenure Information:
             </label>
-            <input type="text" id="account_tenure" class="form-control" [(ngModel)]="account.tenure" />
+            <select id="account_tenure" class="form-control" [(ngModel)]="tenNumber">
+              <option></option>
+              <option [value]="ten.id" *ngFor="let ten of tenure">
+                {{ ten.name }}
+              </option>
+            </select>
+            <div class="form-group text-left">
+              <div class="form-group text-left">
+                <label for="website">
+                  Website Link:
+                </label>
+                <input type="website" id="account_website" class="form-control" [(ngModel)]="account.website" />
+              </div>
+            </div>
           </div>
-
         </div>
       </div>
       <br />
@@ -66,7 +66,7 @@
         <li class="list-group-item text-left" id="header">
           Phone Numbers:
         </li>
-        <li class="list-group-item" *ngFor="let phone of account.phoneNumbers; let i = index">
+        <li class="list-group-item" *ngFor="let phone of phoneNumbers; let i = index">
           {{ phone.number }}
           <button class="btn btn-danger float-right" type="button" (click)="deleteFieldValue(i)">Delete</button>
           <button class="btn btn-primary float-right">
@@ -100,14 +100,24 @@
         </li>
       </ul>
       <br />
-      <button class="btn btn-lg btn-success btn-block" type="button" [disabled] = '!account.name || !account.email' (click)="saveProfile()">
-        Save Changes
+      <button class="btn btn-lg btn-success btn-block" type="button" [disabled]='!account.firstName || !account.email' (click)="saveProfile()">
+        Save
       </button>
+      <a [routerLink]="['/login']" class="btn btn-danger btn-block bg-gray">Cancel</a>
       <div class="col-md-4">
         <pre>{{account|json}}</pre>
       </div>
       <div class="col-md-4">
         <pre>{{accounts|json}}</pre>
+      </div>
+      <div class="col-md-4">
+        <pre>{{phoneNumbers|json}}</pre>
+      </div>
+      <div class="col-md-4">
+        <pre>{{newPhone|json}}</pre>
+      </div>
+      <div class="col-md-4">
+        <pre>{{tenNumber|json}}</pre>
       </div>
     </div>
   </div>
