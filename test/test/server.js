@@ -35,15 +35,6 @@ server.state('session',{
 });
 
 
-server.route({
-    method: 'GET',
-    path: '/',
-    handler: function (request, reply) {
-        console.log('Server processing a / request');
-        reply('Hello, world!');
-    }
-});
-
 //FULL TABLE GET ROUTES
 server.route({
     method: 'GET',
