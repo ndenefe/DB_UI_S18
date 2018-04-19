@@ -17,4 +17,8 @@ export class TestRepository {
         body = body.set('password', creds.password);
         return this.httpClient.post(`${this.endpoint}/login`, body);
     }
+
+    public getdata(): Observable<Account2> {
+      return this.httpClient.get(`${this.endpoint}/getElections`);
+  }
 }
