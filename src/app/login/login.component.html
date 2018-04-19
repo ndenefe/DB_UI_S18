@@ -25,8 +25,7 @@
         </div>
         <hr>
         <div class="form-group">
-
-          <button class="btn btn-primary" type="button" (click)="login()">Login</button>
+          <button [routerLink]="['/profile', newLogin.username]" class="btn btn-primary" type="button" [disabled] = '!newLogin.username || !newLogin.password' (click)="login()">Login</button>
           <a [routerLink]="['/signup']" class="btn btn-link">Sign Up</a>
         </div>
       </form>

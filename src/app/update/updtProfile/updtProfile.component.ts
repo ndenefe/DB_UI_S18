@@ -1,16 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink} from '@angular/router';
-import { Tenure, Phone, Department, Account2, Login } from './../domain';
+import { Tenure, Phone, Department, Account2, Login } from '../../domain';
+//import { Website } from '../../domain/models/website';
+
+//needs to load in profile info at start
+
+//needs to change info in the db on save
+
+//need to add navbar to the page and add this to navbar
+
+//need to add beter validation on this and sign up
+
+//add an alert message saying profile was updated if sucessful
 
 @Component({
-  selector: 'app-sign-up',
-  templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.css']
+  selector: 'app-updtProfile',
+  templateUrl: './updtProfile.component.html',
+  styleUrls: ['./updtProfile.component.css']
 })
+export class UpdtProfileComponent implements OnInit {
 
-//add phone number validation and pipe stuff
-
-export class SignUpComponent implements OnInit {
 
   public title: string;
 
@@ -111,3 +120,4 @@ export class SignUpComponent implements OnInit {
   }
 
 }
+
