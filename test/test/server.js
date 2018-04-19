@@ -242,9 +242,9 @@ server.route({
     path: '/pol',
     handler: function(request, reply) {
         console.log('Server processing a /pol POST request');
-        pool.query('INSERT INTO `politicians` (`username`,`password`,`email`,`picture`,`firstName`,`lastName`,`phone`,`partyId`,`website`,`platformId`) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+        pool.query('INSERT INTO `politicians` (`username`,`password`,`email`,`picture`,`firstName`,`lastName`,`phone`,`partyId`,`website`,`platformId`,`tenure`) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
         [request.payload['username'],request.payload['password'],request.payload['email'],request.payload['picture'],request.payload['firstName'],
-        request.payload['lastName'], request.payload['phone'],request.payload['partyId'],request.payload['website'],request.payload['platformId']],
+        request.payload['lastName'], request.payload['phone'],request.payload['partyId'],request.payload['website'],request.payload['platformId'],request.payload['tenure']],
         function (error, results, fields){
             if (error)
                 throw error;
@@ -297,9 +297,9 @@ server.route({
     path: '/pol/info',
     handler: function(request, reply) {
         console.log('Server processing a /pol info PUT request');
-        pool.query('UPDATE `politicians` SET `email` = ?, `picture` = ?, `firstName` = ?, `lastName` = ?, `phone` = ?, `partyId` = ?, `website` = ?, `platformId` = ? WHERE `polId` = ?',
+        pool.query('UPDATE `politicians` SET `email` = ?, `picture` = ?, `firstName` = ?, `lastName` = ?, `phone` = ?, `partyId` = ?, `website` = ?, `platformId` = ?, `tenure` = ?, WHERE `polId` = ?',
         [request.payload['email'],request.payload['picture'],request.payload['firstName'],request.payload['lastName'],request.payload['phone'],request.payload['partyId'],
-        request.payload['website'],request.payload['platformId'],request.payload['polId']], function (error, results, fields) {
+        request.payload['website'],request.payload['platformId'], request.payload['tenure'],request.payload['polId']], function (error, results, fields) {
             if (error)
                 throw error;
             reply (results);

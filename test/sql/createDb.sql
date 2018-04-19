@@ -77,6 +77,7 @@ CREATE TABLE IF NOT EXISTS `DB_Lab`.`politicians` (
   `phone` VARCHAR(45) NULL DEFAULT NULL,
   `website` VARCHAR(45) NULL DEFAULT NULL,
   `platformId` INT NULL DEFAULT NULL,
+  `tenure` INT NULL DEFAULT NULL,
   PRIMARY KEY (`polId`),
   INDEX `partyId_idx` (`partyId` ASC),
   INDEX `platformId_idx` (`platformId` ASC),
