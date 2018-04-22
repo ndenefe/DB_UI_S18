@@ -378,7 +378,7 @@ server.route({
     }
 });
 
-/*server.route({
+server.route({
     method: 'POST',
     path: '/login',
     handler: function (request, reply) {
@@ -417,9 +417,9 @@ server.route({
             });
         });
     }
-});*/
+});
 
-server.route({
+/*server.route({
     method: ['POST','GET'],
     path: '/login',
     handler: function (request, reply) {
@@ -577,7 +577,7 @@ server.route({
         let cookie = request.state.session; 
         reply.redirect('/').unstate('session');  // delete session and redirect to default page
     }
-});
+});*/
 
 server.start((err) => {
 
