@@ -252,6 +252,28 @@ CREATE TRIGGER after_politicians_insert
   FOR EACH ROW
   INSERT INTO `DB_Lab`.`uniqueIds` (`isPol`,`UID`) VALUES (1,new.polId);
 
+-- CREATE TRIGGER after_nonPolitician_delete
+--   AFTER DELETE ON `DB_Lab`.`nonPolitician`
+--   FOR EACH ROW
+--   DELETE FROM `DB_Lab`.`uniqueIds` WHERE `isPol` = 1 AND `UID` = old.userId;
+  
+-- CREATE TRIGGER after_politicians_delete
+--   AFTER DELETE ON `DB_Lab`.`politicians`
+--   FOR EACH ROW
+--   DELETE FROM `DB_Lab`.`uniqueIds` WHERE `isPol` = 1 AND `UID` = old.polId;
+
+DELIMITER $$
+CREATE TRIGGER after_uniqueIds_delete
+  AFTER DELETE ON `DB_Lab`.`uniqueIds`
+  FOR EACH ROW
+  BEGIN
+    IF (old.isPol=1) THEN
+      DELETE FROM `DB_Lab`.`politicians` WHERE `polId` = old.UID;
+    ELSE
+      DELETE FROM `DB_Lab`.`nonPolitician` WHERE `userId`= old.UID;
+    END IF;
+  END;
+$$
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

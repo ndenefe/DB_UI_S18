@@ -311,6 +311,19 @@ server.route({
         });        
     }
 });
+
+server.route({
+    method: 'DELETE',
+    path: `/deleteAccount/{UID}`,
+    handler: function(request, reply) {
+        console.log('Server processing a /deleteAccount request');
+        pool.query('DELETE FROM uniqueIds WHERE uniqueId = ?', request.params['UID'], function(error,results,fields){
+            if(error)
+                throw error;
+            reply(results);
+        });
+    }
+});
 server.route({
     method: 'GET',
     path: '/election',
