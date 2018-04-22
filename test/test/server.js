@@ -419,6 +419,34 @@ server.route({
     }
 });
 
+server.route({ //Gets all information pertaining to a UID
+    method: 'GET',
+    path: '/account/{UID}',
+    handler: function (request, reply) {
+        
+        console.log('Server processing a /account request');
+        pool.query('SELECT isPol, UID FROM `uniqueIds` WHERE `uniqueId` = ?', request.params['UID'], function (error, results, fields) {
+            if (error)
+                throw error;
+            if (results[0].isPol===1){
+                //console.log(`political`);
+                pool.query('SELECT * FROM (`politicians` NATURAL JOIN `party`) WHERE `polId` = ?',results[0].UID, function(error, results2, fields){
+                    reply(results2);
+                });
+            }else if (results[0].isPol===0){
+                //console.log('nonpolitical');
+                pool.query('SELECT * FROM nonPolitician WHERE userId = ?',results[0].UID, function(error, results3, fields){
+                    reply(results3);
+                });
+            }
+            //reply(results);
+
+        });
+        
+        
+    }
+});
+
 /*server.route({
     method: ['POST','GET'],
     path: '/login',
