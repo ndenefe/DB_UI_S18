@@ -84,13 +84,13 @@ CREATE TABLE IF NOT EXISTS `DB_Lab`.`politicians` (
   CONSTRAINT `partyId`
     FOREIGN KEY (`partyId`)
     REFERENCES `DB_Lab`.`party` (`partyId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `platformId`
     FOREIGN KEY (`platformId`)
     REFERENCES `DB_Lab`.`platform` (`platformId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -122,8 +122,8 @@ CREATE TABLE IF NOT EXISTS `DB_Lab`.`elections` (
   CONSTRAINT `positionId`
     FOREIGN KEY (`positionId`)
     REFERENCES `DB_Lab`.`positions` (`positionId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -140,13 +140,13 @@ CREATE TABLE IF NOT EXISTS `DB_Lab`.`candidates` (
   CONSTRAINT `accountId`
     FOREIGN KEY (`polId`)
     REFERENCES `DB_Lab`.`politicians` (`polId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `electionId`
     FOREIGN KEY (`electionId`)
     REFERENCES `DB_Lab`.`elections` (`electionId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -163,13 +163,13 @@ CREATE TABLE IF NOT EXISTS `DB_Lab`.`favorites` (
   CONSTRAINT `userID`
     FOREIGN KEY (`userId`)
     REFERENCES `DB_Lab`.`nonPolitician` (`userId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `polId`
     FOREIGN KEY (`polId`)
     REFERENCES `DB_Lab`.`politicians` (`polId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -182,18 +182,7 @@ CREATE TABLE IF NOT EXISTS `DB_Lab`.`uniqueIds` (
   `uniqueId` INT NOT NULL AUTO_INCREMENT,
   `isPol` INT(1) NOT NULL,
   `UID` INT NOT NULL,
-  PRIMARY KEY (`uniqueId`),
-  INDEX `user_idx` (`UID` ASC),
-  CONSTRAINT `user`
-    FOREIGN KEY (`UID`)
-    REFERENCES `DB_Lab`.`nonPolitician` (`userId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `politician`
-    FOREIGN KEY (`UID`)
-    REFERENCES `DB_Lab`.`politicians` (`polId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`uniqueId`))
 ENGINE = InnoDB;
 
 
@@ -212,8 +201,8 @@ CREATE TABLE IF NOT EXISTS `DB_Lab`.`phone` (
   CONSTRAINT `UID`
     FOREIGN KEY (`UID`)
     REFERENCES `DB_Lab`.`uniqueIds` (`uniqueId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -229,8 +218,8 @@ CREATE TABLE IF NOT EXISTS `DB_Lab`.`pictures` (
   CONSTRAINT `fk_pictures_1`
     FOREIGN KEY (`partyId`)
     REFERENCES `DB_Lab`.`party` (`partyId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -248,10 +237,20 @@ CREATE TABLE IF NOT EXISTS `DB_Lab`.`session` (
   CONSTRAINT `SessionUser`
     FOREIGN KEY (`UID`)
     REFERENCES `DB_Lab`.`uniqueIds` (`uniqueId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+
+CREATE TRIGGER after_nonPolitician_insert 
+  AFTER INSERT ON `DB_Lab`.`nonPolitician`
+  FOR EACH ROW 
+  INSERT INTO `DB_Lab`.`uniqueIds` (`isPol`,`UID`) VALUES (0,new.userId);
+
+CREATE TRIGGER after_politicians_insert
+  AFTER INSERT ON `DB_Lab`.`politicians`
+  FOR EACH ROW
+  INSERT INTO `DB_Lab`.`uniqueIds` (`isPol`,`UID`) VALUES (1,new.polId);
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
@@ -309,16 +308,16 @@ COMMIT;
 -- -----------------------------------------------------
 -- Data for table `DB_Lab`.`uniqueIds`
 -- -----------------------------------------------------
-START TRANSACTION;
-USE `DB_Lab`;
-INSERT INTO `DB_Lab`.`uniqueIds` (`isPol`, `UID`) VALUES (1,1);
-INSERT INTO `DB_Lab`.`uniqueIds` (`isPol`, `UID`) VALUES (1,2);
-INSERT INTO `DB_Lab`.`uniqueIds` (`isPol`, `UID`) VALUES (1,3);
-INSERT INTO `DB_Lab`.`uniqueIds` (`isPol`, `UID`) VALUES (0,1);
-INSERT INTO `DB_Lab`.`uniqueIds` (`isPol`, `UID`) VALUES (0,2);
-INSERT INTO `DB_Lab`.`uniqueIds` (`isPol`, `UID`) VALUES (0,3);
+-- START TRANSACTION;
+-- USE `DB_Lab`;
+-- INSERT INTO `DB_Lab`.`uniqueIds` (`isPol`, `UID`) VALUES (1,1);
+-- INSERT INTO `DB_Lab`.`uniqueIds` (`isPol`, `UID`) VALUES (1,2);
+-- INSERT INTO `DB_Lab`.`uniqueIds` (`isPol`, `UID`) VALUES (1,3);
+-- INSERT INTO `DB_Lab`.`uniqueIds` (`isPol`, `UID`) VALUES (0,1);
+-- INSERT INTO `DB_Lab`.`uniqueIds` (`isPol`, `UID`) VALUES (0,2);
+-- INSERT INTO `DB_Lab`.`uniqueIds` (`isPol`, `UID`) VALUES (0,3);
 
-COMMIT;
+-- COMMIT;
 
 
 -- -----------------------------------------------------

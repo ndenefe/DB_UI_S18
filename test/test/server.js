@@ -150,6 +150,20 @@ server.route({
 
 server.route({
     method: 'GET',
+    path: '/getUnique',
+    handler: function (request, reply) {
+        console.log('Server processing a /getUnique request');
+        pool.query('SELECT * FROM `uniqueIds`', function (error, results, fields){
+            if (error)
+                throw error;
+            //Sends back to the client the value of 1 + 1
+            reply (results);
+        });
+    }
+});
+
+server.route({
+    method: 'GET',
     path: '/search/{name}',
     handler: function (request, reply) {
         console.log('Server processing a /search request');
@@ -239,12 +253,8 @@ server.route({
         function (error, results, fields){
             if (error)
                 throw error;
+            else reply(results);
         });
-        // pool.query('INSERT INTO `uniqueIds` (`isPol`,`UID`) VALUES (1, SELECT `polId` FROM `politicians` WHERE `username`=? AND `password`=?)',[request.payload['username'],request.payload['password']],
-        // function (error, results2, fields) {
-        //     if (error)
-        //         throw error;
-        // }); 
     }
 });
 
