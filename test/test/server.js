@@ -111,7 +111,7 @@ server.route({
     path: '/getElections',
     handler: function (request, reply) {
         console.log('Server processing a /getElections request');
-        pool.query('SELECT * FROM `elections`', function (error, results, fields){
+        pool.query('SELECT `firstName`, `lastName`, `name` AS `position`, `dateTime`, `city`, `state` FROM `elections` NATURAL JOIN `positions` NATURAL JOIN `candidates` NATURAL JOIN `politicians`', function (error, results, fields){
             if (error)
                 throw error;
             //Sends back to the client the value of 1 + 1
@@ -239,8 +239,12 @@ server.route({
         function (error, results, fields){
             if (error)
                 throw error;
-            reply (results);
         });
+        // pool.query('INSERT INTO `uniqueIds` (`isPol`,`UID`) VALUES (1, SELECT `polId` FROM `politicians` WHERE `username`=? AND `password`=?)',[request.payload['username'],request.payload['password']],
+        // function (error, results2, fields) {
+        //     if (error)
+        //         throw error;
+        // }); 
     }
 });
 
