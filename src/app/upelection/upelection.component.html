@@ -3,14 +3,14 @@
 <div id="content">
 
   <div class="container" id="con">
-    <h1 >{{title}}</h1>
-    <div class="card">
+    <h1>UPCOMING ELECTIONS</h1>
+    <div class="card" *ngFor="let obj of check">
       <div class="card-body">
         <div class="col">
-          <h3>mock name</h3>
+          <h3>{{ obj.firstName }} {{ obj.lastName }}</h3>
 
           <p>Election on: date in pipe
-            <!--{{obj.date| date:'MMM d, y'}}-->
+            {{obj.dateTime| date:'MMM d, y'}}
           </p>
           <p>Candidate: add here</p>
         </div>

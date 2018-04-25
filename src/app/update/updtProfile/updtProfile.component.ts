@@ -1,17 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterLink} from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Tenure, Phone, Department, Account2, Login } from '../../domain';
-//import { Website } from '../../domain/models/website';
-
-//needs to load in profile info at start
-
-//needs to change info in the db on save
-
-//need to add navbar to the page and add this to navbar
-
-//need to add beter validation on this and sign up
-
-//add an alert message saying profile was updated if sucessful
+import { TestRepository } from '../../domain';
+import { SharedService } from "../../domain";
 
 @Component({
   selector: 'app-updtProfile',
@@ -21,6 +12,8 @@ import { Tenure, Phone, Department, Account2, Login } from '../../domain';
 export class UpdtProfileComponent implements OnInit {
 
 
+  public userAccount: Account2;
+
   public title: string;
 
   public account: Account2;
@@ -29,38 +22,21 @@ export class UpdtProfileComponent implements OnInit {
 
   public departments: Department[];
 
-  public newPhone: Phone;
-
   public passCheck: string;
-
-  public tenNumber: number;
 
   public tenure: Tenure[];
 
-  public phoneNumbers: Phone[];
-
-  public isPol: boolean;
-
-  constructor() { }
+  constructor(private testRepository: TestRepository,
+    private sharedService: SharedService) { }
 
   ngOnInit() {
+
+    this.userAccount = this.sharedService.account;
     this.title = 'Sign Up';
 
-    this.account = {
-      username: '',
-      password: '',
-      firstName: '',
-      lastName: '',
-      email: '',
-      partyId: null,
-      website: ''
-    };
+    this.account = this.userAccount;
 
     this.accounts = [];
-
-    this.phoneNumbers = [];
-
-    this.tenNumber = null;
 
     this.departments = [
       { id: 0, name: 'Democrat' },
@@ -71,38 +47,37 @@ export class UpdtProfileComponent implements OnInit {
     ];
 
     this.tenure = [
-      { id: 0, name: '0 Years'},
-      { id: 1, name: '1 Year'},
-      { id: 2, name: '2 Years'},
-      { id: 3, name: '3 Years'},
-      { id: 4, name: '4 Years'},
-      { id: 5, name: '5 Years'},
-      { id: 6, name: '6 Years'},
-      { id: 7, name: '7 Years'},
-      { id: 8, name: '8 Years'},
-      { id: 9, name: '9 Years'},
-      { id: 10, name: '10 Years'},
-      { id: 11, name: 'Over 10 Years'}
+      { id: 0, name: '0 Years' },
+      { id: 1, name: '1 Year' },
+      { id: 2, name: '2 Years' },
+      { id: 3, name: '3 Years' },
+      { id: 4, name: '4 Years' },
+      { id: 5, name: '5 Years' },
+      { id: 6, name: '6 Years' },
+      { id: 7, name: '7 Years' },
+      { id: 8, name: '8 Years' },
+      { id: 9, name: '9 Years' },
+      { id: 10, name: '10 Years' },
+      { id: 11, name: 'Over 10 Years' }
     ]
 
-    this.newPhone = {};
-  }
-
-  public addPhone() {
-    if (!this.newPhone.type)
-    {
-      this.newPhone.type = "None";
-    }
-    this.phoneNumbers.push(this.newPhone);
-    this.newPhone = {};
-  }
-
-  public deleteFieldValue(index) {
-    this.phoneNumbers.splice(index, 1);
   }
 
   public saveProfile() {
+    this.account.userId = this.userAccount.userId;
     this.accounts.push(this.account);
+
+    if(this.account.partyId)
+    {
+      this.testRepository.updtProfilePol(this.account).subscribe(x => {});
+    }
+    else
+    {
+      this.testRepository.updtProfileNonPol(this.account).subscribe(x => { });
+    }
+
+    this.sharedService.insertData(this.account);
+
     //reset data
     this.account = {
       username: '',
@@ -113,9 +88,6 @@ export class UpdtProfileComponent implements OnInit {
       partyId: null,
       website: ''
     };
-    this.phoneNumbers = [];
-    this.tenNumber = null;
-    this.newPhone = {};
     this.passCheck = "";
   }
 
