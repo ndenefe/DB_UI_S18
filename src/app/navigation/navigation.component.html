@@ -17,21 +17,33 @@
       <li class="nav-item">
         <a class="nav-link" routerLink="/signup">SignUp</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/upelection">Elections</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/profile">Profile</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+          Events
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" routerLink="/register">Register</a>
+        </div>
+      </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
           aria-expanded="false">
           Update
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" routerLink="/update_login">Update Login</a> 
+          <a class="dropdown-item" routerLink="/update_login">Update Login</a>
           <!-- <a class="dropdown-item" (click)= "updateL()">Update Login</a> -->
           <a class="dropdown-item" routerLink="/update_profile">Update Profile</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">Logout</a>
         </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
