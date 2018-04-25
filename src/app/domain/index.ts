@@ -13,3 +13,6 @@ export * from './pipes/phone.pipe';
 
 // repositories
 export * from './repositories/test-repository.service';
+
+//services
+export * from './services/shared.service';

@@ -27,12 +27,14 @@
         <div class="form-group">
           <!--<button [routerLink]="['/profile', newLogin.username]" class="btn btn-primary" type="button" [disabled] = '!newLogin.username || !newLogin.password' (click)="login()">Login</button>-->
           <button  class="btn btn-primary" type="button" [disabled] = '!newLogin.username || !newLogin.password' (click)="login()">Login</button>
-          <a [routerLink]="['/signup']" class="btn btn-link">Sign Up</a>
         </div>
       </form>
     </div>
   </div>
   <div class="col-md-4">
     <pre>{{logins|json}}</pre>
+  </div>
+  <div class="col-md-4">
+    <pre>{{ldata|json}}</pre>
   </div>
 </div>
