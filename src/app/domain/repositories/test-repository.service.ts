@@ -4,7 +4,6 @@ import { Login } from '../models/login';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Upelection } from '../models/upelection';
-import { Upelection2 } from '../models/upelection';
 import { Repository } from './repository.service';
 @Injectable()
 export class TestRepository {
