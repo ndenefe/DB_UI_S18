@@ -167,18 +167,16 @@ server.route({
     path: '/search/{name}',
     handler: function (request, reply) {
         console.log('Server processing a /search request');
-        pool.query('SELECT firstName,lastName, email, picture, phone  FROM `nonPolitician` WHERE `firstName`=? OR `lastName`=?', [request.params.name,request.params.name], function (error, results, fields) {
+        console.log(request.params.name);
+        pool.query('SELECT * FROM `nonPolitician` WHERE `firstName`=? OR `lastName`=?', [request.params.name,request.params.name], function (error, results, fields) {
             if (error)
                 throw error;
             else{
-                pool.query('SELECT firstName,lastName, email, picture, partyId, phone, website, platformId FROM `politicians` WHERE `firstName`=? OR `lastName`=?', [request.params.name,request.params.name], function (error, results2, fields) {
+                pool.query('SELECT * FROM `politicians` WHERE `firstName`=? OR `lastName`=?', [request.params.name,request.params.name], function (error, results2, fields) {
                     if (error)
                         throw error;
                     else{
-                        if(results)
-                            reply('politician results: '+results);
-                        else if(results2)
-                            reply('nonpolitician results: '+results);
+                        reply([results,results2]);
                     }
 
                 });
