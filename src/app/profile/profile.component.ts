@@ -1,5 +1,6 @@
+import { SharedService } from './../domain/services/shared.service';
 import { Component, OnInit, Input} from '@angular/core';
-import { Account } from '../domain/models/account';
+import { Account, Account2 } from '../domain/models/account';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -9,12 +10,35 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProfileComponent implements OnInit {
   @Input()
-  public account: Account;
+  public account: Account2;
   public name: string;
+  public imageName: string;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute,
+     private sharedServ: SharedService) { }
 
   ngOnInit() {
+    this.account = this.sharedServ.account;
+    switch (this.account.partyId) {
+      case 0:
+        this.imageName = 'assets/democrat.png';
+      break;
+      case 1:
+        this.imageName = 'assets/republican.jpg';
+      break;
+      case 2:
+        this.imageName = 'assets/libertarian.png';
+      break;
+      case 3:
+        this.imageName = 'assets/green.jpeg';
+      break;
+      case 4:
+        this.imageName = 'assets/default.jpeg';
+      break;
+      default:
+        this.imageName = 'assets/default.jpeg';
+      break;
+    }
 
     this.route.paramMap
     .subscribe(params => (
