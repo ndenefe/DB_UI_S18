@@ -1,116 +1,119 @@
-<div class="container">
-  <h1 class="text-center">{{ title }}</h1>
-  <div class="row">
-    <div class="col-md-8" id="content">
-      <div class="card">
-        <div class="card-header">
-          Login Information
-        </div>
-        <div class="card-body">
-          <div class="form-group text-left">
-            <label for="signup_name">
-              Username:
-            </label>
-            <input type="text" id="account_name" class="form-control" [(ngModel)]="account.username" />
+<div class="row">
+  <img src="assets/reploLarge.png" alt="Mountain View" style="width:250px;height:250px;">
+  <div class="container">
+    <h1 class="heading">{{ title }}</h1>
+    <div class="row">
+      <div class="col-md-8" id="content">
+        <div class="card">
+          <div class="card-header">
+            Login Information
           </div>
-          <div class="form-group text-left">
-            <label for="account_email">
-              Password:
-            </label>
-            <input type="password" id="_password" class="form-control" [(ngModel)]="account.password" />
-
-            <button onclick="if (_password.type == 'text') _password.type ='password';else _password.type = 'text';">Toggle</button>
-          </div>
-          <div *ngIf="passCheck != account.password" class="text-danger">*Passwords do not match</div>
-          <div class="form-group text-left">
-            <label for="account_email">
-              Re-enter Password:
-            </label>
-            <input type="password" id="password" class="form-control" [(ngModel)]="passCheck" />
-            <button onclick="if (password.type == 'text') password.type ='password';else password.type = 'text';">Toggle</button>
-          </div>
-          <div *ngIf="passCheck != account.password" class="text-danger">*Passwords do not match</div>
-        </div>
-      </div>
-
-      <br />
-      <div class="card">
-        <div class="card-header">
-          Account Information
-        </div>
-        <div class="card-body">
-          <div class="form-group text-left">
-            <label for="account_fname">
-              First Name:
-            </label>
-            <input type="text" id="account_nfame" class="form-control" [(ngModel)]="account.firstName" />
-          </div>
-          <div class="form-group text-left">
-            <label for="account_lname">
-              Last Name:
-            </label>
-            <input type="text" id="account_lname" class="form-control" [(ngModel)]="account.lastName" />
-          </div>
-          <div class="form-group text-left">
-            <label for="account_email">
-              Email:
-            </label>
-            <input type="email" id="account_email" class="form-control" [(ngModel)]="account.email" />
-          </div>
-          <br />
-          <div class="form-group">
-            <label for="isPol">
-              <input type="checkbox" id="isPol" [(ngModel)]="isPol" /> Politician
-            </label>
-          </div>
-          <div class="form-group text-left" *ngIf="isPol">
-            <label for="account_partyId">
-              Party Affliation:
-            </label>
-            <select id="account_partyId" class="form-control" [(ngModel)]="account.partyId">
-              <option></option>
-              <option [value]="department.id" *ngFor="let department of departments">
-                {{ department.name }}
-              </option>
-            </select>
-            <label for="account_tenure">
-              Tenure Information:
-            </label>
-            <select id="account_tenure" class="form-control" [(ngModel)]="account.tenure">
-              <option></option>
-              <option [value]="ten.id" *ngFor="let ten of tenure">
-                {{ ten.name }}
-              </option>
-            </select>
+          <div class="card-body">
             <div class="form-group text-left">
+              <label for="signup_name">
+                Username:
+              </label>
+              <input type="text" id="account_name" class="form-control" [(ngModel)]="account.username" />
+            </div>
+            <div class="form-group text-left">
+              <label for="account_email">
+                Password:
+              </label>
+              <input type="password" id="_password" class="form-control" [(ngModel)]="account.password" />
+
+              <button onclick="if (_password.type == 'text') _password.type ='password';else _password.type = 'text';">Toggle</button>
+            </div>
+            <div *ngIf="passCheck != account.password" class="text-danger">*Passwords do not match</div>
+            <div class="form-group text-left">
+              <label for="account_email">
+                Re-enter Password:
+              </label>
+              <input type="password" id="password" class="form-control" [(ngModel)]="passCheck" />
+              <button onclick="if (password.type == 'text') password.type ='password';else password.type = 'text';">Toggle</button>
+            </div>
+            <div *ngIf="passCheck != account.password" class="text-danger">*Passwords do not match</div>
+          </div>
+        </div>
+
+        <br />
+        <div class="card">
+          <div class="card-header">
+            Account Information
+          </div>
+          <div class="card-body">
+            <div class="form-group text-left">
+              <label for="account_fname">
+                First Name:
+              </label>
+              <input type="text" id="account_nfame" class="form-control" [(ngModel)]="account.firstName" />
+            </div>
+            <div class="form-group text-left">
+              <label for="account_lname">
+                Last Name:
+              </label>
+              <input type="text" id="account_lname" class="form-control" [(ngModel)]="account.lastName" />
+            </div>
+            <div class="form-group text-left">
+              <label for="account_email">
+                Email:
+              </label>
+              <input type="email" id="account_email" class="form-control" [(ngModel)]="account.email" />
+            </div>
+            <br />
+            <div class="form-group">
+              <label for="isPol">
+                <input type="checkbox" id="isPol" [(ngModel)]="isPol" /> Politician
+              </label>
+            </div>
+            <div class="form-group text-left" *ngIf="isPol">
+              <label for="account_partyId">
+                Party Affliation:
+              </label>
+              <select id="account_partyId" class="form-control" [(ngModel)]="account.partyId">
+                <option></option>
+                <option [value]="department.id" *ngFor="let department of departments">
+                  {{ department.name }}
+                </option>
+              </select>
+              <label for="account_tenure">
+                Tenure Information:
+              </label>
+              <select id="account_tenure" class="form-control" [(ngModel)]="account.tenure">
+                <option></option>
+                <option [value]="ten.id" *ngFor="let ten of tenure">
+                  {{ ten.name }}
+                </option>
+              </select>
               <div class="form-group text-left">
-                <label for="website">
-                  Website Link:
-                </label>
-                <input type="website" id="account_website" class="form-control" [(ngModel)]="account.website" />
+                <div class="form-group text-left">
+                  <label for="website">
+                    Website Link:
+                  </label>
+                  <input type="website" id="account_website" class="form-control" [(ngModel)]="account.website" />
+                </div>
               </div>
             </div>
-          </div>
-          <div class="form-group text-left">
-            <label for="account_lname">
-              Phone Number:
-            </label>
-            <input type="text" id="account_phone" class="form-control" [(ngModel)]="account.phone" />
+            <div class="form-group text-left">
+              <label for="account_lname">
+                Phone Number:
+              </label>
+              <input type="text" id="account_phone" class="form-control" [(ngModel)]="account.phone" />
+            </div>
           </div>
         </div>
-      </div>
-      <br />
-      <button class="btn btn-lg btn-success btn-block" type="button" [disabled]='!account.firstName || !account.email' (click)="saveProfile()">
-        Save
-      </button>
-      <a [routerLink]="['/login']" class="btn btn-danger btn-block bg-gray">Cancel</a>
-      <div class="col-md-4">
-        <pre>{{account|json}}</pre>
-      </div>
-      <div class="col-md-4">
-        <pre>{{accounts|json}}</pre>
+        <br />
+        <button class="btn btn-lg btn-success btn-block" type="button" [disabled]='!account.firstName || !account.email' (click)="saveProfile()">
+          Save
+        </button>
+        <a [routerLink]="['/login']" class="btn btn-danger btn-block bg-gray">Cancel</a>
+        <div class="col-md-4">
+          <pre>{{account|json}}</pre>
+        </div>
+        <div class="col-md-4">
+          <pre>{{accounts|json}}</pre>
+        </div>
       </div>
     </div>
   </div>
+  <br />
 </div>
-<br />
