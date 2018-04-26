@@ -2,18 +2,18 @@
 <h1 class="text-center">Profile</h1>
 <div class="card" id="profile-card">
   <div class="card-header">
-    <h3 class="text-center">{{name}}</h3>
+    <h3 class="text-center">{{account.firstName}} {{account.lastName}}</h3>
   </div>
   <div class="card-body">
     <div class="row">
-      <img class="pull-left col-sm" src="assets/textImg.jpg" alt="Mountain View">
+      <img class="pull-left col-sm" [src]='imageName' alt="Mountain View">
 
       <ul class="d-inline col-sm list-group">
-        <li class="list-group-item">Party</li>
-        <li class="list-group-item">Phone Nums</li>
-        <li class="list-group-item">District</li>
-        <li class="list-group-item">...</li>
-        <li class="list-group-item">...</li>
+        <li class="list-group-item">{{account.partyId}}</li>
+        <li class="list-group-item">{{account.phone}}</li>
+        <li class="list-group-item">{{account.email}}</li>
+        <li class="list-group-item">{{account.website}}</li>
+        <li class="list-group-item">{{account.tenure}}</li>
 
       </ul>
     </div>
@@ -25,6 +25,6 @@
       <button class="btn btn-secondary col-md-2 d-inline">View Map</button>
       <span class="col-md-3"></span>
     </div>
-
+    <pre>{{account|json}}</pre>
   </div>
   <!-- </div> -->

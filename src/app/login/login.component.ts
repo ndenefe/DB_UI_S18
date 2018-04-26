@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink} from '@angular/router';
 import { Login, Account, Account2 } from '../domain';
 import { TestRepository } from '../domain/repositories/test-repository.service';
-import {SharedService} from "../domain";
+import {SharedService} from '../domain';
 
 @Component({
   selector: 'app-login',
@@ -25,8 +25,10 @@ export class LoginComponent implements OnInit {
 
     public reset = false;
 
+
     constructor(private testRepository: TestRepository,
-    private sharedService: SharedService) {}
+    private sharedService: SharedService,
+    private router: Router) {}
 
     ngOnInit() {
       this.logins = [];
@@ -51,6 +53,7 @@ export class LoginComponent implements OnInit {
         this.testRepository.login(this.newLogin).subscribe(x => {
           this.logins.push(x);
           this.sharedService.insertData(x);
+          this.router.navigateByUrl('/profile');
         });
         this.newLogin = {};
       }
