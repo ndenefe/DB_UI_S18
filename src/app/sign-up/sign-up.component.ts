@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterLink} from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Tenure, Phone, Department, Account2, Login } from './../domain';
+import { TestRepository } from '../domain/repositories/test-repository.service';
+import { SharedService } from "../domain";
 
 @Component({
   selector: 'app-sign-up',
@@ -20,19 +22,20 @@ export class SignUpComponent implements OnInit {
 
   public departments: Department[];
 
-  public newPhone: Phone;
-
   public passCheck: string;
 
   public tenNumber: number;
 
   public tenure: Tenure[];
 
-  public phoneNumbers: Phone[];
-
   public isPol: boolean;
 
-  constructor() { }
+  public newLogin: Login;
+
+  public ldata: Account2;
+
+  constructor(private testRepository: TestRepository,
+    private sharedService: SharedService) { }
 
   ngOnInit() {
     this.title = 'Sign Up';
@@ -49,8 +52,6 @@ export class SignUpComponent implements OnInit {
 
     this.accounts = [];
 
-    this.phoneNumbers = [];
-
     this.tenNumber = null;
 
     this.departments = [
@@ -62,38 +63,42 @@ export class SignUpComponent implements OnInit {
     ];
 
     this.tenure = [
-      { id: 0, name: '0 Years'},
-      { id: 1, name: '1 Year'},
-      { id: 2, name: '2 Years'},
-      { id: 3, name: '3 Years'},
-      { id: 4, name: '4 Years'},
-      { id: 5, name: '5 Years'},
-      { id: 6, name: '6 Years'},
-      { id: 7, name: '7 Years'},
-      { id: 8, name: '8 Years'},
-      { id: 9, name: '9 Years'},
-      { id: 10, name: '10 Years'},
-      { id: 11, name: 'Over 10 Years'}
+      { id: 0, name: '0 Years' },
+      { id: 1, name: '1 Year' },
+      { id: 2, name: '2 Years' },
+      { id: 3, name: '3 Years' },
+      { id: 4, name: '4 Years' },
+      { id: 5, name: '5 Years' },
+      { id: 6, name: '6 Years' },
+      { id: 7, name: '7 Years' },
+      { id: 8, name: '8 Years' },
+      { id: 9, name: '9 Years' },
+      { id: 10, name: '10 Years' },
+      { id: 11, name: 'Over 10 Years' }
     ]
-
-    this.newPhone = {};
+    this.newLogin = {};
   }
 
-  public addPhone() {
-    if (!this.newPhone.type)
-    {
-      this.newPhone.type = "None";
-    }
-    this.phoneNumbers.push(this.newPhone);
-    this.newPhone = {};
-  }
-
-  public deleteFieldValue(index) {
-    this.phoneNumbers.splice(index, 1);
-  }
 
   public saveProfile() {
     this.accounts.push(this.account);
+
+    //make put request
+    if(this.account.partyId)
+    {
+      this.testRepository.polSignUp(this.account).subscribe(x =>{});
+    }
+    else
+    {
+      this.testRepository.nonPolSignUp(this.account).subscribe(x => {});
+    }
+    //update the shared component with this information
+    this.newLogin.password = this.account.password;
+    this.newLogin.username = this.account.username;
+    this.testRepository.login(this.newLogin).subscribe(x => {
+      this.ldata = x;
+      this.sharedService.insertData(x);
+    });
     //reset data
     this.account = {
       username: '',
@@ -104,9 +109,6 @@ export class SignUpComponent implements OnInit {
       partyId: null,
       website: ''
     };
-    this.phoneNumbers = [];
-    this.tenNumber = null;
-    this.newPhone = {};
     this.passCheck = "";
   }
 

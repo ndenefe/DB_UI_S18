@@ -14,6 +14,8 @@ import { PhonePipe, Phone } from './domain';
 import { UpdateModule} from './update/update.module';
 import { DomainModule } from './domain';
 import { NavigationComponent } from './navigation/navigation.component';
+import {SharedService} from "./domain";
+
 
 @NgModule({
   declarations: [
@@ -37,7 +39,7 @@ import { NavigationComponent } from './navigation/navigation.component';
       {enableTracing: true}
   )
   ],
-  providers: [],
+  providers: [SharedService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

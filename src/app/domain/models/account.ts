@@ -27,4 +27,5 @@ export class Account2 {
   partyId?: number;
   website?: string;
   platformId?: number;
+  tenure?: number;
 }

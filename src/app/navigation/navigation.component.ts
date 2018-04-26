@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+import {SharedService} from "../domain";
+import {Account2} from '../domain';
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavigationComponent implements OnInit {
 
-  constructor() { }
+
+  public accounts: Account2 = {};
+
+  constructor(private sharedService: SharedService) { }
 
   ngOnInit() {
   }
+
+  // updateL(){
+  //   this.accounts = this.sharedService.account;
+  //   console.log(this.sharedService.account);
+  // }
+
 
 }
