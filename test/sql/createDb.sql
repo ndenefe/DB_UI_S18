@@ -311,6 +311,12 @@ START TRANSACTION;
 USE `DB_Lab`;
 INSERT INTO `DB_Lab`.`platform` (`platformName`) VALUES ('Gun Control');
 INSERT INTO `DB_Lab`.`platform` (`platformName`) VALUES ('Immigration');
+INSERT INTO `DB_Lab`.`platform` (`platformName`) VALUES ('National Security');
+INSERT INTO `DB_Lab`.`platform` (`platformName`) VALUES ('Environment');
+INSERT INTO `DB_Lab`.`platform` (`platformName`) VALUES ('Health Care');
+INSERT INTO `DB_Lab`.`platform` (`platformName`) VALUES ('Economy');
+INSERT INTO `DB_Lab`.`platform` (`platformName`) VALUES ('Free College');
+INSERT INTO `DB_Lab`.`platform` (`platformName`) VALUES ('Legalize Weed');
 
 COMMIT;
 
@@ -323,6 +329,18 @@ USE `DB_Lab`;
 INSERT INTO `DB_Lab`.`politicians` (`username`, `password`, `email`, `picture`, `firstName`, `lastName`, `partyId`, `phone`, `website`, `platformId`,`tenure`) VALUES ('Jsmith', 'smithy', 'jsmith@rep.gov', NULL, 'John', 'Smith', 1, NULL, NULL, NULL,20);
 INSERT INTO `DB_Lab`.`politicians` (`username`, `password`, `email`, `picture`, `firstName`, `lastName`, `partyId`, `phone`, `website`, `platformId`,`tenure`) VALUES ('Rwilliams', 'freewilly', 'rwilliams@dem.gov', NULL, 'Rebeccah', 'Williams', 2, NULL, NULL, 1,12);
 INSERT INTO `DB_Lab`.`politicians` (`username`, `password`, `email`, `picture`, `firstName`, `lastName`, `partyId`, `phone`, `website`, `platformId`,`tenure`) VALUES ('Broham', 'brosbeforehoes', 'broham@teaparty.org', NULL, 'Barry', 'Roham', 3, NULL, NULL, NULL,10);
+INSERT INTO `DB_Lab`.`politicians` (`username`, `password`, `email`, `picture`, `firstName`, `lastName`, `partyId`, `phone`, `website`, `platformId`,`tenure`) VALUES ('The_Donald', 'maga', 'donald@trump.org', NULL, 'Donald', 'Trump', 1, NULL, NULL, 3,10);
+INSERT INTO `DB_Lab`.`politicians` (`username`, `password`, `email`, `picture`, `firstName`, `lastName`, `partyId`, `phone`, `website`, `platformId`,`tenure`) VALUES ('H_Clinton', 'ihatetrump', 'hilary@privateserver.gov', NULL, 'Hilary', 'Clinton', 2, NULL, NULL, 1,10);
+INSERT INTO `DB_Lab`.`politicians` (`username`, `password`, `email`, `picture`, `firstName`, `lastName`, `partyId`, `phone`, `website`, `platformId`,`tenure`) VALUES ('Bernstar', 'freecollege', 'bernie.sanders@gmail.com', NULL, 'Bernie', 'Sanders', 2, NULL, NULL, 7,10);
+INSERT INTO `DB_Lab`.`politicians` (`username`, `password`, `email`, `picture`, `firstName`, `lastName`, `partyId`, `phone`, `website`, `platformId`,`tenure`) VALUES ('Ted', 'zodiac', 'tedcruz@tedcruz.net', NULL, 'Ted', 'Cruz', 1, NULL, NULL, 3,10);
+INSERT INTO `DB_Lab`.`politicians` (`username`, `password`, `email`, `picture`, `firstName`, `lastName`, `partyId`, `phone`, `website`, `platformId`,`tenure`) VALUES ('LilMarco', '01011100', 'marcorubio@marcorubio.com', NULL, 'Marco', 'Rubio', 1, NULL, NULL, 3,10);
+INSERT INTO `DB_Lab`.`politicians` (`username`, `password`, `email`, `picture`, `firstName`, `lastName`, `partyId`, `phone`, `website`, `platformId`,`tenure`) VALUES ('Gary!', 'aleppo', 'gary@greenparty.com', NULL, 'Gary', 'Johnson', 3, NULL, NULL, 8,10);
+
+
+
+
+
+
 
 COMMIT;
 
@@ -351,6 +369,7 @@ INSERT INTO `DB_Lab`.`positions` (`name`) VALUES ('Governor');
 INSERT INTO `DB_Lab`.`positions` (`name`) VALUES ('Senator');
 INSERT INTO `DB_Lab`.`positions` (`name`) VALUES ('Representative');
 INSERT INTO `DB_Lab`.`positions` (`name`) VALUES ('Judge');
+INSERT INTO `DB_Lab`.`positions` (`name`) VALUES ('President');
 
 COMMIT;
 
@@ -363,6 +382,10 @@ USE `DB_Lab`;
 INSERT INTO `DB_Lab`.`elections` (`positionId`, `dateTime`, `city`, `state`) VALUES (1, '2018-10-12', 'Austin', 'TX');
 INSERT INTO `DB_Lab`.`elections` (`positionId`, `dateTime`, `city`, `state`) VALUES (2, '2020-02-24', 'Cincinnatti', 'CT');
 INSERT INTO `DB_Lab`.`elections` (`positionId`, `dateTime`, `city`, `state`) VALUES (3, '2020-03-23', 'Rhode Island', 'MA');
+INSERT INTO `DB_Lab`.`elections` (`positionId`, `dateTime`, `city`, `state`) VALUES (3, '2020-10-8', 'Fort Worth', 'TX');
+INSERT INTO `DB_Lab`.`elections` (`positionId`, `dateTime`, `city`, `state`) VALUES (3, '2020-10-8', 'Dallas', 'TX');
+INSERT INTO `DB_Lab`.`elections` (`positionId`, `dateTime`, `city`, `state`) VALUES (3, '2024-10-8', 'Las Vegas', 'NV');
+INSERT INTO `DB_Lab`.`elections` (`positionId`, `dateTime`, `city`, `state`) VALUES (3, '2028-10-8', 'New York City', 'NY');
 
 COMMIT;
 
@@ -375,6 +398,12 @@ USE `DB_Lab`;
 INSERT INTO `DB_Lab`.`candidates` (`polId`, `electionId`) VALUES (1, 1);
 INSERT INTO `DB_Lab`.`candidates` (`polId`, `electionId`) VALUES (2, 3);
 INSERT INTO `DB_Lab`.`candidates` (`polId`, `electionId`) VALUES (3, 2);
+INSERT INTO `DB_Lab`.`candidates` (`polId`, `electionId`) VALUES (4, 4);
+INSERT INTO `DB_Lab`.`candidates` (`polId`, `electionId`) VALUES (5, 4);
+INSERT INTO `DB_Lab`.`candidates` (`polId`, `electionId`) VALUES (6, 5);
+INSERT INTO `DB_Lab`.`candidates` (`polId`, `electionId`) VALUES (7, 5);
+INSERT INTO `DB_Lab`.`candidates` (`polId`, `electionId`) VALUES (8, 6);
+INSERT INTO `DB_Lab`.`candidates` (`polId`, `electionId`) VALUES (9, 6);
 
 COMMIT;
 
