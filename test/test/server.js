@@ -328,29 +328,10 @@ server.route({
     handler: function (request, reply) {
         
         console.log('Server processing a /election request');
-        pool.query('SELECT positionId, dateTime, city,state FROM `elections`', function (error, results, fields) {
+        pool.query('SELECT name AS position, dateTime, city,state FROM `elections` NATURAL JOIN `positions`', function (error, results, fields) {
             if (error)
                 throw error;
             reply (results);
-
-        });
-        
-    }
-});
-
-server.route({
-    method: 'GET',
-    path: '/{election}/{name}',
-    handler: function (request, reply) {
-        
-        console.log('Server processing a /searchElection request');
-        pool.query('SELECT firstName,lastName, email, picture, partyId, phone, website, dateTime, city,state FROM `politicians` NATURAL JOIN `candidates` NATURAL JOIN `elections` WHERE `electionId`=? AND (`firstName`=? OR `lastName`=?)', [request.params.election,request.params.name,request.params.name], function (error, results, fields) {
-            if (error)
-                throw error;
-            if(results.length==1)
-                reply (results);
-            else
-                reply("The people you are looking for doesn't enroll this election. ");
 
         });
         
@@ -363,7 +344,7 @@ server.route({
     handler: function (request, reply) {
         
         console.log('Server processing a /searchElection request');
-        pool.query('SELECT firstName,lastName, positionId, dateTime, city,state FROM `politicians` NATURAL JOIN `candidates` NATURAL JOIN `elections` WHERE (`firstName`=? OR `lastName`=?)', [request.params.name,request.params.name], function (error, results, fields) {
+        pool.query('SELECT firstName, lastName, electionId, name AS position, dateTime, city, state FROM `politicians` NATURAL JOIN `candidates` NATURAL JOIN `elections` NATURAL JOIN `positions` WHERE (`firstName`=? OR `lastName`=?)', [request.params.name,request.params.name], function (error, results, fields) {
             if (error)
                 throw error;
             if(results.length>=1)
