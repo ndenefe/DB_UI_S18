@@ -426,6 +426,23 @@ server.route({ //Gets all information pertaining to a UID
     }
 });
 
+server.route({ //Gets an election by its zip code
+    method: 'GET',
+    path: '/election_location/{zip}',
+    handler: function (request, reply) {
+        
+        console.log('Server processing a /election request');
+        pool.query('SELECT electionId, name AS position, dateTime, city, state, zip FROM `elections` NATURAL JOIN `positions` WHERE `zip` = ?', request.params['zip'], function (error, results, fields) {
+            if (error)
+                throw error;
+        reply(results);
+
+        });
+        
+        
+    }
+});
+
 /*server.route({
     method: ['POST','GET'],
     path: '/login',
