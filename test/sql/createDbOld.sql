@@ -84,13 +84,13 @@ CREATE TABLE IF NOT EXISTS `DB_Lab`.`politicians` (
   CONSTRAINT `partyId`
     FOREIGN KEY (`partyId`)
     REFERENCES `DB_Lab`.`party` (`partyId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `platformId`
     FOREIGN KEY (`platformId`)
     REFERENCES `DB_Lab`.`platform` (`platformId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -122,8 +122,8 @@ CREATE TABLE IF NOT EXISTS `DB_Lab`.`elections` (
   CONSTRAINT `positionId`
     FOREIGN KEY (`positionId`)
     REFERENCES `DB_Lab`.`positions` (`positionId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -140,13 +140,13 @@ CREATE TABLE IF NOT EXISTS `DB_Lab`.`candidates` (
   CONSTRAINT `accountId`
     FOREIGN KEY (`polId`)
     REFERENCES `DB_Lab`.`politicians` (`polId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `electionId`
     FOREIGN KEY (`electionId`)
     REFERENCES `DB_Lab`.`elections` (`electionId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -163,13 +163,13 @@ CREATE TABLE IF NOT EXISTS `DB_Lab`.`favorites` (
   CONSTRAINT `userID`
     FOREIGN KEY (`userId`)
     REFERENCES `DB_Lab`.`nonPolitician` (`userId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `polId`
     FOREIGN KEY (`polId`)
     REFERENCES `DB_Lab`.`politicians` (`polId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -182,18 +182,7 @@ CREATE TABLE IF NOT EXISTS `DB_Lab`.`uniqueIds` (
   `uniqueId` INT NOT NULL AUTO_INCREMENT,
   `isPol` INT(1) NOT NULL,
   `UID` INT NOT NULL,
-  PRIMARY KEY (`uniqueId`),
-  INDEX `user_idx` (`UID` ASC),
-  CONSTRAINT `user`
-    FOREIGN KEY (`UID`)
-    REFERENCES `DB_Lab`.`nonPolitician` (`userId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `politician`
-    FOREIGN KEY (`UID`)
-    REFERENCES `DB_Lab`.`politicians` (`polId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`uniqueId`))
 ENGINE = InnoDB;
 
 
@@ -212,8 +201,8 @@ CREATE TABLE IF NOT EXISTS `DB_Lab`.`phone` (
   CONSTRAINT `UID`
     FOREIGN KEY (`UID`)
     REFERENCES `DB_Lab`.`uniqueIds` (`uniqueId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -229,8 +218,8 @@ CREATE TABLE IF NOT EXISTS `DB_Lab`.`pictures` (
   CONSTRAINT `fk_pictures_1`
     FOREIGN KEY (`partyId`)
     REFERENCES `DB_Lab`.`party` (`partyId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -248,11 +237,43 @@ CREATE TABLE IF NOT EXISTS `DB_Lab`.`session` (
   CONSTRAINT `SessionUser`
     FOREIGN KEY (`UID`)
     REFERENCES `DB_Lab`.`uniqueIds` (`uniqueId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
+CREATE TRIGGER after_nonPolitician_insert 
+  AFTER INSERT ON `DB_Lab`.`nonPolitician`
+  FOR EACH ROW 
+  INSERT INTO `DB_Lab`.`uniqueIds` (`isPol`,`UID`) VALUES (0,new.userId);
+
+CREATE TRIGGER after_politicians_insert
+  AFTER INSERT ON `DB_Lab`.`politicians`
+  FOR EACH ROW
+  INSERT INTO `DB_Lab`.`uniqueIds` (`isPol`,`UID`) VALUES (1,new.polId);
+
+-- CREATE TRIGGER after_nonPolitician_delete
+--   AFTER DELETE ON `DB_Lab`.`nonPolitician`
+--   FOR EACH ROW
+--   DELETE FROM `DB_Lab`.`uniqueIds` WHERE `isPol` = 1 AND `UID` = old.userId;
+  
+-- CREATE TRIGGER after_politicians_delete
+--   AFTER DELETE ON `DB_Lab`.`politicians`
+--   FOR EACH ROW
+--   DELETE FROM `DB_Lab`.`uniqueIds` WHERE `isPol` = 1 AND `UID` = old.polId;
+
+DELIMITER $$
+CREATE TRIGGER after_uniqueIds_delete
+  AFTER DELETE ON `DB_Lab`.`uniqueIds`
+  FOR EACH ROW
+  BEGIN
+    IF (old.isPol=1) THEN
+      DELETE FROM `DB_Lab`.`politicians` WHERE `polId` = old.UID;
+    ELSE
+      DELETE FROM `DB_Lab`.`nonPolitician` WHERE `userId`= old.UID;
+    END IF;
+  END;
+$$
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
@@ -290,6 +311,12 @@ START TRANSACTION;
 USE `DB_Lab`;
 INSERT INTO `DB_Lab`.`platform` (`platformName`) VALUES ('Gun Control');
 INSERT INTO `DB_Lab`.`platform` (`platformName`) VALUES ('Immigration');
+INSERT INTO `DB_Lab`.`platform` (`platformName`) VALUES ('National Security');
+INSERT INTO `DB_Lab`.`platform` (`platformName`) VALUES ('Environment');
+INSERT INTO `DB_Lab`.`platform` (`platformName`) VALUES ('Health Care');
+INSERT INTO `DB_Lab`.`platform` (`platformName`) VALUES ('Economy');
+INSERT INTO `DB_Lab`.`platform` (`platformName`) VALUES ('Free College');
+INSERT INTO `DB_Lab`.`platform` (`platformName`) VALUES ('Legalize Weed');
 
 COMMIT;
 
@@ -302,6 +329,18 @@ USE `DB_Lab`;
 INSERT INTO `DB_Lab`.`politicians` (`username`, `password`, `email`, `picture`, `firstName`, `lastName`, `partyId`, `phone`, `website`, `platformId`,`tenure`) VALUES ('Jsmith', 'smithy', 'jsmith@rep.gov', NULL, 'John', 'Smith', 1, NULL, NULL, NULL,20);
 INSERT INTO `DB_Lab`.`politicians` (`username`, `password`, `email`, `picture`, `firstName`, `lastName`, `partyId`, `phone`, `website`, `platformId`,`tenure`) VALUES ('Rwilliams', 'freewilly', 'rwilliams@dem.gov', NULL, 'Rebeccah', 'Williams', 2, NULL, NULL, 1,12);
 INSERT INTO `DB_Lab`.`politicians` (`username`, `password`, `email`, `picture`, `firstName`, `lastName`, `partyId`, `phone`, `website`, `platformId`,`tenure`) VALUES ('Broham', 'brosbeforehoes', 'broham@teaparty.org', NULL, 'Barry', 'Roham', 3, NULL, NULL, NULL,10);
+INSERT INTO `DB_Lab`.`politicians` (`username`, `password`, `email`, `picture`, `firstName`, `lastName`, `partyId`, `phone`, `website`, `platformId`,`tenure`) VALUES ('The_Donald', 'maga', 'donald@trump.org', NULL, 'Donald', 'Trump', 1, NULL, NULL, 3,10);
+INSERT INTO `DB_Lab`.`politicians` (`username`, `password`, `email`, `picture`, `firstName`, `lastName`, `partyId`, `phone`, `website`, `platformId`,`tenure`) VALUES ('H_Clinton', 'ihatetrump', 'hilary@privateserver.gov', NULL, 'Hilary', 'Clinton', 2, NULL, NULL, 1,10);
+INSERT INTO `DB_Lab`.`politicians` (`username`, `password`, `email`, `picture`, `firstName`, `lastName`, `partyId`, `phone`, `website`, `platformId`,`tenure`) VALUES ('Bernstar', 'freecollege', 'bernie.sanders@gmail.com', NULL, 'Bernie', 'Sanders', 2, NULL, NULL, 7,10);
+INSERT INTO `DB_Lab`.`politicians` (`username`, `password`, `email`, `picture`, `firstName`, `lastName`, `partyId`, `phone`, `website`, `platformId`,`tenure`) VALUES ('Ted', 'zodiac', 'tedcruz@tedcruz.net', NULL, 'Ted', 'Cruz', 1, NULL, NULL, 3,10);
+INSERT INTO `DB_Lab`.`politicians` (`username`, `password`, `email`, `picture`, `firstName`, `lastName`, `partyId`, `phone`, `website`, `platformId`,`tenure`) VALUES ('LilMarco', '01011100', 'marcorubio@marcorubio.com', NULL, 'Marco', 'Rubio', 1, NULL, NULL, 3,10);
+INSERT INTO `DB_Lab`.`politicians` (`username`, `password`, `email`, `picture`, `firstName`, `lastName`, `partyId`, `phone`, `website`, `platformId`,`tenure`) VALUES ('Gary!', 'aleppo', 'gary@greenparty.com', NULL, 'Gary', 'Johnson', 3, NULL, NULL, 8,10);
+
+
+
+
+
+
 
 COMMIT;
 
@@ -309,16 +348,16 @@ COMMIT;
 -- -----------------------------------------------------
 -- Data for table `DB_Lab`.`uniqueIds`
 -- -----------------------------------------------------
-START TRANSACTION;
-USE `DB_Lab`;
-INSERT INTO `DB_Lab`.`uniqueIds` (`isPol`, `UID`) VALUES (1,1);
-INSERT INTO `DB_Lab`.`uniqueIds` (`isPol`, `UID`) VALUES (1,2);
-INSERT INTO `DB_Lab`.`uniqueIds` (`isPol`, `UID`) VALUES (1,3);
-INSERT INTO `DB_Lab`.`uniqueIds` (`isPol`, `UID`) VALUES (0,1);
-INSERT INTO `DB_Lab`.`uniqueIds` (`isPol`, `UID`) VALUES (0,2);
-INSERT INTO `DB_Lab`.`uniqueIds` (`isPol`, `UID`) VALUES (0,3);
+-- START TRANSACTION;
+-- USE `DB_Lab`;
+-- INSERT INTO `DB_Lab`.`uniqueIds` (`isPol`, `UID`) VALUES (1,1);
+-- INSERT INTO `DB_Lab`.`uniqueIds` (`isPol`, `UID`) VALUES (1,2);
+-- INSERT INTO `DB_Lab`.`uniqueIds` (`isPol`, `UID`) VALUES (1,3);
+-- INSERT INTO `DB_Lab`.`uniqueIds` (`isPol`, `UID`) VALUES (0,1);
+-- INSERT INTO `DB_Lab`.`uniqueIds` (`isPol`, `UID`) VALUES (0,2);
+-- INSERT INTO `DB_Lab`.`uniqueIds` (`isPol`, `UID`) VALUES (0,3);
 
-COMMIT;
+-- COMMIT;
 
 
 -- -----------------------------------------------------
@@ -330,6 +369,7 @@ INSERT INTO `DB_Lab`.`positions` (`name`) VALUES ('Governor');
 INSERT INTO `DB_Lab`.`positions` (`name`) VALUES ('Senator');
 INSERT INTO `DB_Lab`.`positions` (`name`) VALUES ('Representative');
 INSERT INTO `DB_Lab`.`positions` (`name`) VALUES ('Judge');
+INSERT INTO `DB_Lab`.`positions` (`name`) VALUES ('President');
 
 COMMIT;
 
@@ -342,6 +382,10 @@ USE `DB_Lab`;
 INSERT INTO `DB_Lab`.`elections` (`positionId`, `dateTime`, `city`, `state`) VALUES (1, '2018-10-12', 'Austin', 'TX');
 INSERT INTO `DB_Lab`.`elections` (`positionId`, `dateTime`, `city`, `state`) VALUES (2, '2020-02-24', 'Cincinnatti', 'CT');
 INSERT INTO `DB_Lab`.`elections` (`positionId`, `dateTime`, `city`, `state`) VALUES (3, '2020-03-23', 'Rhode Island', 'MA');
+INSERT INTO `DB_Lab`.`elections` (`positionId`, `dateTime`, `city`, `state`) VALUES (3, '2020-10-8', 'Fort Worth', 'TX');
+INSERT INTO `DB_Lab`.`elections` (`positionId`, `dateTime`, `city`, `state`) VALUES (3, '2020-10-8', 'Dallas', 'TX');
+INSERT INTO `DB_Lab`.`elections` (`positionId`, `dateTime`, `city`, `state`) VALUES (3, '2024-10-8', 'Las Vegas', 'NV');
+INSERT INTO `DB_Lab`.`elections` (`positionId`, `dateTime`, `city`, `state`) VALUES (3, '2028-10-8', 'New York City', 'NY');
 
 COMMIT;
 
@@ -354,6 +398,12 @@ USE `DB_Lab`;
 INSERT INTO `DB_Lab`.`candidates` (`polId`, `electionId`) VALUES (1, 1);
 INSERT INTO `DB_Lab`.`candidates` (`polId`, `electionId`) VALUES (2, 3);
 INSERT INTO `DB_Lab`.`candidates` (`polId`, `electionId`) VALUES (3, 2);
+INSERT INTO `DB_Lab`.`candidates` (`polId`, `electionId`) VALUES (4, 4);
+INSERT INTO `DB_Lab`.`candidates` (`polId`, `electionId`) VALUES (5, 4);
+INSERT INTO `DB_Lab`.`candidates` (`polId`, `electionId`) VALUES (6, 5);
+INSERT INTO `DB_Lab`.`candidates` (`polId`, `electionId`) VALUES (7, 5);
+INSERT INTO `DB_Lab`.`candidates` (`polId`, `electionId`) VALUES (8, 6);
+INSERT INTO `DB_Lab`.`candidates` (`polId`, `electionId`) VALUES (9, 6);
 
 COMMIT;
 

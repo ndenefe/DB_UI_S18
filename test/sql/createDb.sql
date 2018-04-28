@@ -117,6 +117,7 @@ CREATE TABLE IF NOT EXISTS `DB_Lab`.`elections` (
   `dateTime` DATETIME NOT NULL,
   `city` VARCHAR(45) NOT NULL,
   `state` VARCHAR(2) NOT NULL,
+  `zip` INT(5) NOT NULL,
   PRIMARY KEY (`electionId`),
   INDEX `positionId_idx` (`positionId` ASC),
   CONSTRAINT `positionId`
@@ -379,13 +380,13 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `DB_Lab`;
-INSERT INTO `DB_Lab`.`elections` (`positionId`, `dateTime`, `city`, `state`) VALUES (1, '2018-10-12', 'Austin', 'TX');
-INSERT INTO `DB_Lab`.`elections` (`positionId`, `dateTime`, `city`, `state`) VALUES (2, '2020-02-24', 'Cincinnatti', 'CT');
-INSERT INTO `DB_Lab`.`elections` (`positionId`, `dateTime`, `city`, `state`) VALUES (3, '2020-03-23', 'Rhode Island', 'MA');
-INSERT INTO `DB_Lab`.`elections` (`positionId`, `dateTime`, `city`, `state`) VALUES (3, '2020-10-8', 'Fort Worth', 'TX');
-INSERT INTO `DB_Lab`.`elections` (`positionId`, `dateTime`, `city`, `state`) VALUES (3, '2020-10-8', 'Dallas', 'TX');
-INSERT INTO `DB_Lab`.`elections` (`positionId`, `dateTime`, `city`, `state`) VALUES (3, '2024-10-8', 'Las Vegas', 'NV');
-INSERT INTO `DB_Lab`.`elections` (`positionId`, `dateTime`, `city`, `state`) VALUES (3, '2028-10-8', 'New York City', 'NY');
+INSERT INTO `DB_Lab`.`elections` (`positionId`, `dateTime`, `city`, `state`,`zip`) VALUES (1, '2018-10-12', 'Austin', 'TX', 78730);
+INSERT INTO `DB_Lab`.`elections` (`positionId`, `dateTime`, `city`, `state`,`zip`) VALUES (2, '2020-02-24', 'Cincinnatti', 'CT', 22727);
+INSERT INTO `DB_Lab`.`elections` (`positionId`, `dateTime`, `city`, `state`,`zip`) VALUES (3, '2020-03-23', 'Rhode Island', 'MA', 34334);
+INSERT INTO `DB_Lab`.`elections` (`positionId`, `dateTime`, `city`, `state`,`zip`) VALUES (3, '2020-10-8', 'Fort Worth', 'TX', 22477);
+INSERT INTO `DB_Lab`.`elections` (`positionId`, `dateTime`, `city`, `state`,`zip`) VALUES (3, '2020-10-8', 'Dallas', 'TX', 75205);
+INSERT INTO `DB_Lab`.`elections` (`positionId`, `dateTime`, `city`, `state`,`zip`) VALUES (3, '2024-10-8', 'Las Vegas', 'NV', 34332);
+INSERT INTO `DB_Lab`.`elections` (`positionId`, `dateTime`, `city`, `state`,`zip`) VALUES (3, '2028-10-8', 'New York City', 'NY', 22333);
 
 COMMIT;
 
