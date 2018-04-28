@@ -10,6 +10,8 @@ RUN npm install
 
 # Bundle app source
 COPY server.js /usr/src/app
+COPY sql-pool.js /usr/src/app
+COPY handlers.js /usr/src/app
 
 EXPOSE 3000
 CMD [ "npm", "start" ]
