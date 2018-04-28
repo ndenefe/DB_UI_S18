@@ -435,6 +435,28 @@ server.route({ //Gets an election by its zip code
         pool.query('SELECT electionId, name AS position, dateTime, city, state, zip FROM `elections` NATURAL JOIN `positions` WHERE `zip` = ?', request.params['zip'], function (error, results, fields) {
             if (error)
                 throw error;
+                
+        pool.query('SELECT * FROM `politicians` NATURAL JOIN `candidates` WHERE `electionId` = (SELECT electionId FROM elections WHERE zip=?)', request.params['zip'], function (error, results2, fields) {
+            if (error)
+                throw error;
+        reply([results,results2]);
+
+        });
+        });
+        
+        
+    }
+});
+
+server.route({ //Gets candidates by electionId code
+    method: 'GET',
+    path: '/candidates/{id}',
+    handler: function (request, reply) {
+        
+        console.log('Server processing a /candidates request');
+        pool.query('SELECT * FROM `politicians` NATURAL JOIN `candidates` WHERE `electionId` = ?', request.params['id'], function (error, results, fields) {
+            if (error)
+                throw error;
         reply(results);
 
         });
@@ -442,7 +464,6 @@ server.route({ //Gets an election by its zip code
         
     }
 });
-
 /*server.route({
     method: ['POST','GET'],
     path: '/login',
