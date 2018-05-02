@@ -70,9 +70,7 @@ export class TestRepository {
 
     public updtProfilePol(data: Account2): Observable<any> {
       let body = new HttpParams();
-      body = body.set('polId', data.userId.toString());
-      body = body.set('username', data.username);
-      body = body.set('password', data.password);
+      body = body.set('polId', data.polId.toString());
       body = body.set('email', data.email);
       body = body.set('firstName', data.firstName);
       body = body.set('lastName', data.lastName);
