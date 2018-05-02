@@ -39,11 +39,6 @@ export class ProfileComponent implements OnInit {
         this.imageName = 'assets/default.jpeg';
       break;
     }
-
-    this.route.paramMap
-    .subscribe(params => (
-      this.name = params.get('id')
-    ));
   }
 
 }

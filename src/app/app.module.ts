@@ -17,6 +17,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import {SharedService} from "./domain";
 import { SearchComponent } from './search/search.component';
 import { ProfilePropComponent } from './profile-prop/profile-prop.component';
+import { PolProfilesComponent } from './pol-profiles/pol-profiles.component';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { ProfilePropComponent } from './profile-prop/profile-prop.component';
     NavigationComponent,
     SearchComponent,
     ProfilePropComponent
+    PolProfilesComponent
 ],
   imports: [
     BrowserModule,

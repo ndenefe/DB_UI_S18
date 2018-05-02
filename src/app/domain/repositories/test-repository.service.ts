@@ -101,4 +101,7 @@ export class TestRepository {
     public getPolByZip(zip: number): Observable<any> {
       return this.httpClient.get(`${this.endpoint}/pol/${zip}`);
     }
+    public getPols(): Observable<any> {
+      return this.httpClient.get(`${this.endpoint}/getPol`);
+    }
 }
