@@ -32,7 +32,7 @@ import { PolProfilesComponent } from './pol-profiles/pol-profiles.component';
     PhonePipe,
     NavigationComponent,
     SearchComponent,
-    ProfilePropComponent
+    ProfilePropComponent,
     PolProfilesComponent
 ],
   imports: [
