@@ -99,6 +99,10 @@ export class TestRepository {
       return this.httpClient.put(`${this.endpoint}/nonPol/creds`, body);
     }
 
+    public getPols(): Observable<any> {
+      return this.httpClient.get(`${this.endpoint}/getPol`);
+    }
+
 
     
 }

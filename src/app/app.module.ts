@@ -15,6 +15,7 @@ import { UpdateModule} from './update/update.module';
 import { DomainModule } from './domain';
 import { NavigationComponent } from './navigation/navigation.component';
 import {SharedService} from "./domain";
+import { PolProfilesComponent } from './pol-profiles/pol-profiles.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import {SharedService} from "./domain";
     HomePageComponent,
     RegisterComponent,
     PhonePipe,
-    NavigationComponent
+    NavigationComponent,
+    PolProfilesComponent
 ],
   imports: [
     BrowserModule,
