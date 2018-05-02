@@ -50,7 +50,7 @@ class handlers {
     }
     getElections (request, reply) {
         console.log('Server processing a /getElections request');
-        pool.query('SELECT `firstName`, `lastName`, `name` AS `position`, `dateTime`, `city`, `state` FROM `elections` NATURAL JOIN `positions` NATURAL JOIN `candidates` NATURAL JOIN `politicians`', function (error, results, fields){
+        pool.query('SELECT `firstName`, `lastName`, `name` AS `position`, `dateTime`, `city`, `state`, `zip` FROM `elections` NATURAL JOIN `positions` NATURAL JOIN `candidates` NATURAL JOIN `politicians`', function (error, results, fields){
             if (error)
                 throw error;
             //Sends back to the client the value of 1 + 1
@@ -131,11 +131,12 @@ class handlers {
         });
         
     } 
+
     postNonPol(request, reply) {
         console.log('Server processing a /nonPol POST request');
-        pool.query('INSERT INTO `nonPolitician` (`username`,`password`,`email`,`picture`,`firstName`,`lastName`,`phone`) VALUES(?, ?, ?, ?, ?, ?, ?)',
+        pool.query('INSERT INTO `nonPolitician` (`username`,`password`,`email`,`picture`,`firstName`,`lastName`,`phone`,`zip`) VALUES(?, ?, ?, ?, ?, ?, ?, ?)',
         [request.payload['username'],request.payload['password'],request.payload['email'],request.payload['picture'],request.payload['firstName'],
-        request.payload['lastName'], request.payload['phone']],function (error, results, fields){
+        request.payload['lastName'], request.payload['phone'], request.payload['zip']],function (error, results, fields){
             if (error)
                 throw error;
             reply (results);
@@ -151,6 +152,13 @@ class handlers {
                 throw error;
             else reply(results);
         });
+    }
+    postPolLoc(request, reply){
+        console.log('server processing a /polLoc POST request');
+        pool.query('INSERT INTO `polLoc` (`polId`,`zipcode`) VALUES (?,?)', [request.payload['polId'],request.payload['zip']],function(err,results,fields){
+            if (err) throw err;
+            reply(results);
+        })
     }
     updateNonPolCreds(request, reply) {
         console.log('Server processing a /nonPol credential PUT request');
@@ -304,6 +312,14 @@ class handlers {
         });
         
         
+    }
+    polLoc (request,reply){
+        console.log('Server processing a /candidates request');
+        pool.query('Select * FROM `politicians` NATURAL JOIN `polLoc` WHERE zipcode=?', request.params['zip'], function (err, results, fields){
+            if (err)
+                throw err;
+        reply(results);
+        });
     }
 
 }

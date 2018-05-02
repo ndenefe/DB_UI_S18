@@ -177,6 +177,17 @@ server.route({ //Gets candidates by electionId code
     path: '/candidates/{electionId}',
     handler: handlers.candidatesByElectionId
 });
+server.route({ //Gets candidates by electionId code
+    method: 'GET',
+    path: '/pol/{zip}',
+    handler: handlers.polLoc
+});
+server.route({ //Gets candidates by electionId code
+    method: 'POST',
+    path: '/polLoc',
+    handler: handlers.postPolLoc
+});
+
 /*server.route({
     method: ['POST','GET'],
     path: '/login',

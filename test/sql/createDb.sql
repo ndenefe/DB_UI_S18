@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS `DB_Lab`.`nonPolitician` (
   `firstName` VARCHAR(45) NULL DEFAULT NULL,
   `lastName` VARCHAR(45) NULL DEFAULT NULL,
   `phone` VARCHAR(45) NULL DEFAULT NULL,
+  `zip` INT NULL DEFAULT NULL,
   PRIMARY KEY (`userId`))
 ENGINE = InnoDB;
 
@@ -175,6 +176,23 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `DB_Lab`.`polLoc`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `DB_Lab`.`polLoc` ;
+
+CREATE TABLE IF NOT EXISTS `DB_Lab`.`polLoc` (
+  `polId` INT NOT NULL,
+  `zipcode` INT NOT NULL,
+  PRIMARY KEY (`polId`),
+  CONSTRAINT `polLoc`
+    FOREIGN KEY (`polId`)
+    REFERENCES `DB_Lab`.`politicians` (`polId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `DB_Lab`.`uniqueIds`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `DB_Lab`.`uniqueIds` ;
@@ -284,10 +302,9 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `DB_Lab`;
-INSERT INTO `DB_Lab`.`nonPolitician` (`username`,`password`,`email`,`picture`,`firstName`,`lastName`,`phone`) VALUES ('yyyy','password','abe@gmail.com',null,'Abe','Willian',null);
-INSERT INTO `DB_Lab`.`nonPolitician` (`username`,`password`,`email`,`picture`,`firstName`,`lastName`,`phone`) VALUES ('rc32','123',null,null,'Weaver','Bob',null);
-INSERT INTO `DB_Lab`.`nonPolitician` (`username`,`password`,`email`,`picture`,`firstName`,`lastName`,`phone`) VALUES ('i11Pc','abc','will2@smu.edu',null,'Will','Roberson',null);
-
+INSERT INTO `DB_Lab`.`nonPolitician` (`username`,`password`,`email`,`picture`,`firstName`,`lastName`,`phone`,`zip`) VALUES ('yyyy','password','abe@gmail.com',null,'Abe','Willian',null,22477);
+INSERT INTO `DB_Lab`.`nonPolitician` (`username`,`password`,`email`,`picture`,`firstName`,`lastName`,`phone`, `zip`) VALUES ('rc32','123',null,null,'Weaver','Bob',null,34332);
+INSERT INTO `DB_Lab`.`nonPolitician` (`username`,`password`,`email`,`picture`,`firstName`,`lastName`,`phone`,`zip`) VALUES ('i11Pc','abc','will2@smu.edu',null,'Will','Roberson',null,75205);
 COMMIT;
 
 
@@ -417,5 +434,22 @@ INSERT INTO `DB_Lab`.`favorites` (`userId`, `polId`) VALUES (1, 1);
 INSERT INTO `DB_Lab`.`favorites` (`userId`, `polId`) VALUES (1, 2);
 INSERT INTO `DB_Lab`.`favorites` (`userId`, `polId`) VALUES (2, 2);
 INSERT INTO `DB_Lab`.`favorites` (`userId`, `polId`) VALUES (3, 3);
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `DB_Lab`.`polLoc`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `DB_Lab`;
+INSERT INTO `DB_Lab`.`polLoc` (`polId`,`zipcode`) VALUES (1,78730);
+INSERT INTO `DB_Lab`.`polLoc` (`polId`,`zipcode`) VALUES (3,22727);
+INSERT INTO `DB_Lab`.`polLoc` (`polId`,`zipcode`) VALUES (2,34334);
+INSERT INTO `DB_Lab`.`polLoc` (`polId`,`zipcode`) VALUES (4,22477);
+INSERT INTO `DB_Lab`.`polLoc` (`polId`,`zipcode`) VALUES (5,22477);
+INSERT INTO `DB_Lab`.`polLoc` (`polId`,`zipcode`) VALUES (6,75205);
+INSERT INTO `DB_Lab`.`polLoc` (`polId`,`zipcode`) VALUES (7,75205);
+INSERT INTO `DB_Lab`.`polLoc` (`polId`,`zipcode`) VALUES (8,34332);
+INSERT INTO `DB_Lab`.`polLoc` (`polId`,`zipcode`) VALUES (9,34332);
 
 COMMIT;
