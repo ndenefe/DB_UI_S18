@@ -70,6 +70,7 @@ export class UpdtProfileComponent implements OnInit {
     if(this.account.partyId)
     {
       this.testRepository.updtProfilePol(this.account).subscribe(x => {});
+      console.log(this.account);
     }
     else
     {
