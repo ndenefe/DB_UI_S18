@@ -73,15 +73,6 @@
         <button class="btn btn-success" type="button" [disabled]='!account.firstName || !account.email' (click)="saveProfile()">
           Save
         </button>
-        <div class="col-md-4">
-          <pre>{{account|json}}</pre>
-        </div>
-        <div class="col-md-4">
-          <pre>{{accounts|json}}</pre>
-        </div>
-        <div class="col-md-4">
-          <pre>{{userAccount|json}}</pre>
-        </div>
       </div>
     </div>
   </div>
