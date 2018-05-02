@@ -7,14 +7,16 @@
   </div>
   <div class="card-body">
     <div class="row">
-      <img class="pull-left col-sm" [src]='imageName' alt="Mountain View">
+      <div class="image">
+      <img class="pull-left col-sm" [src]='imageName' align="middle" alt="Mountain View">
+      </div>
 
       <ul class="d-inline col-sm list-group">
-        <li class="list-group-item">{{account.partyId}}</li>
-        <li class="list-group-item">{{account.phone}}</li>
-        <li class="list-group-item">{{account.email}}</li>
-        <li class="list-group-item">{{account.website}}</li>
-        <li class="list-group-item">{{account.tenure}}</li>
+        <li *ngIf="account.partyId && account.partyId != undefined" class="list-group-item">Party: {{account.partyId}}</li>
+        <li *ngIf="account.phone && !account.phone === undefined"class="list-group-item">Phone Number: {{account.phone}}</li>
+        <li *ngIf="account.email"class="list-group-item">Email: {{account.email}}</li>
+        <li *ngIf="account.website" class="list-group-item">Website: {{account.website}}</li>
+        <li *ngIf="account.tenure" class="list-group-item">Years Served: {{account.tenure}}</li>
 
       </ul>
     </div>
