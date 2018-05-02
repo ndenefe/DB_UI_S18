@@ -13,7 +13,7 @@ export class NavigationComponent implements OnInit {
 
   public accounts: Account2 = {};
 
-  constructor(private sharedService: SharedService,
+  constructor(public sharedService: SharedService,
   private router: Router) { }
 
   ngOnInit() {
