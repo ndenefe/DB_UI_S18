@@ -19,23 +19,25 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.account = this.sharedServ.account;
-    switch (this.account.partyId) {
-      case 1:
-        this.imageName = 'assets/republican.jpg';
-      break;
-      case 2:
-        this.imageName = 'assets/libertarian.png';
-      break;
-      case 3:
-        this.imageName = 'assets/green.jpeg';
-      break;
-      case 4:
-        this.imageName = 'assets/democrat.png';
-      break;
-      default:
-        this.imageName = 'assets/default.jpeg';
-      break;
-    }
+    console.log(this.account);
+    console.log(this.account.partyId);
+    // switch (this.account.partyId) {
+    //   case 1:
+    //     this.imageName = 'assets/republican.jpg';
+    //   break;
+    //   case 2:
+    //     this.imageName = 'assets/libertarian.png';
+    //   break;
+    //   case 3:
+    //     this.imageName = 'assets/green.jpeg';
+    //   break;
+    //   case 4:
+    //     this.imageName = 'assets/democrat.png';
+    //   break;
+    //   default:
+    //     this.imageName = 'assets/default.jpeg';
+    //   break;
+    // }
   }
 
 }

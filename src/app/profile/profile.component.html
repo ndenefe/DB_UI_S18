@@ -5,10 +5,18 @@
       </div>
       <div class="card-body">
         <div class="row">
-          <div class="image">
-          <img class="pull-left col-sm" [src]='imageName' align="middle" alt="Mountain View">
+          <div class="image" *ngIf="account.partyId == 1">
+            <img class="pull-left col-sm" src='assets/republican.jpg' align="middle" alt="Mountain View">
           </div>
-
+          <div class="image" *ngIf="account.partyId == 2">
+            <img class="pull-left col-sm" src='assets/libertarian.png' align="middle" alt="Mountain View">
+          </div>
+          <div class="image" *ngIf="account.partyId == 3">
+            <img class="pull-left col-sm" src='assets/green.jpeg' align="middle" alt="Mountain View">
+          </div>
+          <div class="image" *ngIf="account.partyId == 4">
+            <img class="pull-left col-sm" src='assets/democrat.png' align="middle" alt="Mountain View">
+          </div>
           <ul class="d-inline col-sm list-group">
             <li *ngIf="account.partyId && account.partyId != undefined" class="list-group-item">Party: {{account.partyId}}</li>
             <li *ngIf="account.phone && !account.phone === undefined"class="list-group-item">Phone Number: {{account.phone}}</li>
