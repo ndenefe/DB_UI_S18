@@ -1,3 +1,36 @@
-<div class="col-md-4">
-  <pre>{{accounts|json}}</pre>
-</div>
+<div class="container" id="content" *ngIf="polAccounts != []">
+  <h1 class="text-center">Politician Profiles</h1>
+  <div *ngFor="let account of this.polAccounts">
+    <div class="card" id="profile-card">
+      <div class="card-header">
+        <h3 class="text-center">{{account.firstName}} {{account.lastName}}</h3>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="image" *ngIf="account.partyId == 0">
+            <img class="pull-left col-sm" src='assets/democrat.png' align="middle" alt="Mountain View">
+          </div>
+          <div class="image" *ngIf="account.partyId == 1">
+            <img class="pull-left col-sm" src='assets/republican.jpg' align="middle" alt="Mountain View">
+          </div>
+          <div class="image" *ngIf="account.partyId == 2">
+            <img class="pull-left col-sm" src='assets/libertarian.png' align="middle" alt="Mountain View">
+          </div>
+          <div class="image" *ngIf="account.partyId == 3">
+            <img class="pull-left col-sm" src='assets/green.jpeg' align="middle" alt="Mountain View">
+          </div>
+          <div class="image" *ngIf="account.partyId == 4">
+            <img class="pull-left col-sm" src='assets/default.jpeg' align="middle" alt="Mountain View">
+          </div>
+          <ul class="d-inline col-sm list-group">
+            <li *ngIf="account.partyId && account.partyId != undefined" class="list-group-item">Party: {{account.partyId}}</li>
+            <li *ngIf="account.phone && !account.phone === undefined" class="list-group-item">Phone Number: {{account.phone}}</li>
+            <li *ngIf="account.email" class="list-group-item">Email: {{account.email}}</li>
+            <li *ngIf="account.website" class="list-group-item">Website: {{account.website}}</li>
+            <li *ngIf="account.tenure" class="list-group-item">Years Served: {{account.tenure}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <br />
+  </div>

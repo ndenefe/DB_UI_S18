@@ -12,17 +12,24 @@ import { TestRepository } from '../domain/repositories/test-repository.service';
 export class PolProfilesComponent implements OnInit {
 
 
-  public accounts: Account2[];
+  public polAccounts: Account2[];
+  public aaa: Account2[];
+
+  public imageName: string;
+  public account: Account2;
 
   constructor(private testRepository: TestRepository,
     private sharedService: SharedService,
     private router: Router) { }
 
   ngOnInit() {
+    this.polAccounts = [];
     this.testRepository.getPols().subscribe(x => {
-      this.accounts = x;
+      for (let i = 0; i < x.length; i++) {
+        this.polAccounts.push(x[i]);
+        }
     });
-    
   }
+
 
 }
