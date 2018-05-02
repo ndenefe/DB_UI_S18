@@ -70,11 +70,9 @@
           </div>
         </div>
         <br />
-
-        <button class="btn btn-lg btn-success btn-block" type="button" [disabled]='!account.firstName || !account.email' (click)="saveProfile()">
+        <button class="btn btn-success" type="button" [disabled]='!account.firstName || !account.email' (click)="saveProfile()">
           Save
         </button>
-        <a [routerLink]="['/login']" class="btn btn-danger btn-block bg-gray">Cancel</a>
         <div class="col-md-4">
           <pre>{{account|json}}</pre>
         </div>
