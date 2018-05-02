@@ -1,6 +1,8 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import {SharedService} from "../domain";
+import {SharedService} from '../domain';
 import {Account2} from '../domain';
+import { NgModel } from '@angular/forms';
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
@@ -11,15 +13,13 @@ export class NavigationComponent implements OnInit {
 
   public accounts: Account2 = {};
 
-  constructor(private sharedService: SharedService) { }
+  constructor(private sharedService: SharedService,
+  private router: Router) { }
 
   ngOnInit() {
   }
-
-  // updateL(){
-  //   this.accounts = this.sharedService.account;
-  //   console.log(this.sharedService.account);
-  // }
-
+  zipSearch(search: any) {
+    this.router.navigateByUrl(`search/${search}`);
+  }
 
 }

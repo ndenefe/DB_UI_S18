@@ -15,6 +15,8 @@ import { UpdateModule} from './update/update.module';
 import { DomainModule } from './domain';
 import { NavigationComponent } from './navigation/navigation.component';
 import {SharedService} from "./domain";
+import { SearchComponent } from './search/search.component';
+import { ProfilePropComponent } from './profile-prop/profile-prop.component';
 import { PolProfilesComponent } from './pol-profiles/pol-profiles.component';
 
 
@@ -29,6 +31,8 @@ import { PolProfilesComponent } from './pol-profiles/pol-profiles.component';
     RegisterComponent,
     PhonePipe,
     NavigationComponent,
+    SearchComponent,
+    ProfilePropComponent
     PolProfilesComponent
 ],
   imports: [

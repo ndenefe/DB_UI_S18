@@ -19,8 +19,9 @@
             <h5>
               <label for="password">Password:</label>
             </h5>
-            <input type="password" class="form-control" name="password" [(ngModel)]="newLogin.password" />
-            <button onclick="if (password.type == 'text') password.type ='password';else password.type = 'text';">Toggle</button>
+            <input type="password" id="pw" class="form-control" name="password" [(ngModel)]="newLogin.password" />
+            <button class="btn btn-primary" id="toggle" onclick="if (password.type == 'text')
+             password.type ='password';else password.type = 'text';">Toggle</button>
             <div *ngIf="passCheck" class="text-danger">*Password is required</div>
           </div>
           <hr>
@@ -31,9 +32,9 @@
         </form>
       </div>
     </div>
-    <div class="col-md-4">
+    <!-- <div class="col-md-4">
       <pre>{{logins|json}}</pre>
   <div class="col-md-4">
-    <!-- <pre>{{ldata|json}}</pre> -->
+    <!- <pre>{{ldata|json}}</pre> -->
+    <!-- </div> -->
   </div>
-</div>

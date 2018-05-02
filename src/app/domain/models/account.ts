@@ -28,4 +28,5 @@ export class Account2 {
   website?: string;
   platformId?: number;
   tenure?: number;
+  zip?: number;
 }

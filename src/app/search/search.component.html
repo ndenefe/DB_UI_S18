@@ -1,0 +1,7 @@
+<div class="container" *ngIf="politicians.length > 0">
+  <div *ngFor="let pol of politicians">
+    <!-- {{pol.partyId}} -->
+    <app-profile-prop [account]="pol"></app-profile-prop>
+    <!-- <pre>{{pol | json}}</pre> -->
+  </div>
+</div>
