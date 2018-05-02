@@ -27,7 +27,8 @@ export class UpdtProfileComponent implements OnInit {
   public tenure: Tenure[];
 
   constructor(private testRepository: TestRepository,
-    private sharedService: SharedService) { }
+    private sharedService: SharedService,
+   private router: Router) { }
 
   ngOnInit() {
 
@@ -90,6 +91,7 @@ export class UpdtProfileComponent implements OnInit {
       website: ''
     };
     this.passCheck = "";
+    this.router.navigateByUrl("profile");
   }
 
 }
