@@ -98,7 +98,7 @@ export class TestRepository {
       body = body.set('password', data.password);
       return this.httpClient.put(`${this.endpoint}/nonPol/creds`, body);
     }
-
-
-    
+    public getPolByZip(zip: number): Observable<any> {
+      return this.httpClient.get(`${this.endpoint}/pol/${zip}`);
+    }
 }

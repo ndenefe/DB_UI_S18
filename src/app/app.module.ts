@@ -15,6 +15,8 @@ import { UpdateModule} from './update/update.module';
 import { DomainModule } from './domain';
 import { NavigationComponent } from './navigation/navigation.component';
 import {SharedService} from "./domain";
+import { SearchComponent } from './search/search.component';
+import { ProfilePropComponent } from './profile-prop/profile-prop.component';
 
 
 @NgModule({
@@ -27,7 +29,9 @@ import {SharedService} from "./domain";
     HomePageComponent,
     RegisterComponent,
     PhonePipe,
-    NavigationComponent
+    NavigationComponent,
+    SearchComponent,
+    ProfilePropComponent
 ],
   imports: [
     BrowserModule,
