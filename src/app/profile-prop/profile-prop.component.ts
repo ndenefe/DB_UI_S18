@@ -19,9 +19,6 @@ export class ProfilePropComponent implements OnInit {
 
   ngOnInit() {
     switch (this.account.partyId) {
-      case 0:
-        this.imageName = 'assets/democrat.png';
-      break;
       case 1:
         this.imageName = 'assets/republican.jpg';
       break;
@@ -32,7 +29,7 @@ export class ProfilePropComponent implements OnInit {
         this.imageName = 'assets/green.jpeg';
       break;
       case 4:
-        this.imageName = 'assets/default.jpeg';
+        this.imageName = 'assets/democrat.png';
       break;
       default:
         this.imageName = 'assets/default.jpeg';

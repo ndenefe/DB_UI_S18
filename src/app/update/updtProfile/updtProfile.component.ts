@@ -40,11 +40,10 @@ export class UpdtProfileComponent implements OnInit {
     this.accounts = [];
 
     this.departments = [
-      { id: 0, name: 'Democrat' },
       { id: 1, name: 'Republican' },
       { id: 2, name: 'Libertarian' },
       { id: 3, name: 'Green Party' },
-      { id: 4, name: 'Other' }
+      { id: 4, name: 'Democrat' }
     ];
 
     this.tenure = [
