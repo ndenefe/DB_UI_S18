@@ -38,7 +38,7 @@ export class TestRepository {
       body = body.set('email', data.email);
       body = body.set('firstName', data.firstName);
       body = body.set('lastName', data.lastName);
-      body = body.set('phone',data.phone);
+      body = body.set('phone', data.phone);
       return this.httpClient.post(`${this.endpoint}/nonPol`, body);
     }
 

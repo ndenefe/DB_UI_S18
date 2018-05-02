@@ -35,7 +35,8 @@ export class SignUpComponent implements OnInit {
   public ldata: Account2;
 
   constructor(private testRepository: TestRepository,
-    private sharedService: SharedService) { }
+    private sharedService: SharedService,
+  public router: Router) { }
 
   ngOnInit() {
     this.title = 'Sign Up';
@@ -92,13 +93,7 @@ export class SignUpComponent implements OnInit {
     {
       this.testRepository.nonPolSignUp(this.account).subscribe(x => {});
     }
-    //update the shared component with this information
-    this.newLogin.password = this.account.password;
-    this.newLogin.username = this.account.username;
-    this.testRepository.login(this.newLogin).subscribe(x => {
-      this.ldata = x;
-      this.sharedService.insertData(x);
-    });
+    this.sharedService.insertData(this.account);
     //reset data
     this.account = {
       username: '',
@@ -110,6 +105,7 @@ export class SignUpComponent implements OnInit {
       website: ''
     };
     this.passCheck = "";
+    this.router.navigateByUrl('login');
   }
 
 }

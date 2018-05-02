@@ -13,11 +13,11 @@
           <h3>{{ obj.position }}</h3>
         </div>
         <div class="card-body text-center">
-          <strong>Election on: {{obj.dateTime| date:'MMM d, y'}}</strong>
+          <strong>Election On:</strong> {{obj.dateTime| date:'MMM d, y'}}
           <div *ngFor="let hold of obj.polis">
-            <p>Candidate: {{ hold.firstName }} {{ hold.lastName }}</p>
+            <p><strong>Candidate:</strong> {{ hold.firstName }} {{ hold.lastName }}</p>
           </div>
-          <p>Location:{{ obj.city}}, {{ obj.state }}</p>
+          <p><strong>Location:</strong> {{ obj.city}}, {{ obj.state }}</p>
         </div>
       </div>
       <br />
