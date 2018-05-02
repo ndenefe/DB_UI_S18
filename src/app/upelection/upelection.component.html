@@ -5,17 +5,25 @@
     <div class="container" id="con">
       <h1 class="heading">UPCOMING ELECTIONS</h1>
 
-      <div class="card" style="height: 12rem" *ngFor="let obj of check">
-        <div class="card-body">
-          <div class="col">
-            <h3>{{ obj.position }}</h3>
+      <div *ngFor="let obj of data">
+        <div class="card">
+          <div class="card-body">
+            <div class="col">
+              <h3>{{ obj.position }}</h3>
 
-            <p>Election on: {{obj.dateTime| date:'MMM d, y'}}</p>
-            <p>Candidates: {{ obj.firstName }} {{ obj.lastName }} vs {{ obj.firstName }}2 {{ obj.lastName }}2</p>
-            <p>Location: {{ obj.city}}, {{ obj.state }}</p>
+              <p>Election on: {{obj.dateTime| date:'MMM d, y'}}</p>
+
+                <div *ngFor="let hold of obj.polis">
+                  <p>Candidate: {{ hold.firstName }} {{ hold.lastName }}</p>
+                </div>
+
+
+              <p>Location:{{ obj.city}}, {{ obj.state }}</p>
+            </div>
           </div>
+
         </div>
-        <br>
+        <br />
       </div>
 
 
