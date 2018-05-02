@@ -3,36 +3,29 @@
       <img class="center" src="../../assets/replocate-app-icon-medium@2x.png" alt="placeholder" id="image1">
       <br>
       <h3>Elections Coming Up...</h3>
-      <table>
+      <h4>
+      <table class="table-striped">
         <thead>
           <tr>
             <td>Position</td>
+            <td>City</td>
             <td>State</td>
-            <td>County</td>
             <td>Date</td>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>President</td>
-            <td>United</td>
-            <td>All</td>
-            <td>November 4, 2020</td>
+
+          <tr *ngFor="let obj of checkTest">
+            <td>{{ obj.position }}</td>
+            <td>{{ obj.city }}</td>
+            <td>{{ obj.state }}</td>
+            <td>{{ obj.dateTime | date:'MMM d, y'}}</td>
+
           </tr>
-          <tr>
-            <td>County Rep</td>
-            <td>Texas</td>
-            <td>Dallas</td>
-            <td>July 12, 2018</td>
-          </tr>
-          <tr>
-            <td>College Security Club Treasurer</td>
-            <td>Alaska</td>
-            <td>Igloo 1</td>
-            <td>Feburary 30, 20XX</td>
-          </tr>
+
         </tbody>
       </table>
+    </h4>
     </div>
   <!-- <div class="container" id="gifContainer">
       <img class="center" src="../../assets/AMFLAG.gif" id="gif">
