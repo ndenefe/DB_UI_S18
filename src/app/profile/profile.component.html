@@ -17,12 +17,15 @@
           <div class="image" *ngIf="account.partyId == 4">
             <img class="pull-left col-sm" src='assets/democrat.png' align="middle" alt="Mountain View">
           </div>
+          <div class="image" *ngIf="!account.partyId">
+              <img class="pull-left col-sm" src='assets/default.jpeg' align="middle" alt="Mountain View">
+            </div>
           <ul class="d-inline col-sm list-group">
             <li *ngIf="account.partyId && account.partyId != undefined && account.partyId == 1" class="list-group-item">Party: Republican</li>
             <li *ngIf="account.partyId && account.partyId != undefined && account.partyId == 2" class="list-group-item">Party: Libertarian</li>
             <li *ngIf="account.partyId && account.partyId != undefined && account.partyId == 3" class="list-group-item">Party: Green Party</li>
             <li *ngIf="account.partyId && account.partyId != undefined && account.partyId == 4" class="list-group-item">Party: Democrat</li>
-            <li *ngIf="account.phone && !account.phone === undefined"class="list-group-item">Phone Number: {{account.phone}}</li>
+            <li *ngIf="account.phone" class="list-group-item">Phone Number: {{account.phone}}</li>
             <li *ngIf="account.email"class="list-group-item">Email: {{account.email}}</li>
             <li *ngIf="account.website" class="list-group-item">Website: {{account.website}}</li>
             <li *ngIf="account.tenure" class="list-group-item">Years Served: {{account.tenure}}</li>

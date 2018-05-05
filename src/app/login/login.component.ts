@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink} from '@angular/router';
-import { Login, Account, Account2 } from '../domain';
+import { Login, Account2 } from '../domain';
 import { TestRepository } from '../domain/repositories/test-repository.service';
 import {SharedService} from '../domain';
 
