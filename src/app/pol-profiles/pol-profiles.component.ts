@@ -1,6 +1,6 @@
 import { SharedService } from './../domain/services/shared.service';
 import { Component, OnInit, Input} from '@angular/core';
-import { Account, Account2, Politicians } from '../domain/models/';
+import { Account2, Politicians } from '../domain/models/';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TestRepository } from '../domain/repositories/test-repository.service';
 
