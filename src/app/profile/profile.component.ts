@@ -1,6 +1,6 @@
 import { SharedService } from './../domain/services/shared.service';
 import { Component, OnInit, Input} from '@angular/core';
-import {Account2 } from '../domain/models/account';
+import { Account, Account2 } from '../domain/models/account';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

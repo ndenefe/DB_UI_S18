@@ -28,7 +28,4 @@ export class SearchComponent implements OnInit {
     });
     console.log(this.politicians);
   }
-
-
-
 }

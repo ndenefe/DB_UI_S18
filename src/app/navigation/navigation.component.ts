@@ -14,9 +14,7 @@ export class NavigationComponent implements OnInit {
   public accounts: Account2 = {};
 
   constructor(public sharedService: SharedService,
-  private router: Router) {     this.router.routeReuseStrategy.shouldReuseRoute = function() {
-    return false;
-};}
+  private router: Router) { }
 
   ngOnInit() {
   }

@@ -1,12 +1,7 @@
-<!-- Search for any zip code Try searching for any zip code
-  and then search for 75205 (Only test zip in the database) -->
 <div class="container" *ngIf="politicians.length > 0">
   <div *ngFor="let pol of politicians">
+    <!-- {{pol.partyId}} -->
     <app-profile-prop [account]="pol"></app-profile-prop>
+    <!-- <pre>{{pol | json}}</pre> -->
   </div>
-</div>
-<div class= "container" *ngIf="politicians.length == 0">
-    <div class = "card-body ">
-      <h5>Your search returned 0 results.</h5>
-    </div>
 </div>
