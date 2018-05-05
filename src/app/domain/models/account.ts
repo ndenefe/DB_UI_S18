@@ -1,3 +1,4 @@
+import { Politicians } from './politicians';
 import { Phone } from './phone';
 import { Login } from './login';
 
@@ -29,4 +30,5 @@ export class Account2 {
   platformId?: number;
   tenure?: number;
   zip?: number;
+  //favList?: Politicians[];
 }

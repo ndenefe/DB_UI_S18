@@ -1,16 +1,19 @@
-
 .card {
-    width: 90%;
-    margin: 0 auto;
-  }
-  #content {
-    width: 90%;
-    margin: 0 auto;
-  }
-  .card-header{
-    background-color: lightcoral;
-  }
-  .image {
-    display: inline-block;
-    width: 20%;
-  }
+  width: 90%;
+  margin: 0 auto;
+}
+#content {
+  width: 90%;
+  margin: 0 auto;
+}
+.card-header {
+  background-color: lightcoral;
+}
+.image {
+  display: inline-block;
+  width: 20%;
+}
+#but {
+  margin-top: 10px;
+  margin-left: 190px;
+}

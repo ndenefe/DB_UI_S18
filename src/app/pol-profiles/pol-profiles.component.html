@@ -5,8 +5,10 @@
       <div class="card-header">
         <h3 class="text-center">{{account.firstName}} {{account.lastName}}</h3>
       </div>
+
       <div class="card-body">
         <div class="row">
+
           <div class="image" *ngIf="account.partyId == 1">
             <img class="pull-left col-sm" src='assets/republican.jpg' align="middle" alt="Mountain View">
           </div>
@@ -19,18 +21,24 @@
           <div class="image" *ngIf="account.partyId == 4">
             <img class="pull-left col-sm" src='assets/democrat.png' align="middle" alt="Mountain View">
           </div>
-          <ul class="d-inline col-sm list-group">
-            <li *ngIf="account.partyId && account.partyId != undefined && account.partyId == 1" class="list-group-item">Party: Republican</li>
-            <li *ngIf="account.partyId && account.partyId != undefined && account.partyId == 2" class="list-group-item">Party: Libertarian</li>
-            <li *ngIf="account.partyId && account.partyId != undefined && account.partyId == 3" class="list-group-item">Party: Green Party</li>
-            <li *ngIf="account.partyId && account.partyId != undefined && account.partyId == 4" class="list-group-item">Party: Democrat</li>
-            <li *ngIf="account.phone && !account.phone === undefined" class="list-group-item">Phone Number: {{account.phone}}</li>
-            <li *ngIf="account.email" class="list-group-item">Email: {{account.email}}</li>
-            <li *ngIf="account.website" class="list-group-item">Website: {{account.website}}</li>
-            <li *ngIf="account.tenure" class="list-group-item">Years Served: {{account.tenure}}</li>
-          </ul>
+          <div class="col">
+            <ul class="d-inline col-sm list-group">
+              <li *ngIf="account.partyId && account.partyId != undefined && account.partyId == 1" class="list-group-item">Party: Republican</li>
+              <li *ngIf="account.partyId && account.partyId != undefined && account.partyId == 2" class="list-group-item">Party: Libertarian</li>
+              <li *ngIf="account.partyId && account.partyId != undefined && account.partyId == 3" class="list-group-item">Party: Green Party</li>
+              <li *ngIf="account.partyId && account.partyId != undefined && account.partyId == 4" class="list-group-item">Party: Democrat</li>
+              <li *ngIf="account.phone && !account.phone === undefined" class="list-group-item">Phone Number: {{account.phone}}</li>
+              <li *ngIf="account.email" class="list-group-item">Email: {{account.email}}</li>
+              <li *ngIf="account.website" class="list-group-item">Website: {{account.website}}</li>
+              <li *ngIf="account.tenure" class="list-group-item">Years Served: {{account.tenure}}</li>
+
+            </ul>
+              <button id="but" class="btn btn-primary" (click)="addList(account.firstName, account.lastName)" type="button">Add to Favorite List</button>
+          </div>
         </div>
       </div>
     </div>
+
     <br />
   </div>
+</div>
