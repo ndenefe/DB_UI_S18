@@ -11,7 +11,6 @@ export class SharedService {
         this.account = data;
     }
     insertPol(data: Politicians) {
-      console.log(data);
       this.polArr.push(data);
   }
 }

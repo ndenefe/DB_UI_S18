@@ -1,36 +1,43 @@
-
-    <div class="card" id="profile-card">
-      <div class="card-header">
-        <h3 class="text-center">{{account.firstName}} {{account.lastName}}</h3>
+<div class="card" id="profile-card">
+  <div class="card-header">
+    <h3 class="text-center">{{account.firstName}} {{account.lastName}}</h3>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="image" *ngIf="account.partyId == 1">
+        <img class="pull-left col-sm" src='assets/republican.jpg' align="middle" alt="Mountain View">
       </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="image" *ngIf="account.partyId == 1">
-            <img class="pull-left col-sm" src='assets/republican.jpg' align="middle" alt="Mountain View">
-          </div>
-          <div class="image" *ngIf="account.partyId == 2">
-            <img class="pull-left col-sm" src='assets/libertarian.png' align="middle" alt="Mountain View">
-          </div>
-          <div class="image" *ngIf="account.partyId == 3">
-            <img class="pull-left col-sm" src='assets/green.jpeg' align="middle" alt="Mountain View">
-          </div>
-          <div class="image" *ngIf="account.partyId == 4">
-            <img class="pull-left col-sm" src='assets/democrat.png' align="middle" alt="Mountain View">
-          </div>
-          <div class="image" *ngIf="!account.partyId">
-              <img class="pull-left col-sm" src='assets/default.jpeg' align="middle" alt="Mountain View">
+      <div class="image" *ngIf="account.partyId == 2">
+        <img class="pull-left col-sm" src='assets/libertarian.png' align="middle" alt="Mountain View">
+      </div>
+      <div class="image" *ngIf="account.partyId == 3">
+        <img class="pull-left col-sm" src='assets/green.jpeg' align="middle" alt="Mountain View">
+      </div>
+      <div class="image" *ngIf="account.partyId == 4">
+        <img class="pull-left col-sm" src='assets/democrat.png' align="middle" alt="Mountain View">
+      </div>
+      <div class="image" *ngIf="!account.partyId">
+        <img class="pull-left col-sm" src='assets/default.jpeg' align="middle" alt="Mountain View">
+      </div>
+      <ul class="d-inline col-sm list-group">
+        <li *ngIf="account.partyId && account.partyId != undefined && account.partyId == 1" class="list-group-item">Party: Republican</li>
+        <li *ngIf="account.partyId && account.partyId != undefined && account.partyId == 2" class="list-group-item">Party: Libertarian</li>
+        <li *ngIf="account.partyId && account.partyId != undefined && account.partyId == 3" class="list-group-item">Party: Green Party</li>
+        <li *ngIf="account.partyId && account.partyId != undefined && account.partyId == 4" class="list-group-item">Party: Democrat</li>
+        <li *ngIf="account.phone" class="list-group-item">Phone Number: {{account.phone}}</li>
+        <li *ngIf="account.email" class="list-group-item">Email: {{account.email}}</li>
+        <li *ngIf="account.website" class="list-group-item">Website: {{account.website}}</li>
+        <li *ngIf="account.tenure" class="list-group-item">Years Served: {{account.tenure}}</li>
+        <ul style="list-style-type:disc" *ngIf="polArr.length!=0" class="list-group-item">
+          Favorite Politicians:
+          <div *ngFor="let obj of polArr">
+            <div class="ta">
+              {{obj.firstName}} {{obj.lastName}}
             </div>
-          <ul class="d-inline col-sm list-group">
-            <li *ngIf="account.partyId && account.partyId != undefined && account.partyId == 1" class="list-group-item">Party: Republican</li>
-            <li *ngIf="account.partyId && account.partyId != undefined && account.partyId == 2" class="list-group-item">Party: Libertarian</li>
-            <li *ngIf="account.partyId && account.partyId != undefined && account.partyId == 3" class="list-group-item">Party: Green Party</li>
-            <li *ngIf="account.partyId && account.partyId != undefined && account.partyId == 4" class="list-group-item">Party: Democrat</li>
-            <li *ngIf="account.phone" class="list-group-item">Phone Number: {{account.phone}}</li>
-            <li *ngIf="account.email"class="list-group-item">Email: {{account.email}}</li>
-            <li *ngIf="account.website" class="list-group-item">Website: {{account.website}}</li>
-            <li *ngIf="account.tenure" class="list-group-item">Years Served: {{account.tenure}}</li>
-          </ul>
-        </div>
-        <br />
-      </div>
+          </div>
+        </ul>
+      </ul>
     </div>
+    <br />
+  </div>
+</div>

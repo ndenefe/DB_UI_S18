@@ -1,6 +1,6 @@
 import { SharedService } from './../domain/services/shared.service';
 import { Component, OnInit, Input} from '@angular/core';
-import { Account2 } from '../domain/models/account';
+import { Account2, Politicians } from '../domain/models/';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -13,14 +13,14 @@ export class ProfileComponent implements OnInit {
   public account: Account2;
   public name: string;
   public imageName: string;
+  public polArr: Politicians[];
 
   constructor(private route: ActivatedRoute,
      private sharedServ: SharedService) { }
 
   ngOnInit() {
     this.account = this.sharedServ.account;
-    console.log(this.account);
-    console.log(this.account.partyId);
+    this.polArr = this.sharedServ.polArr;
     // switch (this.account.partyId) {
     //   case 1:
     //     this.imageName = 'assets/republican.jpg';
