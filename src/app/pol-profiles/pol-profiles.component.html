@@ -27,7 +27,7 @@
               <li *ngIf="account.partyId && account.partyId != undefined && account.partyId == 2" class="list-group-item">Party: Libertarian</li>
               <li *ngIf="account.partyId && account.partyId != undefined && account.partyId == 3" class="list-group-item">Party: Green Party</li>
               <li *ngIf="account.partyId && account.partyId != undefined && account.partyId == 4" class="list-group-item">Party: Democrat</li>
-              <li *ngIf="account.phone && !account.phone === undefined" class="list-group-item">Phone Number: {{account.phone}}</li>
+              <li *ngIf="account.phone" class="list-group-item">Phone Number: {{account.phone}}</li>
               <li *ngIf="account.email" class="list-group-item">Email: {{account.email}}</li>
               <li *ngIf="account.website" class="list-group-item">Website: {{account.website}}</li>
               <li *ngIf="account.tenure" class="list-group-item">Years Served: {{account.tenure}}</li>

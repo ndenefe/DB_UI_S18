@@ -5,3 +5,8 @@
     <!-- <pre>{{pol | json}}</pre> -->
   </div>
 </div>
+<div class = "container" *ngIf="!politicians.length">
+  <div class = "card-body">
+    <h5>Your search returned 0 results.</h5>
+  </div>
+</div>
